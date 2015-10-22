@@ -33,9 +33,9 @@ public class HomeController {
             logger.debug((String) ht.get("uid"));
 
 
-            return "static/views/home";
+            return "static/index";
         } else {
-            return "static/views/login";
+            return "static/page/login";
 
         }
     }
