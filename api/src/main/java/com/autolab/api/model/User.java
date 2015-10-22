@@ -26,83 +26,31 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
     public static String TAG = User.class.getSimpleName().toLowerCase();
 
 
-    //和阿里账户相关的字段
-    private String aliId;
-    private String aliNick;
-    private String aliAvatar;
+    //和jaccount相关的字段
+    private String jaccountUid;
+    private String jaccountChinesename;
+    private String jaccountId;
 
     //用户角色
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    private String openid;
-
-
-    private Integer subscribe;
-
-
-    private String nickname;
-
-    private String sex;
-
-    private String language;
-
-
-    private String city;
-
-    private String province;
-
-    private String country;
-
-    private String headimgurl;
-
-
-    @Column(name = "subscribe_time")
-    @SerializedName("subscribe_time")
-    private Long subscribeTime;
-
-
-    private String unionid;
-
-    //经纬度
-
-    private Double longitude;
-
-    private Double latitude;
-    //地理位置精度
-
-    private Double accuracy;
 
     private String username;
 
     @JsonIgnore
     private String password;
 
-    private String phone;
-
-    //上次登录时间
-
-    @Column(name = "last_login_ip")
-    @SerializedName("last_login_ip")
-    private String lastLoginIp;
-
-    //上次登录时间
-
-    @Column(name = "last_login_time")
-    @SerializedName("last_login_time")
-    private Date lastLoginTime;
-
-
     /**
-     * 产生一个新的阿里账户
+     * 产生一个新的jaccount
      */
-    public static User generateAliUser(String aliId, String aliNick, String aliAvatar) {
+    public static User generateJaccountUser(String jaccountUid, String jaccountChinesename, String jaccountId) {
         User user = new User();
-        user.setAliId(aliId);
-        user.setAliNick(aliNick);
-        user.setAliAvatar(aliAvatar);
+        user.setJaccountUid(jaccountUid);
+        user.setJaccountChinesename(jaccountChinesename);
+        user.setJaccountId(jaccountId);
         user.setRole(User.Role.ROLE_USER);
         user.setStatus(Status.OK);
+
 
         return user;
     }
@@ -116,35 +64,15 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
      */
     public User(User user) {
         id = user.getId();
+        jaccountUid = user.getJaccountUid();
+        jaccountChinesename = user.getJaccountChinesename();
+        jaccountId = user.getJaccountId();
+        role = user.getRole();
         status = user.getStatus();
         createTime = user.getCreateTime();
-
-
-        aliId = user.getAliId();
-        aliNick = user.getAliNick();
-        aliAvatar = user.getAliAvatar();
-        role = user.getRole();
-        openid = user.getOpenid();
-        subscribe = user.getSubscribe();
-        nickname = user.getNickname();
-        sex = user.getSex();
-        language = user.getLanguage();
-        city = user.getCity();
-        province = user.getProvince();
-        country = user.getCountry();
-        headimgurl = user.getHeadimgurl();
-        subscribeTime = user.getSubscribeTime();
-        unionid = user.getUnionid();
-        longitude = user.getLongitude();
-        latitude = user.getLatitude();
-        accuracy = user.getAccuracy();
         username = user.getUsername();
         password = user.getPassword();
-        phone = user.getPhone();
-        lastLoginIp = user.getLastLoginIp();
-        lastLoginTime = user.getLastLoginTime();
     }
-
 
     /**********************************interface UserDetails Start*************************************************/
     /**
@@ -162,7 +90,6 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
             roles.add(new SimpleGrantedAuthority(Role.ROLE_USER.getName()));
             roles.add(new SimpleGrantedAuthority(Role.ROLE_ADMIN.getName()));
         }
-
 
         return roles;
     }
@@ -203,7 +130,6 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
     public enum Role {
         ROLE_USER("ROLE_USER"),
         ROLE_ADMIN("ROLE_ADMIN");
-
 
         public static final String HAS_ROLE_USER = "hasRole('ROLE_USER')";
         public static final String HAS_ROLE_ADMIN = "hasRole('ROLE_ADMIN')";
