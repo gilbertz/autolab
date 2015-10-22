@@ -32,6 +32,7 @@ public class HomeController {
         if (ht != null) {
             logger.debug((String) ht.get("uid"));
 
+
             return "static/views/home";
         } else {
             return "static/views/login";

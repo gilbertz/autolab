@@ -29,24 +29,24 @@ public class JaccountTokenGranter extends AbstractTokenGranter {
     protected OAuth2Authentication getOAuth2Authentication(ClientDetails client, TokenRequest tokenRequest) {
         Map<String, String> params = tokenRequest.getRequestParameters();
 
-        if(!params.containsKey("ali_id")){
-            logger.debug("ali_id不存在");
-            throw new com.autolab.api.exception.UtilException("ali_id不存在");
+        if(!params.containsKey("jaccount_uid")){
+            logger.debug("jaccount_uid不存在");
+            throw new com.autolab.api.exception.UtilException("jaccount_uid不存在");
         }
 
-        if(!params.containsKey("ali_nick")){
-            logger.debug("ali_nick不存在");
-            throw new com.autolab.api.exception.UtilException("ali_nick不存在");
+        if(!params.containsKey("jaccount_chinesename")){
+            logger.debug("jaccount_chinesename不存在");
+            throw new com.autolab.api.exception.UtilException("jaccount_chinesename不存在");
         }
 
-        if(!params.containsKey("ali_avatar")){
-            logger.debug("ali_avatar不存在");
-            throw new com.autolab.api.exception.UtilException("ali_avatar不存在");
+        if(!params.containsKey("jaccount_id")){
+            logger.debug("jaccount_id不存在");
+            throw new com.autolab.api.exception.UtilException("jaccount_id不存在");
         }
 
-        String aliId=params.get("ali_id");
-        String aliNick=params.get("ali_nick");
-        String aliAvatar=params.get("ali_avatar");
+        String aliId=params.get("jaccount_uid");
+        String aliNick=params.get("jaccount_chinesename");
+        String aliAvatar=params.get("jaccount_id");
 
 
         ApplicationContext appContextManager = com.autolab.api.util.AppContextManager.getAppContext();
