@@ -1,4 +1,4 @@
-package com.autolab.api;
+package com.autolab.api.controller;
 
 import edu.sjtu.jaccount.JAccountManager;
 import org.slf4j.Logger;
