@@ -31,9 +31,10 @@ public class HomeController {
 
         if (ht != null) {
             logger.debug((String) ht.get("uid"));
+            //认证成功后，获取accessToken
+            return "redirect:/oauth/token";
 
-
-            return "static/views/home";
+            //return "static/views/home";
         } else {
             return "static/views/login";
 
