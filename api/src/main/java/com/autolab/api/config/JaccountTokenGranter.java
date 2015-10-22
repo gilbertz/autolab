@@ -52,7 +52,8 @@ public class JaccountTokenGranter extends AbstractTokenGranter {
         ApplicationContext appContextManager = com.autolab.api.util.AppContextManager.getAppContext();
         UserDao userDao =appContextManager.getBean(UserDao.class);
 
-        User user = userDao.findByAliId(aliId);
+       // User user = userDao.findByAliId(aliId);
+        User user = null;
         if (user == null) {
 
             logger.debug("不存在该阿里账号，马上创建一个。");
@@ -60,7 +61,7 @@ public class JaccountTokenGranter extends AbstractTokenGranter {
             //新建一个阿里用户
             user=User.generateAliUser(aliId,aliNick,aliAvatar);
 
-            userDao.save(user);
+            //userDao.save(user);
 
         }
 

@@ -32,7 +32,9 @@ public class HomeController {
         if (ht != null) {
             logger.debug((String) ht.get("uid"));
             //认证成功后，获取accessToken
-            return "redirect:/oauth/token";
+            return "redirect:/oauth/token?client_id=clientapp&client_secret=f506d105142e2928e2e37675b560ff75"
+            +"&grant_type=jaccount&scope=read write&jaccount_uid="+ht.get("uid") + "&jaccount_chinesename="
+                    + "zqin" + "&jaccount_id=" + "123";
 
             //return "static/views/home";
         } else {
