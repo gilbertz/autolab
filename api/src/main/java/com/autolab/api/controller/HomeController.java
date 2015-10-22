@@ -31,8 +31,8 @@ public class HomeController {
 
         if (ht != null) {
             logger.debug((String) ht.get("uid"));
-
-
+            //��֤�ɹ��󣬻�ȡaccessToken
+           // return "redirect:/oauth/token";
             return "static/index";
         } else {
             return "static/page/login";
