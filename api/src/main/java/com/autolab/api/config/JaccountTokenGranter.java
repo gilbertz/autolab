@@ -65,11 +65,7 @@ public class JaccountTokenGranter extends AbstractTokenGranter {
         ApplicationContext appContextManager = com.autolab.api.util.AppContextManager.getAppContext();
         UserDao userDao =appContextManager.getBean(UserDao.class);
 
-
-       // User user = userDao.findByAliId(aliId);
-//        User user = null;
-
-        User user = userDao.findByJaccountUid(jaccountUid);
+        User user = userDao.findByJaccountId(jaccountId);
 
         if (user == null) {
 
