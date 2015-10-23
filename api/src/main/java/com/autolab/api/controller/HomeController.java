@@ -120,6 +120,8 @@ public class HomeController extends  BaseController{
             params.add(new Param("jaccount_uid", (String)ht.get("uid")));
             params.add(new Param("jaccount_chinesename",(String)ht.get("chinesename")));
             params.add(new Param("jaccount_id", (String)ht.get("id")));
+            params.add(new Param("jaccount_student", (String)ht.get("student")));
+            params.add(new Param("jaccount_dept", (String)ht.get("dept")));
             params.add(new Param("grant_type", "jaccount"));
             params.add(new Param("scope", "read write"));
             params.add(new Param("client_secret", "f506d105142e2928e2e37675b560ff75"));

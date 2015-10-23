@@ -30,6 +30,8 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
     private String jaccountUid;
     private String jaccountChinesename;
     private String jaccountId;
+    private String jaccountStudent;
+    private String jaccountDept;
 
     //用户角色
     @Enumerated(EnumType.STRING)
@@ -43,14 +45,19 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
     /**
      * 产生一个新的jaccount
      */
-    public static User generateJaccountUser(String jaccountUid, String jaccountChinesename, String jaccountId) {
+    public static User generateJaccountUser(String jaccountUid, String jaccountChinesename, String jaccountId,String jaccountStudent,String jaccountDept) {
         User user = new User();
         user.setJaccountUid(jaccountUid);
         user.setJaccountChinesename(jaccountChinesename);
         user.setJaccountId(jaccountId);
-        user.setRole(User.Role.ROLE_USER);
+        user.setJaccountStudent(jaccountStudent);
+        user.setJaccountDept(jaccountDept);
+        if (jaccountStudent.equals("yes")){
+            user.setRole(User.Role.ROLE_USER);
+        }else {
+            user.setRole(User.Role.ROLE_ADMIN);
+        }
         user.setStatus(Status.OK);
-
 
         return user;
     }
@@ -67,6 +74,9 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
         jaccountUid = user.getJaccountUid();
         jaccountChinesename = user.getJaccountChinesename();
         jaccountId = user.getJaccountId();
+        jaccountStudent = user.getJaccountStudent();
+        jaccountDept = user.getJaccountDept();
+
         role = user.getRole();
         status = user.getStatus();
         createTime = user.getCreateTime();

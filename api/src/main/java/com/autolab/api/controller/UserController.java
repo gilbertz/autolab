@@ -42,10 +42,10 @@ public class UserController extends BaseController {
         User user=getUser();
         logger.debug(user.toString());
 
-//        Test test = testDao.findByUser(user);
-        List<Test> tests= testDao.findAll();
-        
-        return success("tests",tests);
+        Test test = testDao.findByUser(user);
+//        List<Test> tests= testDao.findAll();
+
+        return success("test",test);
     }
 
 }

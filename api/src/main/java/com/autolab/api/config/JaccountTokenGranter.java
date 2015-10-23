@@ -44,9 +44,22 @@ public class JaccountTokenGranter extends AbstractTokenGranter {
             throw new com.autolab.api.exception.UtilException("jaccount_id不存在");
         }
 
+        if(!params.containsKey("jaccount_student")){
+            logger.debug("jaccount_student不存在");
+            throw new com.autolab.api.exception.UtilException("jaccount_student不存在");
+        }
+
+        if(!params.containsKey("jaccount_dept")){
+            logger.debug("jaccount_dept不存在");
+            throw new com.autolab.api.exception.UtilException("jaccount_dept不存在");
+        }
+
         String jaccountUid=params.get("jaccount_uid");
         String jaccountChinesename=params.get("jaccount_chinesename");
         String jaccountId=params.get("jaccount_id");
+        String jaccountStudent=params.get("jaccount_student");
+        String jaccountDept=params.get("jaccount_dept");
+
 
 
         ApplicationContext appContextManager = com.autolab.api.util.AppContextManager.getAppContext();
@@ -54,18 +67,18 @@ public class JaccountTokenGranter extends AbstractTokenGranter {
 
 
        // User user = userDao.findByAliId(aliId);
-        User user = null;
+//        User user = null;
 
-        //User user = userDao.findByJaccountUid(jaccountUid);
+        User user = userDao.findByJaccountUid(jaccountUid);
 
         if (user == null) {
 
             logger.debug("不存在该jaccount账号，马上创建一个。");
 
             //新建一个jaccount用户
-            user=User.generateJaccountUser(jaccountUid, jaccountChinesename, jaccountId);
+            user=User.generateJaccountUser(jaccountUid, jaccountChinesename, jaccountId,jaccountStudent,jaccountDept);
 
-            //userDao.save(user);
+            userDao.save(user);
 
         }
 
