@@ -24,59 +24,8 @@ import org.apache.log4j.Logger;
 @Service
 public class UserService {
 
-    @Autowired
-    TokenStore tokenStore;
-
     private static Logger logger = Logger.getLogger(UserService.class);
 
-    /*******************************Auth œ‡πÿ*************************************/
-    public DefaultTokenServices defaultTokenServices() {
 
-        DefaultTokenServices tokenServices = new DefaultTokenServices();
-        tokenServices.setSupportRefreshToken(true);
-        tokenServices.setTokenStore(this.tokenStore);
-        return tokenServices;
-    }
-
-    /**
-     * ◊‘º∫ ÷∂Ø¿¥»œ÷§£¨»ª∫Û∑µªÿaccess_token.
-     * @param user ”√ªß
-     * @param clientId clientId
-     * @return »œ÷§–≈œ¢°£
-     */
-    public OAuth2 oauth2(User user,String clientId){
-
-
-        Map<String, String> requestParameters = new HashMap<>();
-        boolean approved = true;
-        Set<String> scope = new HashSet<>();
-        scope.add("read");
-        scope.add("write");
-        Set<String> resourceIds = new HashSet<>();
-        Set<String> responseTypes = new HashSet<>();
-        responseTypes.add("code");
-        Map<String, Serializable> extensionProperties = new HashMap<>();
-
-        OAuth2Request oAuth2Request = new OAuth2Request(requestParameters, clientId,
-                user.getAuthorities(), approved, scope,
-                resourceIds, null, responseTypes, extensionProperties);
-
-
-
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-        OAuth2Authentication auth = new OAuth2Authentication(oAuth2Request, authenticationToken);
-
-        OAuth2AccessToken token = defaultTokenServices().createAccessToken(auth);
-
-        OAuth2 oAuth2=new OAuth2();
-        oAuth2.setAccessToken(token.getValue());
-        oAuth2.setTokenType(token.getTokenType());
-        oAuth2.setRefreshToken(token.getRefreshToken().getValue());
-        oAuth2.setExpiresIn(token.getExpiresIn());
-
-        return oAuth2;
-    }
-
-
-    /*******************************Auth œ‡πÿ*************************************/
+    /*******************************Auth ÔøΩÔøΩÔøΩ*************************************/
 }

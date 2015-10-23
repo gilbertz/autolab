@@ -100,28 +100,28 @@ angular.module('app')
             //通过各种方法，终于能够获取到oauth信息了。
             $rootScope.oauth2={};
 
-            var autolabDebug=true;
-
-            if(autolabDebug){
-
-                //UI开发阶段HardCode.
-                $rootScope.oauth2.accessToken="aa21f536-2163-4bc9-b983-74263e75fa89";
-                $rootScope.oauth2.tokenType="bearer";
-                $rootScope.oauth2.refreshToken="3ecd724e-a02d-40c4-8a5f-496e981e9f9d";
-                $rootScope.oauth2.expiresIn="86399";
-                $rootScope.oauth2.scope="read write";
-                $rootScope.oauth2.url="/";
-                $rootScope.oauth2.code="CODE";
-
-            }else{
-                $rootScope.oauth2.accessToken=document.getElementById("oauth2_access_token").innerHTML;
-                $rootScope.oauth2.tokenType=document.getElementById("oauth2_token_type").innerHTML;
-                $rootScope.oauth2.refreshToken=document.getElementById("oauth2_refresh_token").innerHTML;
-                $rootScope.oauth2.expiresIn=document.getElementById("oauth2_expires_in").innerHTML;
-                $rootScope.oauth2.scope=document.getElementById("oauth2_scope").innerHTML;
-                $rootScope.oauth2.url=document.getElementById("oauth2_url").innerHTML;
-                $rootScope.oauth2.code=document.getElementById("oauth2_code").innerHTML;
-            }
+            //var autolabDebug=true;
+            //
+            //if(autolabDebug){
+            //
+            //    //UI开发阶段HardCode.
+            //    $rootScope.oauth2.accessToken="aa21f536-2163-4bc9-b983-74263e75fa89";
+            //    $rootScope.oauth2.tokenType="bearer";
+            //    $rootScope.oauth2.refreshToken="3ecd724e-a02d-40c4-8a5f-496e981e9f9d";
+            //    $rootScope.oauth2.expiresIn="86399";
+            //    $rootScope.oauth2.scope="read write";
+            //    $rootScope.oauth2.url="/";
+            //    $rootScope.oauth2.code="CODE";
+            //
+            //}else{
+            //    $rootScope.oauth2.accessToken=document.getElementById("oauth2_access_token").innerHTML;
+            //    $rootScope.oauth2.tokenType=document.getElementById("oauth2_token_type").innerHTML;
+            //    $rootScope.oauth2.refreshToken=document.getElementById("oauth2_refresh_token").innerHTML;
+            //    $rootScope.oauth2.expiresIn=document.getElementById("oauth2_expires_in").innerHTML;
+            //    $rootScope.oauth2.scope=document.getElementById("oauth2_scope").innerHTML;
+            //    $rootScope.oauth2.url=document.getElementById("oauth2_url").innerHTML;
+            //    $rootScope.oauth2.code=document.getElementById("oauth2_code").innerHTML;
+            //}
 
 
             console.log(JSON.stringify($rootScope.oauth2));
