@@ -1,0 +1,52 @@
+<div class="wrapper-md" style="padding-top:0!important;" ng-controller="DashboardController">
+
+    <div class="row ">
+        <div style="background:url('{{app.host}}/file/561fb386a2d41fa83bd819a4') center center; background-size:cover;
+        padding-top: 180px;
+        padding-bottom:10px;
+        ">
+            <span class="text-white f24 m-l-sm">
+                我的成绩
+            </span>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+
+    app.controller('DashboardController', ['$scope', '$http', function ($scope, $http) {
+        $scope.app.title="自动化系实验预约系统";
+
+        console.log("Enter into DashboardController");
+
+        $scope.refresh = function () {
+            var url = $scope.app.host + '/city/detail/' + $scope.app.city.id;
+
+            //,$scope.app.httpConfig
+            var params = {};
+            console.log(url + "?" + JSON.stringify(params));
+            $http.post(url, params)
+                    .success(function (response) {
+                        console.log(response);
+                        $scope.city = response.city;
+
+                        $scope.filterDistricts = [];
+                        $scope.filterDistricts.push($scope.allDistrict);
+                        for (var key in $scope.city.districts) {
+                            var district = $scope.city.districts[key];
+                            $scope.filterDistricts.push(district);
+                        }
+
+
+                    }).error(function (response) {
+                        $scope.pop("error", "错误", response.error.message);
+                    });
+        };
+        $scope.refresh();
+
+
+    }]);
+
+</script>

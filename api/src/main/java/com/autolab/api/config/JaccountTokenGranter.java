@@ -44,34 +44,38 @@ public class JaccountTokenGranter extends AbstractTokenGranter {
             throw new com.autolab.api.exception.UtilException("jaccount_id不存在");
         }
 
-        String aliId=params.get("jaccount_uid");
-        String aliNick=params.get("jaccount_chinesename");
-        String aliAvatar=params.get("jaccount_id");
+        String jaccountUid=params.get("jaccount_uid");
+        String jaccountChinesename=params.get("jaccount_chinesename");
+        String jaccountId=params.get("jaccount_id");
 
 
         ApplicationContext appContextManager = com.autolab.api.util.AppContextManager.getAppContext();
         UserDao userDao =appContextManager.getBean(UserDao.class);
 
+
        // User user = userDao.findByAliId(aliId);
         User user = null;
+
+        //User user = userDao.findByJaccountUid(jaccountUid);
+
         if (user == null) {
 
-            logger.debug("不存在该阿里账号，马上创建一个。");
+            logger.debug("不存在该jaccount账号，马上创建一个。");
 
-            //新建一个阿里用户
-            user=User.generateAliUser(aliId,aliNick,aliAvatar);
+            //新建一个jaccount用户
+            user=User.generateJaccountUser(jaccountUid, jaccountChinesename, jaccountId);
 
             //userDao.save(user);
 
         }
 
         //Authentication authentication = new UsernamePasswordAuthenticationToken(aliUsername, aliPassword, user.getAuthorities());
-        Authentication authentication = new AnonymousAuthenticationToken(aliId,user,user.getAuthorities());
+        Authentication authentication = new AnonymousAuthenticationToken(jaccountUid,user,user.getAuthorities());
         Object principal=authentication.getPrincipal();
-        User aliUser=(User)principal;
+        User jaccountUser=(User)principal;
         OAuth2Authentication oAuth2authentication = new OAuth2Authentication(tokenRequest.createOAuth2Request(client), authentication);
         Object principal1=oAuth2authentication.getUserAuthentication().getPrincipal();
-        User aliUser1=(User)principal1;
+        User jaccountUser1=(User)principal1;
 
         return oAuth2authentication;
     }

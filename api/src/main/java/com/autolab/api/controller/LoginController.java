@@ -16,6 +16,6 @@ public class LoginController {
     @RequestMapping("/")
     public String login() {
 
-        return "static/views/login";
+        return "static/page/login";
     }
 }

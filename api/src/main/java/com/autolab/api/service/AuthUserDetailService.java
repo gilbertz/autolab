@@ -19,7 +19,7 @@ public class AuthUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.findByUsername(username);
+        User user = userDao.findByJaccountUid(username);
         if (user == null) {
             throw new UsernameNotFoundException("user not found");
         }

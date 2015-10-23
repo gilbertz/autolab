@@ -7,12 +7,11 @@ import com.autolab.api.model.User;
  */
 public interface UserDao extends BaseDao<User, Long> {
 
+    User findByJaccountUid(String jaccountUid);
 
-    User findByAliId(String aliId);
+    User findByJaccountId(String jaccountId);
 
-    User findByUsername(String username);
-
-    User findById(Long id);
+    User findByJaccountChinesename(String jaccountChinesename);
 
 }
 

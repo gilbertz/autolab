@@ -31,14 +31,20 @@ public class HomeController {
 
         if (ht != null) {
             logger.debug((String) ht.get("uid"));
+<<<<<<< HEAD
             //认证成功后，获取accessToken
             return "redirect:/oauth/token?client_id=clientapp&client_secret=f506d105142e2928e2e37675b560ff75"
             +"&grant_type=jaccount&scope=read write&jaccount_uid="+ht.get("uid") + "&jaccount_chinesename="
                     + "zqin" + "&jaccount_id=" + "123";
 
             //return "static/views/home";
+=======
+            //锟斤拷证锟缴癸拷锟襟，伙拷取accessToken
+           // return "redirect:/oauth/token";
+            return "static/index";
+>>>>>>> 4e11768b349f37d781fd425cb2e6c5c2b4095a64
         } else {
-            return "static/views/login";
+            return "static/page/login";
 
         }
     }
