@@ -109,6 +109,12 @@ public class HomeController extends  BaseController{
 
         if (ht != null) {
             logger.debug((String) ht.get("uid"));
+
+
+//            return "redirect:/oauth/token?client_id=clientapp&client_secret=f506d105142e2928e2e37675b560ff75"
+//            +"&grant_type=jaccount&scope=read write&jaccount_uid="+ht.get("uid") + "&jaccount_chinesename="
+//                    + "zqin" + "&jaccount_id=" + "123";
+
            // return "redirect:/oauth/token";
             List<Param> params = new ArrayList<>();
             params.add(new Param("jaccount_uid", (String)ht.get("uid")));
@@ -125,6 +131,7 @@ public class HomeController extends  BaseController{
             model.addAttribute("oauth2", oAuth2);
 
             return "static/index";
+
         } else {
             return "static/page/login";
 
