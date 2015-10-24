@@ -18,12 +18,12 @@ public class CourseForm {
     private String name;
 
     @NotNull
-    private String team;
+    private String term;
 
     public Course generateCourse(){
         Course course = new Course();
         course.setName(name);
-        course.setTerm(team);
+        course.setTerm(term);
         return course;
     }
 
@@ -31,8 +31,8 @@ public class CourseForm {
         if(name != null){
             course.setName(name);
         }
-        if(team != null){
-            course.setTerm(team);
+        if(term != null){
+            course.setTerm(term);
         }
 
     }

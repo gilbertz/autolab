@@ -1,5 +1,7 @@
 package com.autolab.api.controller;
 
+import com.autolab.api.exception.UtilException;
+import com.autolab.api.model.Item;
 import com.autolab.api.model.Status;
 import com.autolab.api.model.User;
 import com.autolab.api.repository.ItemDao;
@@ -30,11 +32,12 @@ public class ItemController extends BaseController{
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping(value = "/create")
     public Map<String,?> create(@Valid ItemForm form){
-        User user = getUser();
-        Course course = form.generateCourse();
-        course.setUser(user);
-        courseDao.save(course);
-        return success(Course.TAG, course);
+        Item item = form.generateItem();
+        if(getUser() != item.getCourse().getUser()){
+            throw new UtilException("you have no authorization");
+        }
+        itemDao.save(item);
+        return success(Item.TAG, item);
     }
 
     /**
@@ -44,55 +47,55 @@ public class ItemController extends BaseController{
      */
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping(value = "/edit")
-    public Map<String, ?> edit(CourseForm form) {
+    public Map<String, ?> edit(ItemForm form) {
 
         if (form.getId() == null) {
             throw new UtilException("id required!");
         }
-        Course course = courseDao.findOne(form.getId());
+        Item item = itemDao.findOne(form.getId());
 
-        form.updateCourse(course);
+        form.updateCourse(item);
 
-        courseDao.save(course);
+        itemDao.save(item);
 
-        return success(Course.TAG, course);
+        return success(Item.TAG, item);
     }
 
     /**
      * detele a course
-     * @param courseId
+     * @param itemId
      * @return
      */
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
-    @RequestMapping(value = "/del/{courseId}")
-    public Map<String, ?> del(@PathVariable Long courseId) {
+    @RequestMapping(value = "/del/{itemId}")
+    public Map<String, ?> del(@PathVariable Long itemId) {
 
-        Course course = courseDao.findOne(courseId);
+        Item item = itemDao.findOne(itemId);
 
-        if(course == null){
-            throw new UtilException("course is not exit");
+        if(item == null){
+            throw new UtilException("item is not exit");
         }
 
-        course.setStatus(Status.DELETED);
+        item.setStatus(Status.DELETED);
 
-        courseDao.save(course);
+        itemDao.save(item);
 
         return success();
     }
 
     /**
      * fina a course
-     * @param courseId
+     * @param itemId
      * @return
      */
-    @RequestMapping(value = "/detail/{courseId}")
-    public Map<String, ?> find(@PathVariable Long courseId) {
-        Course course = courseDao.findOne(courseId);
+    @RequestMapping(value = "/detail/{itemId}")
+    public Map<String, ?> find(@PathVariable Long itemId) {
+        Item item = itemDao.findOne(itemId);
 
-        if(course == null){
-            throw new UtilException("course is not exit");
+        if(item == null){
+            throw new UtilException("item is not exit");
         }
-        return success(Course.TAG, course);
+        return success(Item.TAG, item);
     }
 
 
