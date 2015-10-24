@@ -27,73 +27,7 @@ public class ItemController extends BaseController{
     @Autowired
     protected ItemDao itemDao;
 
-    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
-    @RequestMapping(value = "/create")
-    public Map<String,?> create(@Valid ItemForm form){
-        User user = getUser();
-        Course course = form.generateCourse();
-        course.setUser(user);
-        courseDao.save(course);
-        return success(Course.TAG, course);
-    }
 
-    /**
-     * edit a course
-     *@param form
-     * @return
-     */
-    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
-    @RequestMapping(value = "/edit")
-    public Map<String, ?> edit(CourseForm form) {
-
-        if (form.getId() == null) {
-            throw new UtilException("id required!");
-        }
-        Course course = courseDao.findOne(form.getId());
-
-        form.updateCourse(course);
-
-        courseDao.save(course);
-
-        return success(Course.TAG, course);
-    }
-
-    /**
-     * detele a course
-     * @param courseId
-     * @return
-     */
-    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
-    @RequestMapping(value = "/del/{courseId}")
-    public Map<String, ?> del(@PathVariable Long courseId) {
-
-        Course course = courseDao.findOne(courseId);
-
-        if(course == null){
-            throw new UtilException("course is not exit");
-        }
-
-        course.setStatus(Status.DELETED);
-
-        courseDao.save(course);
-
-        return success();
-    }
-
-    /**
-     * fina a course
-     * @param courseId
-     * @return
-     */
-    @RequestMapping(value = "/detail/{courseId}")
-    public Map<String, ?> find(@PathVariable Long courseId) {
-        Course course = courseDao.findOne(courseId);
-
-        if(course == null){
-            throw new UtilException("course is not exit");
-        }
-        return success(Course.TAG, course);
-    }
 
 
 }

@@ -23,22 +23,7 @@ public class ItemForm {
     @NotNull
     private Long courseId;
 
-    public Item generateCourse(){
-        Item item = new Item();
-        item.setName(name);
-        CourseDao courseDao = applicationContext.getBean(CourseDao.class);
-        Episode episode = episodeDao.findOne(episodeId);
-        item.s
-        return course;
-    }
 
-    public void updateCourse(Course course){
-        if(name != null){
-            course.setName(name);
-        }
-        if(team != null){
-            course.setTerm(team);
-        }
 
-    }
+
 }
