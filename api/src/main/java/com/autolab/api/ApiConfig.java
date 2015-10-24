@@ -1,6 +1,8 @@
 package com.autolab.api;
 
+import lombok.Getter;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class ApiConfig {
 
     private static Logger logger = Logger.getLogger(ApiConfig.class);
+
+    @Getter
+    @Value("${autolab.debug}")
+    private boolean debug;
 
     //为了解决Spring boot Post请求出现乱码的bug.
     @Bean
