@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = Class.TABLE_NAME)
 public class Class extends BaseEntity{
-    public static final String TAG = Test.class.getSimpleName().toLowerCase();
+    public static final String TAG = Class.class.getSimpleName().toLowerCase();
     public static final String TAGS = TAG + "s";
     public static final String TABLE_NAME=BaseEntity.PREFIX+"class";
 

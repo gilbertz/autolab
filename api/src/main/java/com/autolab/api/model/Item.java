@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = Item.TABLE_NAME)
 public class Item extends BaseEntity{
-    public static final String TAG = Test.class.getSimpleName().toLowerCase();
+    public static final String TAG = Item.class.getSimpleName().toLowerCase();
     public static final String TAGS = TAG + "s";
     public static final String TABLE_NAME=BaseEntity.PREFIX+"item";
 

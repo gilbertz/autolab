@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by KUN on 2015/10/24.
@@ -16,7 +18,7 @@ import java.util.Date;
 @Entity
 @Table(name = Batch.TABLE_NAME)
 public class Batch extends BaseEntity{
-    public static final String TAG = Test.class.getSimpleName().toLowerCase();
+    public static final String TAG = Batch.class.getSimpleName().toLowerCase();
     public static final String TAGS = TAG + "s";
     public static final String TABLE_NAME=BaseEntity.PREFIX+"batch";
 
@@ -32,4 +34,8 @@ public class Batch extends BaseEntity{
     private Date startTime;
 
     private Date endTime;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "batch", cascade = {}, fetch = FetchType.LAZY)
+    private List<Book> books = new ArrayList<>();
 }

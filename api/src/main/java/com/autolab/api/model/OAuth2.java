@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.lang.*;
+
 /**
  * Created by zhao on 15/10/22.
  */
@@ -44,7 +46,7 @@ public class OAuth2 {
     @Setter
     protected String errmsg;
 
-    public static <T> T fromJson(String json, Class<T> classOfT) {
+    public static <T> T fromJson(String json, java.lang.Class<T> classOfT) {
         Gson gson = new Gson();
         T entity;
         try {

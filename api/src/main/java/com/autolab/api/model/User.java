@@ -42,6 +42,10 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
     @JsonIgnore
     private String password;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = {}, fetch = FetchType.LAZY)
+    private List<Book> books = new ArrayList<>();
+
     /**
      * 产生一个新的jaccount
      */

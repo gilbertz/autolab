@@ -20,7 +20,7 @@ import java.util.List;
 @Entity
 @Table(name = Course.TABLE_NAME)
 public class Course extends BaseEntity{
-    public static final String TAG = Test.class.getSimpleName().toLowerCase();
+    public static final String TAG = Course.class.getSimpleName().toLowerCase();
     public static final String TAGS = TAG + "s";
     public static final String TABLE_NAME=BaseEntity.PREFIX+"course";
 
