@@ -30,7 +30,11 @@ public class ItemController extends BaseController{
     protected ItemDao itemDao;
 
 
-
+    /**
+     * create a item
+     * @param form
+     * @return
+     */
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping(value = "/create")
     public Map<String,?> create(@Valid ItemForm form){
