@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +20,7 @@ public class HomeController {
     public static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @RequestMapping("/home")
-    public String home(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    public String home(HttpServletRequest request, HttpServletResponse response, HttpSession session, RedirectAttributes attr) {
 
         String sid = "jaexperimentreservation20150922";
         String keyDir = this.getClass().getResource("/public/static").toString();
@@ -31,18 +32,25 @@ public class HomeController {
 
         if (ht != null) {
             logger.debug((String) ht.get("uid"));
-<<<<<<< HEAD
+
+            attr.addAttribute("client_id", "clientapp");
+            attr.addAttribute("client_secret", "f506d105142e2928e2e37675b560ff75");
+            attr.addAttribute("grant_type", "jaccount");
+            attr.addAttribute("scope", "read write");
+            attr.addAttribute("jaccount_uid", ht.get("uid"));
+            attr.addAttribute("jaccount_chinesename", ht.get("chinesename"));
+            attr.addAttribute("jaccount_id",ht.get("id"));
             //认证成功后，获取accessToken
-            return "redirect:/oauth/token?client_id=clientapp&client_secret=f506d105142e2928e2e37675b560ff75"
-            +"&grant_type=jaccount&scope=read write&jaccount_uid="+ht.get("uid") + "&jaccount_chinesename="
-                    + "zqin" + "&jaccount_id=" + "123";
+            //return "redirect:/oauth/token?client_id=clientapp&client_secret=f506d105142e2928e2e37675b560ff75"
+            //+"&grant_type=jaccount&scope=read write&jaccount_uid="+ht.get("uid") + "&jaccount_chinesename="
+                    //+ "zqin" + "&jaccount_id=" + "123";
 
             //return "static/views/home";
-=======
+
             //锟斤拷证锟缴癸拷锟襟，伙拷取accessToken
-           // return "redirect:/oauth/token";
-            return "static/index";
->>>>>>> 4e11768b349f37d781fd425cb2e6c5c2b4095a64
+            return "redirect:static/index";
+            //return "static/index";
+
         } else {
             return "static/page/login";
 
