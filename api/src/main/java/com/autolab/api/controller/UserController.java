@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,15 +27,16 @@ public class UserController extends BaseController {
     protected BookDao bookDao;
 
     @PreAuthorize(User.Role.HAS_ROLE_USER)
-    @RequestMapping(value = "/book/grade")
+    @RequestMapping(value = "/grade")
     public Map<String, ?> getGrades() {
 
         User user=getUser();
+
         logger.debug(user.toString());
 
-        Book book = bookDao.findByUser(user);
+        List<Book> books = bookDao.findByUser(user);
 
-        return success("book",book);
+        return success(Book.TAGS,books);
     }
 
 }

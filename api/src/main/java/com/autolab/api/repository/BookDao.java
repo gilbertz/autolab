@@ -22,7 +22,7 @@ public interface BookDao extends BaseDao<Book, Long>{
 
     List<Book> findAll();
 
-    Book findByUser(User user);
+    List<Book> findByUser(User user);
 
 
 }
