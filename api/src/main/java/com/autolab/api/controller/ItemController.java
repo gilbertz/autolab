@@ -1,15 +1,8 @@
 package com.autolab.api.controller;
 
-/**
- * Created by KUN on 2015/10/24.
- */
-
-import com.autolab.api.exception.UtilException;
-import com.autolab.api.form.CourseForm;
-import com.autolab.api.model.Course;
 import com.autolab.api.model.Status;
 import com.autolab.api.model.User;
-import com.autolab.api.repository.CourseDao;
+import com.autolab.api.repository.ItemDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,26 +10,26 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.autolab.api.form.ItemForm;
 
 import javax.validation.Valid;
 import java.util.Map;
 
+/**
+ * Created by KUN on 2015/10/24.
+ */
+
 @RestController
-@RequestMapping("/course")
-public class CourseController  extends BaseController{
-    public static final Logger logger = LoggerFactory.getLogger(CourseController.class);
+@RequestMapping("/item")
+public class ItemController extends BaseController{
+    public static final Logger logger = LoggerFactory.getLogger(ItemController.class);
 
     @Autowired
-    protected CourseDao courseDao;
+    protected ItemDao itemDao;
 
-    /**
-     * create a course
-     * @param form
-     * @return
-     */
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping(value = "/create")
-    public Map<String,?> create(@Valid CourseForm form){
+    public Map<String,?> create(@Valid ItemForm form){
         User user = getUser();
         Course course = form.generateCourse();
         course.setUser(user);
@@ -101,4 +94,6 @@ public class CourseController  extends BaseController{
         }
         return success(Course.TAG, course);
     }
+
+
 }
