@@ -5,8 +5,10 @@ import com.autolab.api.model.Batch;
 import com.autolab.api.model.Item;
 import com.autolab.api.repository.ItemDao;
 import com.autolab.api.util.AppContextManager;
+import com.autolab.api.util.DateUtil;
 import lombok.Data;
 import org.springframework.context.ApplicationContext;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -30,9 +32,11 @@ public class BatchForm {
     private Integer allowNumber;
 
     @NotNull
+    @DateTimeFormat(pattern= DateUtil.DEFAULT_FORMAT)
     private Date startTime;
 
     @NotNull
+    @DateTimeFormat(pattern= DateUtil.DEFAULT_FORMAT)
     private Date endTime;
 
     public Batch generateBatch(){

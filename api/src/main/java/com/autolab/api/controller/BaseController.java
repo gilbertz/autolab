@@ -2,6 +2,7 @@ package com.autolab.api.controller;
 
 import com.autolab.api.ApiConfig;
 import com.autolab.api.exception.UtilException;
+import com.autolab.api.model.BaseEntity_;
 import com.autolab.api.model.Pager;
 import com.autolab.api.model.Status;
 import com.autolab.api.model.User;
@@ -12,6 +13,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -167,5 +171,12 @@ public abstract class BaseController {
         return Validation.checkParam(list);
     }
 
+    /**
+     * 查询字段的状态不为DELETED
+     */
+    @SuppressWarnings("unchecked")
+    protected Predicate setStatusNotDeleted(Root root, CriteriaBuilder cb) {
+        return cb.notEqual(root.get(BaseEntity_.status), Status.DELETED);
+    }
 
 }

@@ -23,8 +23,7 @@ public class Item extends BaseEntity{
 
     private String name;
 
-    @JsonIgnore
-    @ManyToOne(cascade = {},fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {},fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id", nullable = true)
     private Course course;
 

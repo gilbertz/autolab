@@ -11,6 +11,7 @@ public abstract class Course_ extends com.autolab.api.model.BaseEntity_ {
 
 	public static volatile SingularAttribute<Course, String> name;
 	public static volatile SingularAttribute<Course, String> term;
+	public static volatile SingularAttribute<Course, User> user;
 	public static volatile ListAttribute<Course, Item> items;
 
 }

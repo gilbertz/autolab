@@ -19,14 +19,12 @@ public class Book extends BaseEntity{
     public static final String TAGS = TAG + "s";
     public static final String TABLE_NAME=BaseEntity.PREFIX+"book";
 
-    @JsonIgnore
     @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     @JoinColumn(name = "batch_id", nullable = false)
     private Batch batch;
 
     private String grade;
 
-    @JsonIgnore
     @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

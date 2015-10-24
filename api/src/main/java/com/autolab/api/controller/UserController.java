@@ -32,9 +32,6 @@ public class UserController extends BaseController {
 
         User user=getUser();
 
-        //这里用user.tostring()会触发死循环
-        //logger.debug(user.toString());
-
         List<Book> books = bookDao.findByUser(user);
 
         return success(Book.TAGS,books);

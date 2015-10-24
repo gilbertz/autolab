@@ -22,8 +22,7 @@ public class Batch extends BaseEntity{
     public static final String TAGS = TAG + "s";
     public static final String TABLE_NAME=BaseEntity.PREFIX+"batch";
 
-    @JsonIgnore
-    @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id", nullable = true)
     private Item item;
 
