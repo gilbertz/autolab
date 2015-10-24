@@ -56,7 +56,7 @@ public class ItemController extends BaseController{
         }
         Item item = itemDao.findOne(form.getId());
 
-        form.updateCourse(item);
+        form.updateItem(item);
 
         itemDao.save(item);
 

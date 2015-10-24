@@ -25,11 +25,11 @@ public class ItemForm {
     @NotNull
     private Long courseId;
 
-<<<<<<< HEAD
 
 
 
-=======
+
+
     public Item generateItem(){
         Item item = new Item();
         item.setName(name);
@@ -43,7 +43,7 @@ public class ItemForm {
         return item;
     }
 
-    public void updateCourse(Item item){
+    public void updateItem(Item item){
         if(name != null){
             item.setName(name);
         }
@@ -58,5 +58,5 @@ public class ItemForm {
         }
 
     }
->>>>>>> 60938f4a81a2cfb3f4ef6d212cdd92f0c784a043
+
 }
