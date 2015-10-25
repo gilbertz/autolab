@@ -34,6 +34,7 @@ public class Batch extends BaseEntity{
 
     private Date endTime;
 
+
     @JsonIgnore
     @OneToMany(mappedBy = "batch", cascade = {}, fetch = FetchType.LAZY)
     private List<Book> books = new ArrayList<>();
