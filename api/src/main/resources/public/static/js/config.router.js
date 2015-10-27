@@ -49,6 +49,16 @@ angular.module('app')
                   templateUrl: '/static/page/my_booking/index.html'
               })
 
+              .state('app.my_profile', {
+                  abstract: true,
+                  url: '/my_profile',
+                  template: '<div ui-view class="fade-in-up"></div>'
+              })
+              .state('app.my_profile.index', {
+                  url: '/index',
+                  templateUrl: '/static/page/my_profile/index.html'
+              })
+
               .state('app.my_grade', {
                   abstract: true,
                   url: '/my_grade',
