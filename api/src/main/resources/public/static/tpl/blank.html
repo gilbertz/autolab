@@ -1,0 +1,17 @@
+<div class="wrapper-md" ng-controller="BlankController">
+
+</div>
+
+<script type="text/javascript">
+
+    app.controller('BlankController', ['$scope', '$state', '$rootScope', 'toaster',
+        function ($scope, $state, $rootScope, toaster) {
+            console.log($rootScope.oauth2.user.role);
+            if ($rootScope.oauth2.user.role == "teacher"){
+                $state.go("app.experiment_booking.index");
+            }else{
+                $state.go("app.experiment.index");
+            }
+        }]);
+
+</script>

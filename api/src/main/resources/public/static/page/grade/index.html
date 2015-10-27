@@ -1,0 +1,121 @@
+<div class="wrapper-md" style="padding-top:0!important;" ng-controller="MygradeIndexController">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            成绩管理
+        </div>
+        <div class="row wrapper">
+            <div class="col-sm-5 m-b-xs">
+                <select class="input-sm form-control w-sm inline v-middle">
+                    <option value="0">自动控制原理实验</option>
+                    <option value="1">计算机控制实验</option>
+                    <option value="2">过程控制实验</option>
+                    <option value="3">运动控制实验</option>
+                </select>
+                <button class="btn btn-sm btn-default">选择课程</button>
+            </div>
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <input type="text" class="input-sm form-control" placeholder="搜索实验项目">
+          <span class="input-group-btn">
+            <button class="btn btn-sm btn-default" type="button">搜索</button>
+          </span>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped b-t b-light">
+                <thead>
+                <tr>
+                    <th>实验项目</th>
+                    <th>实验地点</th>
+                    <th>预约时间</th>
+                    <th>实验成绩</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>自动控制原理实验一</td>
+                    <td>自动控制实验室</td>
+                    <td>星期一 2015-9-10 12:00 至 14:00</td>
+                    <td>A</td>
+                </tr>
+                <tr>
+                    <td>自动控制原理实验二</td>
+                    <td>自动控制实验室</td>
+                    <td>星期一 2015-9-10 12:00 至 14:00</td>
+                    <td>A+</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-4 hidden-xs">
+                    <select class="input-sm form-control w-sm inline v-middle">
+                        <option value="0">自动控制原理实验</option>
+                        <option value="1">计算机控制实验</option>
+                        <option value="2">过程控制实验</option>
+                        <option value="3">运动控制实验</option>
+                    </select>
+                    <button class="btn btn-sm btn-default">选择课程</button>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <small class="text-muted inline m-t-sm m-b-sm"></small>
+                </div>
+                <div class="col-sm-4 text-right text-center-xs">
+                    <ul class="pagination pagination-sm m-t-none m-b-none">
+                        <li><a href><i class="fa fa-chevron-left"></i></a></li>
+                        <li><a href>1</a></li>
+                        <li><a href>2</a></li>
+                        <li><a href>3</a></li>
+                        <li><a href>4</a></li>
+                        <li><a href>5</a></li>
+                        <li><a href><i class="fa fa-chevron-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+
+    app.controller('MygradeIndexController', ['$scope', '$http', function ($scope, $http) {
+        //        $scope.app.title="自动化系实验预约系统";
+        //
+        //        console.log("Enter into DashboardController");
+        //
+        //        $scope.refresh = function () {
+        //            var url = $scope.app.host + '/city/detail/' + $scope.app.city.id;
+        //
+        //            //,$scope.app.httpConfig
+        //            var params = {};
+        //            console.log(url + "?" + JSON.stringify(params));
+        //            $http.post(url, params)
+        //                    .success(function (response) {
+        //                        console.log(response);
+        //                        $scope.city = response.city;
+        //
+        //                        $scope.filterDistricts = [];
+        //                        $scope.filterDistricts.push($scope.allDistrict);
+        //                        for (var key in $scope.city.districts) {
+        //                            var district = $scope.city.districts[key];
+        //                            $scope.filterDistricts.push(district);
+        //                        }
+        //
+        //
+        //                    }).error(function (response) {
+        //                        $scope.pop("error", "错误", response.error.message);
+        //                    });
+        //        };
+        //        $scope.refresh();
+        //
+        //
+    }]);
+
+</script>

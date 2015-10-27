@@ -13,18 +13,65 @@ angular.module('app')
     ]
   )
   .config(
-    [          '$stateProvider', '$urlRouterProvider', 'JQ_CONFIG', 
-      function ($stateProvider,   $urlRouterProvider, JQ_CONFIG) {
-          
+    [          '$stateProvider', '$urlRouterProvider', 'JQ_CONFIG',
+      function ($stateProvider,  $urlRouterProvider, JQ_CONFIG) {
           $urlRouterProvider
-              .otherwise('/app/my_booking/index');
+              .otherwise('/app/blank');
           $stateProvider
               .state('app', {
                   abstract: true,
                   url: '/app',
                   templateUrl: '/static/tpl/app.html'
               })
+              .state('app.blank', {
+                  url: '/blank',
+                  templateUrl: '/static/tpl/blank.html'
+              })
 
+              //teacher route
+              .state('app.experiment', {
+                  abstract: true,
+                  url: '/experiment',
+                  template: '<div ui-view class="fade-in-up"></div>'
+              })
+              .state('app.experiment.index', {
+                  url: '/index',
+                  templateUrl: '/static/page/experiment/index.html'
+              })
+              .state('app.experiment.booking', {
+                  url: '/booking',
+                  templateUrl: '/static/page/experiment/booking.html'
+              })
+
+              .state('app.booking', {
+                  abstract: true,
+                  url: '/booking',
+                  template: '<div ui-view class="fade-in-up"></div>'
+              })
+              .state('app.booking.index', {
+                  url: '/index',
+                  templateUrl: '/static/page/booking/index.html'
+              })
+              .state('app.booking.booking', {
+                  url: '/booking',
+                  templateUrl: '/static/page/booking/booking.html'
+              })
+              .state('app.booking.detail', {
+                  url: '/detail',
+                  templateUrl: '/static/page/booking/detail.html'
+              })
+
+              .state('app.grade', {
+                  abstract: true,
+                  url: '/grade',
+                  template: '<div ui-view class="fade-in-up"></div>'
+              })
+              .state('app.grade.index', {
+                  url: '/index',
+                  templateUrl: '/static/page/grade/index.html'
+              })
+
+              //student route
               .state('app.experiment_booking', {
                   abstract: true,
                   url: '/experiment_booking',
@@ -49,16 +96,6 @@ angular.module('app')
                   templateUrl: '/static/page/my_booking/index.html'
               })
 
-              .state('app.my_profile', {
-                  abstract: true,
-                  url: '/my_profile',
-                  template: '<div ui-view class="fade-in-up"></div>'
-              })
-              .state('app.my_profile.index', {
-                  url: '/index',
-                  templateUrl: '/static/page/my_profile/index.html'
-              })
-
               .state('app.my_grade', {
                   abstract: true,
                   url: '/my_grade',
@@ -67,6 +104,17 @@ angular.module('app')
               .state('app.my_grade.index', {
                   url: '/index',
                   templateUrl: '/static/page/my_grade/index.html'
+              })
+
+              //个人信息
+              .state('app.my_profile', {
+                  abstract: true,
+                  url: '/my_profile',
+                  template: '<div ui-view class="fade-in-up"></div>'
+              })
+              .state('app.my_profile.index', {
+                  url: '/index',
+                  templateUrl: '/static/page/my_profile/index.html'
               })
 
 
