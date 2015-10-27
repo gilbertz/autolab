@@ -45,7 +45,7 @@ public class BookController extends BaseController {
     public Map<String,?> create(@Valid BookForm form){
         Book book=form.generateBook();
         if(!getUser() .equals( book.getUser())){
-            throw new UtilException("you have no authorization booking for other students")
+            throw new UtilException("you have no authorization booking for other students");
         }
 
         Batch batch=book.getBatch();
@@ -63,10 +63,8 @@ public class BookController extends BaseController {
     /**
      * add the grade
      * @param  form
+     * @return
      */
-    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
-    @RequestMapping(value =  "/grade")
-    public Map<String,?> grade(@Valid )
 
     /**
      * detele a book
@@ -85,6 +83,10 @@ public class BookController extends BaseController {
         if(  getUser().equals(book.getUser()) ){
             throw new  UtilException("cannot delete other students book");
         }
+        /*
+        to avoid bugs
+         */
+        return success(Book.TAG,bookId);
     }
 
     /**
