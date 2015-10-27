@@ -13,8 +13,8 @@ angular.module('app')
 
             // config
             $scope.app = {
-                name: '上海交通大学自动化系实验预约系统',
-                title: '上海交通大学自动化系实验预约系统',
+                name: '自动化系实验预约系统',
+                title: '自动化系实验预约系统',
                 organization:"上海交通大学自动化系",
                 version: '1.0',
                 host: "http://localhost:8025",

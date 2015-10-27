@@ -17,7 +17,7 @@ angular.module('app')
       function ($stateProvider,   $urlRouterProvider, JQ_CONFIG) {
           
           $urlRouterProvider
-              .otherwise('/app/experiment_booking');
+              .otherwise('/app/my_booking/index');
           $stateProvider
               .state('app', {
                   abstract: true,
@@ -26,8 +26,17 @@ angular.module('app')
               })
 
               .state('app.experiment_booking', {
+                  abstract: true,
                   url: '/experiment_booking',
+                  template: '<div ui-view class="fade-in-up"></div>'
+              })
+              .state('app.experiment_booking.index', {
+                  url: '/index',
                   templateUrl: '/static/page/experiment_booking/index.html'
+              })
+              .state('app.experiment_booking.booking', {
+                  url: '/booking',
+                  templateUrl: '/static/page/experiment_booking/booking.html'
               })
 
               .state('app.my_booking', {
@@ -36,7 +45,7 @@ angular.module('app')
                   template: '<div ui-view class="fade-in-up"></div>'
               })
               .state('app.my_booking.index', {
-                  url: '/my_booking/index',
+                  url: '/index',
                   templateUrl: '/static/page/my_booking/index.html'
               })
 
@@ -46,11 +55,10 @@ angular.module('app')
                   template: '<div ui-view class="fade-in-up"></div>'
               })
               .state('app.my_grade.index', {
-                  url: '/my_grade/index',
+                  url: '/index',
                   templateUrl: '/static/page/my_grade/index.html'
               })
-
-
+              
 
               .state('app.ui', {
                   url: '/ui',
