@@ -58,7 +58,7 @@ angular.module('app')
                   url: '/index',
                   templateUrl: '/static/page/my_grade/index.html'
               })
-              
+
 
               .state('app.ui', {
                   url: '/ui',
@@ -66,7 +66,7 @@ angular.module('app')
               })
               .state('app.ui.toaster', {
                   url: '/toaster',
-                  templateUrl: '/static/page/ui_toaster.html',
+                  templateUrl: '/static/tpl/ui_toaster.html',
                   resolve: {
                       deps: ['$ocLazyLoad',
                           function( $ocLazyLoad){
@@ -88,7 +88,6 @@ angular.module('app')
                   url: '/404',
                   templateUrl: '/static/tpl/404.html'
               })
-
 
       }
     ]
