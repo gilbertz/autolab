@@ -9,15 +9,13 @@
                 <select class="input-sm form-control w-sm inline v-middle">
                     <option value="0">自动控制原理实验</option>
                     <option value="1">计算机控制实验</option>
-                    <option value="2">过程控制实验</option>
-                    <option value="3">运动控制实验</option>
                 </select>
                 <button class="btn btn-sm btn-default">选择课程</button>
             </div>
             <div class="col-sm-5">
             </div>
             <div class="col-sm-2">
-                <button type="button" ng-click="addRandomItem(row)" class="btn btn-sm btn-success" tabindex="0">
+                <button type="button" ng-click="addRandomItem(row)"  ui-sref="app.experiment.create" class="btn btn-sm btn-success" tabindex="0">
                     <i class="glyphicon glyphicon-plus">
                     </i> 新建实验项目
                 </button>

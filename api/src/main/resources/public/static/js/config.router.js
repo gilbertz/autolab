@@ -42,6 +42,10 @@ angular.module('app')
                   url: '/booking',
                   templateUrl: '/static/page/experiment/booking.html'
               })
+              .state('app.experiment.create', {
+                  url: '/create',
+                  templateUrl: '/static/page/experiment/create.html'
+              })
 
               .state('app.booking', {
                   abstract: true,
@@ -69,6 +73,14 @@ angular.module('app')
               .state('app.grade.index', {
                   url: '/index',
                   templateUrl: '/static/page/grade/index.html'
+              })
+              .state('app.grade.booking', {
+                  url: '/booking',
+                  templateUrl: '/static/page/grade/booking.html'
+              })
+              .state('app.grade.detail', {
+                  url: '/detail',
+                  templateUrl: '/static/page/grade/detail.html'
               })
 
               //student route
