@@ -39,7 +39,7 @@ angular.module('app')
                   templateUrl: '/static/page/experiment/index.html'
               })
               .state('app.experiment.booking', {
-                  url: '/booking',
+                  url: '/booking/{itemId}',
                   templateUrl: '/static/page/experiment/booking.html'
               })
               .state('app.experiment.create', {

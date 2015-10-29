@@ -6,7 +6,7 @@
         </div>
         <div class="row wrapper">
             <div class="col-sm-6 m-b-xs">
-                <label class="inline"}>选择课程</label>
+                <label class="inline">选择课程</label>
                 <div class="dropdown filter-content inline" dropdown="">
                     <button class="btn btn-default dropdown-toggle filter-a" type="button" dropdown-toggle=""
                        aria-haspopup="true"
@@ -49,7 +49,7 @@
                     <td>{{item.place}}</td>
                     <td>{{item.opentime}}</td>
                     <td>
-                        <button class="btn btn-default  btn-success btn-xs" ui-sref="app.experiment.booking">设置时间</button>
+                        <button class="btn btn-default  btn-success btn-xs" ui-sref="app.experiment.booking({itemId: '{{item.id}}'})">设置时间</button>
                     </td>
                     <td>
                         <button class="btn btn-default btn-danger btn-xs" ng-click="deleteItem(item)">删除项目</button>

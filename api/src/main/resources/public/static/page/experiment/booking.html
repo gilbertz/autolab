@@ -10,13 +10,21 @@
                 <tr>
                     <div class="row wrapper">
                         <div class="col-sm-5 m-b-xs">
-                            <select class="input-sm form-control w-sm inline v-middle">
-                                <option value="0">第7周</option>
-                                <option value="1">第8周</option>
-                                <option value="2">第10周</option>
-                                <option value="3">第11周</option>
-                            </select>
-                            <button class="btn btn-sm btn-default">选择周次</button>
+                         <label class="inline"}>选择周次</label>
+                         <div class="dropdown filter-content inline" dropdown="">
+                            <button class="btn btn-default dropdown-toggle filter-a" type="button" dropdown-toggle=""
+                            aria-haspopup="true"
+                            aria-expanded="false">{{item.name}}<span
+                            class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li ng-repeat="course in courses">
+                                <a href="javascript:void(0)" ng-click="changeCourse(course)">
+                                    {{course.name}}
+                                </a>
+                            </li>
+                        </ul>
+                        </div>
                         </div>
                         <div class="col-sm-5">
                         </div>
@@ -270,7 +278,29 @@
 <script type="text/javascript">
 
 
-    app.controller('ExperimentBookingController', ['$scope', '$http', function ($scope, $http) {
+    app.controller('ExperimentBookingController', ['$scope','$stateParams', '$http', function ($scope, $http, $stateParams) {
+
+        //根据外面来传进来的itemId刷新本页item详情。
+        var itemId = $stateParams.itemId;
+
+        $scope.item = {id : itemId};
+        $scope.getItem = function () {
+            // var url = $scope.app.host + '/item/detail/' + $scope.item.id;
+
+            // var params = {};
+            // console.log(url + "?" + JSON.stringify(params));
+            // $http.post(url, params)
+            //         .success(function (response) {
+            //             console.log(response);
+            //             $scope.item = response.item;
+
+            //         }).error(function (response) {
+            //             toaster.pop("error", "错误", response.error.message);
+            //         });
+            $scope.item.opentime = "7,8,9";
+
+        };
+
         //        $scope.app.title="自动化系实验预约系统";
         //
         //        console.log("Enter into DashboardController");
