@@ -1,4 +1,4 @@
-<div class="wrapper-md" style="padding-top:0!important;" ng-controller="ExperimentIndexController">
+<div class="wrapper-md" style="padding-top:0!important;" ng-controller="ExperimentCreateController">
     <div class="col-sm-6">
         <div class="panel panel-default">
             <div class="panel-heading font-bold">新建实验项目</div>
@@ -8,29 +8,29 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">实验项目名称</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" ng-model="item.name">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-4 control-label">实验地点</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" ng-model="item.place">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-4 control-label">开放周次</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" ng-model="item.opentime" placeholder="数字和逗号表示，例如1,2,3">
                         </div>
                     </div>
 
                     <div class="line line-dashed b-b line-lg pull-in"></div>
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-8">
-                            <button type="submit" class="btn btn-default">取消</button>
-                            <button type="submit" class="btn btn-primary">完成</button>
+                            <button type="submit" class="btn btn-default" ui-sref="^.index">取消</button>
+                            <button type="submit" ng-click="createExperiment" class="btn btn-primary">完成</button>
                         </div>
                     </div>
                 </form>
@@ -43,37 +43,21 @@
 <script type="text/javascript">
 
 
-    app.controller('ExperimentIndexController', ['$scope', '$http', function ($scope, $http) {
-//        $scope.app.title="自动化系实验预约系统";
-//
-//        console.log("Enter into DashboardController");
-//
-//        $scope.refresh = function () {
-//            var url = $scope.app.host + '/city/detail/' + $scope.app.city.id;
-//
-//            //,$scope.app.httpConfig
-//            var params = {};
-//            console.log(url + "?" + JSON.stringify(params));
-//            $http.post(url, params)
-//                    .success(function (response) {
-//                        console.log(response);
-//                        $scope.city = response.city;
-//
-//                        $scope.filterDistricts = [];
-//                        $scope.filterDistricts.push($scope.allDistrict);
-//                        for (var key in $scope.city.districts) {
-//                            var district = $scope.city.districts[key];
-//                            $scope.filterDistricts.push(district);
-//                        }
-//
-//
-//                    }).error(function (response) {
-//                        $scope.pop("error", "错误", response.error.message);
-//                    });
-//        };
-//        $scope.refresh();
-//
-//
+    app.controller('ExperimentCreateController', ['$scope', '$http', function ($scope, $http) {
+
+       $scope.createExperiment = function () {
+           var url = $scope.app.host + '/course/create';
+
+           var params = {"name":$scope.item.name, "place":$scope.item.place, "opentime":$scope.item.opentime};
+           console.log(url + "?" + JSON.stringify(params));
+           $http.post(url, params)
+                   .success(function (response) {
+                       console.log(response);
+                   }).error(function (response) {
+                       $scope.pop("error", "错误", response.error.message);
+                   });
+       };
+
     }]);
 
 </script>

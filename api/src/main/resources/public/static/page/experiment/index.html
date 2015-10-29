@@ -5,14 +5,25 @@
             实验列表
         </div>
         <div class="row wrapper">
-            <div class="col-sm-5 m-b-xs">
-                <select class="input-sm form-control w-sm inline v-middle">
-                    <option value="0">自动控制原理实验</option>
-                    <option value="1">计算机控制实验</option>
-                </select>
-                <button class="btn btn-sm btn-default">选择课程</button>
+            <div class="col-sm-6 m-b-xs">
+                <label class="inline"}>选择课程</label>
+                <div class="dropdown filter-content inline" dropdown="">
+                    <button class="btn btn-default dropdown-toggle filter-a" type="button" dropdown-toggle=""
+                       aria-haspopup="true"
+                       aria-expanded="false">{{filterCourse.name}}<span
+                            class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="course in courses">
+                            <a href="javascript:void(0)" ng-click="changeCourse(course)">
+                                {{course.name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="col-sm-5">
+
+            <div class="col-sm-4">
             </div>
             <div class="col-sm-2">
                 <button type="button" ng-click="addRandomItem(row)"  ui-sref="app.experiment.create" class="btn btn-sm btn-success" tabindex="0">
@@ -27,87 +38,21 @@
                 <tr>
                     <th>实验项目</th>
                     <th>实验地点</th>
-                    <th>开放时间</th>
+                    <th>开放周次</th>
                     <th style="width:30px;"></th>
                     <th style="width:30px;"></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>自动控制原理实验一</td>
-                    <td>自动控制实验室</td>
-                    <td>2015-9-10 至 2015-10-10</td>
+                <tr ng-repeat="item in items">
+                    <td>{{item.name}}</td>
+                    <td>{{item.place}}</td>
+                    <td>{{item.opentime}}</td>
                     <td>
                         <button class="btn btn-default  btn-success btn-xs" ui-sref="app.experiment.booking">设置时间</button>
                     </td>
                     <td>
-                        <button class="btn btn-default btn-danger btn-xs" >删除项目</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>自动控制原理实验二</td>
-                    <td>自动控制实验室</td>
-                    <td>2015-9-10 至 2015-10-10</td>
-                    <td>
-                        <button class="btn btn-default  btn-success btn-xs" ui-sref="app.experiment_booking.booking">设置时间</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default btn-danger btn-xs" ui-sref="app.experiment_booking.booking">删除项目</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>自动控制原理实验三</td>
-                    <td>自动控制实验室</td>
-                    <td>2015-9-10 至 2015-10-10</td>
-                    <td>
-                        <button class="btn btn-default  btn-success btn-xs" ui-sref="app.experiment_booking.booking">设置时间</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default btn-danger btn-xs" ui-sref="app.experiment_booking.booking">删除项目</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>自动控制原理实验四</td>
-                    <td>自动控制实验室</td>
-                    <td>2015-9-10 至 2015-10-10</td>
-                    <td>
-                        <button class="btn btn-default  btn-success btn-xs" ui-sref="app.experiment_booking.booking">设置时间</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default btn-danger btn-xs" ui-sref="app.experiment_booking.booking">删除项目</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>自动控制原理实验五</td>
-                    <td>自动控制实验室</td>
-                    <td>2015-9-10 至 2015-10-10</td>
-                    <td>
-                        <button class="btn btn-default  btn-success btn-xs" ui-sref="app.experiment_booking.booking">设置时间</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default btn-danger btn-xs" ui-sref="app.experiment_booking.booking">删除项目</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>自动控制原理实验六</td>
-                    <td>自动控制实验室</td>
-                    <td>2015-9-10 至 2015-10-10</td>
-                    <td>
-                        <button class="btn btn-default  btn-success btn-xs" ui-sref="app.experiment_booking.booking">设置时间</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default btn-danger btn-xs" ui-sref="app.experiment_booking.booking">删除项目</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>自动控制原理实验七</td>
-                    <td>自动控制实验室</td>
-                    <td>2015-9-10 至 2015-10-10</td>
-                    <td>
-                        <button class="btn btn-default  btn-success btn-xs" ui-sref="app.experiment_booking.booking">设置时间</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default btn-danger btn-xs" ui-sref="app.experiment_booking.booking">删除项目</button>
+                        <button class="btn btn-default btn-danger btn-xs" ng-click="deleteItem(item)">删除项目</button>
                     </td>
                 </tr>
                 </tbody>
@@ -140,36 +85,68 @@
 
 
     app.controller('ExperimentIndexController', ['$scope', '$http', function ($scope, $http) {
-//        $scope.app.title="自动化系实验预约系统";
-//
-//        console.log("Enter into DashboardController");
-//
-//        $scope.refresh = function () {
-//            var url = $scope.app.host + '/city/detail/' + $scope.app.city.id;
-//
-//            //,$scope.app.httpConfig
-//            var params = {};
-//            console.log(url + "?" + JSON.stringify(params));
-//            $http.post(url, params)
-//                    .success(function (response) {
-//                        console.log(response);
-//                        $scope.city = response.city;
-//
-//                        $scope.filterDistricts = [];
-//                        $scope.filterDistricts.push($scope.allDistrict);
-//                        for (var key in $scope.city.districts) {
-//                            var district = $scope.city.districts[key];
-//                            $scope.filterDistricts.push(district);
-//                        }
-//
-//
-//                    }).error(function (response) {
-//                        $scope.pop("error", "错误", response.error.message);
-//                    });
-//        };
-//        $scope.refresh();
-//
-//
+
+        $scope.filterCourses = [];
+
+
+        $scope.getCourses = function () {
+            var url = $scope.app.host + '/course/page';
+
+            var params = {};
+            console.log(url + "?" + JSON.stringify(params));
+            $http.post(url, params)
+                    .success(function (response) {
+                        console.log(response);
+                        $scope.courses = response.pager.courses;
+                        if ($scope.courses.length !=0) {
+                            $scope.filterCourse = $scope.courses[0];
+                            $scope.getItems();
+                            console.log("0");
+
+                        };
+
+                    }).error(function (response) {
+                        toaster.pop("error", "错误", response.error.message);
+                    });
+        };
+        $scope.getCourses();
+
+        $scope.changeCourse = function (course) {
+            console.log("change");
+            $scope.filterCourse = course;
+            $scope.getItems();
+        };
+
+       $scope.getItems = function () {
+           var url = $scope.app.host + '/item/page';
+
+           var params = {"courseId": $scope.filterCourse.id};
+           console.log(url + "?" + JSON.stringify(params));
+           $http.post(url, params)
+                   .success(function (response) {
+                       console.log(response);
+                       $scope.items = response.pager.items;
+
+                   }).error(function (response) {
+                       $scope.pop("error", "错误", response.error.message);
+                   });
+       };
+
+       $scope.deleteItem = function (item){
+            var url = $scope.app.host + 'item/del/'+item.id;
+
+            var params = {};
+           console.log(url + "?" + JSON.stringify(params));
+           $http.post(url, params)
+                   .success(function (response) {
+                       console.log(response);
+
+                   }).error(function (response) {
+                       $scope.pop("error", "错误", response.error.message);
+                   });
+       }
+
+
     }]);
 
 </script>

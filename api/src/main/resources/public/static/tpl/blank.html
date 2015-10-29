@@ -8,9 +8,11 @@
         function ($scope, $state, $rootScope, toaster) {
             console.log($rootScope.oauth2.user.role);
             if ($rootScope.oauth2.user.role == "teacher"){
-                $state.go("app.experiment_booking.index");
-            }else{
+                console.log("go to teacher");
                 $state.go("app.experiment.index");
+            }else{
+                console.log("go to student");
+                $state.go("app.experiment_booking.index");
             }
         }]);
 

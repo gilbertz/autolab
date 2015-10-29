@@ -76,10 +76,10 @@ angular.module('app').factory('httpRequestInterceptor',
         return {
             request: function ($config) {
                 //添加Oauth权限认证。
-                if ($rootScope.oauth2 && $rootScope.oauth2.accessToken) {
-                    $config.headers['Authorization'] = "bearer " + $rootScope.oauth2.accessToken;
-                }
-                $config.headers['X-Request-With']="";
+                // if ($rootScope.oauth2 && $rootScope.oauth2.accessToken) {
+                //     $config.headers['Authorization'] = "bearer " + $rootScope.oauth2.accessToken;
+                // }
+                // $config.headers['X-Request-With']="";
                 return $config;
             }
         };
