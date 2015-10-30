@@ -57,7 +57,7 @@ angular.module('app')
                   templateUrl: '/static/page/booking/index.html'
               })
               .state('app.booking.booking', {
-                  url: '/booking',
+                  url: '/booking/{itemId}',
                   templateUrl: '/static/page/booking/booking.html'
               })
               .state('app.booking.detail', {
@@ -75,7 +75,7 @@ angular.module('app')
                   templateUrl: '/static/page/grade/index.html'
               })
               .state('app.grade.booking', {
-                  url: '/booking',
+                  url: '/booking/{itemId}',
                   templateUrl: '/static/page/grade/booking.html'
               })
               .state('app.grade.detail', {

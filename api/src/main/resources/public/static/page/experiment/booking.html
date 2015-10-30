@@ -1,3 +1,5 @@
+
+
 <div class="wrapper-md" style="padding-top:0!important;" ng-controller="ExperimentBookingController">
 
     <div class="panel panel-default">
@@ -14,13 +16,13 @@
                          <div class="dropdown filter-content inline" dropdown="">
                             <button class="btn btn-default dropdown-toggle filter-a" type="button" dropdown-toggle=""
                             aria-haspopup="true"
-                            aria-expanded="false">{{item.name}}<span
+                            aria-expanded="false">{{filterWeek.week}}<span
                             class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li ng-repeat="course in courses">
-                                <a href="javascript:void(0)" ng-click="changeCourse(course)">
-                                    {{course.name}}
+                            <li ng-repeat="week in weeks">
+                                <a href="javascript:void(0)" ng-click="changeWeek(week)">
+                                    {{week.week}}
                                 </a>
                             </li>
                         </ul>
@@ -44,221 +46,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>星期一/2015-9-10</td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">200人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>星期二/2015-9-11</td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>星期三/2015-9-12</td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>星期四/2015-9-13</td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>星期五/2015-9-14</td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>星期六/2015-9-15</td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>星期日/2015-9-16</td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">开放</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px;display:inline-block">50人</button>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">关闭</button>
+                <tr ng-repeat = "date in filterWeek.dates">
+                    <td>{{date.date}}</td>
+                    <td ng-repeat = "batch in date.batches">
+                      <div ng-controller="ModalDemoCtrl" style="display:inline-block" >
+                        <script type="text/ng-template" id="myModalContent.html">
+                         <div ng-include="'/static/page/experiment/modal.html'"></div>
+                       </script>
+                       <button class="btn btn-default  btn-info btn-xs" style="width: 40px" ng-click="open(batch.id)">{{batch.allow_number}}</button>
+                     </div>
+                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right" ng-click="changeStatus(batch)">{{batch.status}}</button>
                     </td>
                 </tr>
                 </tbody>
@@ -277,60 +74,1137 @@
 
 <script type="text/javascript">
 
-
-    app.controller('ExperimentBookingController', ['$scope','$stateParams', '$http', function ($scope, $http, $stateParams) {
+    app.controller('ExperimentBookingController', ['$scope','$modal','$stateParams' ,'$http', function($scope, $http, $modal,$stateParams) {
 
         //根据外面来传进来的itemId刷新本页item详情。
         var itemId = $stateParams.itemId;
 
-        $scope.item = {id : itemId};
-        $scope.getItem = function () {
-            // var url = $scope.app.host + '/item/detail/' + $scope.item.id;
-
-            // var params = {};
-            // console.log(url + "?" + JSON.stringify(params));
+        $scope.getBatches = function(){
+            var url = $scope.app.host + '/batches/page' ;
+            var params = {"itemId": $stateParams.itemId};
+            console.log(url + "?" + JSON.stringify(params));
             // $http.post(url, params)
+            var data = {
+              "status": "OK",
+              "pager":{
+                "weeks":[
+                {
+                  "week":"第7周",
+                  "dates":[
+                  {
+                    "date":"2015-9-10 星期一",
+                    "batches":[
+                    {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                   ]
+                    },
+                                      {
+                    "date":"2015-9-10 星期二",
+                    "batches":[
+                    {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                   ]
+                    },
+                                      {
+                    "date":"2015-9-10 星期三",
+                    "batches":[
+                    {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                   ]
+                    },
+                                      {
+                    "date":"2015-9-10 星期四",
+                    "batches":[
+                    {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                   ]
+                    },
+                                      {
+                    "date":"2015-9-10 星期五",
+                    "batches":[
+                    {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                   ]
+                    },
+                                      {
+                    "date":"2015-9-10 星期六",
+                    "batches":[
+                    {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                   ]
+                    },
+                                      {
+                    "date":"2015-9-10 星期日",
+                    "batches":[
+                    {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                   ]
+                    },
+               ]
+           },
+                           {
+                  "week":"第8周",
+                  "dates":[
+                  {
+                    "date":"2015-9-11 星期一",
+                    "batches":[
+                    {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                   ]
+                    },
+                                      {
+                    "date":"2015-9-10 星期二",
+                    "batches":[
+                    {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                   ]
+                    },
+                                      {
+                    "date":"2015-9-10 星期三",
+                    "batches":[
+                    {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                   ]
+                    },
+                                      {
+                    "date":"2015-9-10 星期四",
+                    "batches":[
+                    {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                   ]
+                    },
+                                      {
+                    "date":"2015-9-10 星期五",
+                    "batches":[
+                    {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                   ]
+                    },
+                                      {
+                    "date":"2015-9-10 星期六",
+                    "batches":[
+                    {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                   ]
+                    },
+                                      {
+                    "date":"2015-9-10 星期日",
+                    "batches":[
+                    {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                                       {
+                       "id": "1",
+                       "start_time":"2015-9-1 12:00",
+                       "end_time":"2015-9-1 14:00",
+                       "book_num":"20",
+                       "allow_number":"50",
+                       "status":"OK",
+                       
+                   },
+                   ]
+                    },
+               ]
+           },
+           ]
+       }
+     };           
+
+                console.log(data);
+                $scope.weeks = data.pager.weeks;
+                if ($scope.weeks.length != 0 ) {
+                    $scope.filterWeek = $scope.weeks[0];
+                };
+
+
+            // $http.post(url,params)
             //         .success(function (response) {
             //             console.log(response);
-            //             $scope.item = response.item;
+            //             $scope.weeks = response.pager.weeks;
+            //             if ($scope.weeks.length != 0 ) {
+            //                 $scope.filterWeek = $scope.weeks[0];
+            //             };
 
             //         }).error(function (response) {
             //             toaster.pop("error", "错误", response.error.message);
-            //         });
-            $scope.item.opentime = "7,8,9";
+            // });
+
+        };
+        $scope.getBatches();
+
+        $scope.changeWeek = function (week) {
+            console.log("change");
+            $scope.filterWeek = week;
+        };
+
+        $scope.changeStatus = function(batch){
+
+           var url = $scope.app.host + '/batch/edit';
+           var params = {"batchId": $scope.batch.batchId,"status":$scope.batch.status};
+           console.log(url + "?" + JSON.stringify(params));
+           // $http.post(url, params)
+           //         .success(function (response) {
+           //             console.log(response);
+           //             // $scope.items = response.pager.items;
+
+           //         }).error(function (response) {
+           //             $scope.pop("error", "错误", response.error.message);
+           //         });
 
         };
 
-        //        $scope.app.title="自动化系实验预约系统";
-        //
-        //        console.log("Enter into DashboardController");
-        //
-        //        $scope.refresh = function () {
-        //            var url = $scope.app.host + '/city/detail/' + $scope.app.city.id;
-        //
-        //            //,$scope.app.httpConfig
-        //            var params = {};
-        //            console.log(url + "?" + JSON.stringify(params));
-        //            $http.post(url, params)
-        //                    .success(function (response) {
-        //                        console.log(response);
-        //                        $scope.city = response.city;
-        //
-        //                        $scope.filterDistricts = [];
-        //                        $scope.filterDistricts.push($scope.allDistrict);
-        //                        for (var key in $scope.city.districts) {
-        //                            var district = $scope.city.districts[key];
-        //                            $scope.filterDistricts.push(district);
-        //                        }
-        //
-        //
-        //                    }).error(function (response) {
-        //                        $scope.pop("error", "错误", response.error.message);
-        //                    });
-        //        };
-        //        $scope.refresh();
-        //
-        //
     }]);
+
+
+  // app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', function($scope, $modal, $log) {
+  //   $scope.items = ['item1', 'item2', 'item3'];
+  //   $scope.open = function (size) {
+  //     var modalInstance = $modal.open({
+  //       templateUrl: 'myModalContent.html',
+  //       controller: 'ModalInstanceCtrl',
+  //       size: size,
+  //       resolve: {
+  //         items: function () {
+  //           return $scope.items;
+  //         }
+  //       }
+  //     });
+
+  //     modalInstance.result.then(function (selectedItem) {
+  //       $scope.selected = selectedItem;
+  //     }, function () {
+  //       $log.info('Modal dismissed at: ' + new Date());
+  //     });
+  //   };
+  // }])
+  // ; 
+
+    app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', function($scope, $modal, $log) {
+
+    $scope.items = ['item1', 'item2', 'item3'];
+    $scope.open = function (batchId) {
+                  console.log("changeNumber");
+            // $scope.batchId = batchId;
+            // var modalInstance = $modal.open({
+            //     templateUrl: 'myModalContent.html',
+            //     controller: 'ModalInstanceCtrl',
+            //     size: batchId,
+            //     resolve: {
+            //         batchId: function () {
+            //             return $scope.items;
+            //         }
+            //     }
+            // });
+
+            // modalInstance.result.then(function (selectedItem) {
+            //     $scope.selected = selectedItem;
+            // }, function () {
+            //     $log.info('Modal dismissed at: ' + new Date());
+            // });
+      var modalInstance = $modal.open({
+        templateUrl: 'myModalContent.html',
+        controller: 'ModalInstanceCtrl',
+        size: 'sm',
+        resolve: {
+          batchId: function () {
+            return batchId;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (selectedItem) {
+        $scope.selected = selectedItem;
+      }, function () {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
+    };
+  }])
+  ; 
+
+    app.controller('ModalInstanceCtrl', ['$scope', '$http','$modalInstance', 'batchId', function($scope, $http, $modalInstance, batchId) {
+    // $scope.items = items;
+    // $scope.selected = {
+    //   item: $scope.items[0]
+    // };
+
+    // $scope.ok = function () {
+    //   $modalInstance.close($scope.selected.item);
+    // };
+
+    // $scope.cancel = function () {
+    //   $modalInstance.dismiss('cancel');
+    // };
+        $scope.batch = {};
+        $scope.batch.batchId = batchId;
+
+    $scope.ok = function () {
+      // $modalInstance.close($scope.selected.item);
+                  console.log("changeAllowNumber");
+            // var url = $scope.app.host + '/batch/edit';
+            var url = '';
+           var params = {"batchId": $scope.batch.batchId,"allow_number":$scope.batch.allow_number};
+           console.log(url + "?" + JSON.stringify(params));
+           // $http.post(url, params)
+           //         .success(function (response) {
+           //             console.log(response);
+           //             // $scope.items = response.pager.items;
+
+           //         }).error(function (response) {
+           //             $scope.pop("error", "错误", response.error.message);
+           //         });
+          $modalInstance.close($scope.batch);
+
+        };
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+
+  }])
+  ; 
 
 </script>
