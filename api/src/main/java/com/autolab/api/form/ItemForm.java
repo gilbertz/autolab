@@ -31,6 +31,9 @@ public class ItemForm {
     @NotNull
     private String openTime;
 
+    @NotNull
+    private Integer allowNumber;
+
 
 
 

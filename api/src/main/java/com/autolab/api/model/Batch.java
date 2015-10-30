@@ -28,6 +28,8 @@ public class Batch extends BaseEntity{
 
     private Integer allowNumber;
 
+    private Integer week;
+
     private Date startTime;
 
     private Date endTime;

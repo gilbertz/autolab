@@ -52,7 +52,7 @@ public class ItemController extends BaseController{
         if(getUser() != item.getCourse().getUser()){
             throw new UtilException("you have no authorization");
         }
-        itemService.createItem(item);
+        itemService.createItem(item, form.getAllowNumber());
         return success(Item.TAG, item);
     }
 
