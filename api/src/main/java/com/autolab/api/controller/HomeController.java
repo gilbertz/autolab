@@ -98,7 +98,6 @@ public class HomeController extends  BaseController{
     }
 
     @RequestMapping("/home")
-
     public String home(Model model,HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
         String sid = "jaexperimentreservation20150922";
@@ -112,13 +111,6 @@ public class HomeController extends  BaseController{
         if (ht != null) {
             logger.debug((String) ht.get("uid"));
 
-
-
-//            return "redirect:/oauth/token?client_id=clientapp&client_secret=f506d105142e2928e2e37675b560ff75"
-//            +"&grant_type=jaccount&scope=read write&jaccount_uid="+ht.get("uid") + "&jaccount_chinesename="
-//                    + "zqin" + "&jaccount_id=" + "123";
-
-           // return "redirect:/oauth/token";
             List<Param> params = new ArrayList<>();
             params.add(new Param("jaccount_uid", (String)ht.get("uid")));
             params.add(new Param("jaccount_chinesename",(String)ht.get("chinesename")));
@@ -134,6 +126,11 @@ public class HomeController extends  BaseController{
             OAuth2 oAuth2 = getOAuth2(url, params);
 
             model.addAttribute("oauth2", oAuth2);
+            model.addAttribute("user_uid",(String)ht.get("uid"));
+            model.addAttribute("user_id",(String)ht.get("id"));
+            model.addAttribute("user_chinesename",(String)ht.get("chinesename"));
+            model.addAttribute("user_student",(String)ht.get("student"));
+            model.addAttribute("user_dept",(String)ht.get("dept"));
 
             return "static/index";
 
@@ -144,4 +141,27 @@ public class HomeController extends  BaseController{
 
 
     }
+
+    @RequestMapping("/loginout")
+    public String loginout(Model model,HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+        String sid = "jaexperimentreservation20150922";
+        String keyDir = this.getClass().getResource("/public/static").toString();
+        keyDir = keyDir.substring(5);
+
+        JAccountManager jam = new JAccountManager(sid, keyDir);
+        boolean loggedout = jam.logout(request, response, request.getRequestURI());
+        String s = String.valueOf(loggedout);
+        logger.debug("loginout :"+s);
+
+        if (!loggedout) {
+            return "static/tpl/404";
+        }else {
+            return "static/page/login";
+        }
+
+    }
+
+
+
 }

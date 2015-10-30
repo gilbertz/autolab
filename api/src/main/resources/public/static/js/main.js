@@ -100,7 +100,7 @@ angular.module('app')
             //通过各种方法，终于能够获取到oauth信息了。
             $rootScope.oauth2={};
 
-            var autolabDebug=true;
+            var autolabDebug=false;
 
             if(autolabDebug){
 
@@ -110,9 +110,11 @@ angular.module('app')
                 $rootScope.oauth2.refreshToken="3ecd724e-a02d-40c4-8a5f-496e981e9f9d";
                 $rootScope.oauth2.expiresIn="86399";
                 $rootScope.oauth2.scope="read write";
-                //$rootScope.oauth2.url="/";
-                //$rootScope.oauth2.code="CODE";
-                $rootScope.oauth2.user = {chinesename: "李爽", role: "teacher"};
+                $rootScope.oauth2.id = "1140329122";
+                $rootScope.oauth2.uid = "zhaoguoqi";
+                $rootScope.oauth2.student = "no";
+                $rootScope.oauth2.chinesename = "赵国旗";
+                $rootScope.oauth2.dept = "自动化系";
 
             }else{
                 $rootScope.oauth2.accessToken=document.getElementById("oauth2_access_token").innerHTML;
@@ -120,10 +122,11 @@ angular.module('app')
                 $rootScope.oauth2.refreshToken=document.getElementById("oauth2_refresh_token").innerHTML;
                 $rootScope.oauth2.expiresIn=document.getElementById("oauth2_expires_in").innerHTML;
                 $rootScope.oauth2.scope=document.getElementById("oauth2_scope").innerHTML;
-                //$rootScope.oauth2.url=document.getElementById("oauth2_url").innerHTML;
-                //$rootScope.oauth2.code=document.getElementById("oauth2_code").innerHTML;
-                $rootScope.oauth2.user = JSON.parse(document.getElementById("oauth2_user").innerHTML);
-
+                $rootScope.oauth2.id=document.getElementById("oauth2_id").innerHTML;
+                $rootScope.oauth2.uid=document.getElementById("oauth2_uid").innerHTML;
+                $rootScope.oauth2.student=document.getElementById("oauth2_student").innerHTML;
+                $rootScope.oauth2.chinesename=document.getElementById("oauth2_chinesename").innerHTML;
+                $rootScope.oauth2.dept=document.getElementById("oauth2_dept").innerHTML;
 
             }
 
