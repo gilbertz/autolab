@@ -26,8 +26,6 @@ public class Batch extends BaseEntity{
     @JoinColumn(name = "item_id", nullable = true)
     private Item item;
 
-    private String laboratory;
-
     private Integer allowNumber;
 
     private Date startTime;

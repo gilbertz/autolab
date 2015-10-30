@@ -27,6 +27,10 @@ public class Item extends BaseEntity{
     @JoinColumn(name = "course_id", nullable = true)
     private Course course;
 
+    private String place;
+
+    private String openTime;
+
     @JsonIgnore
     @OneToMany(mappedBy = "item", cascade = {}, fetch = FetchType.LAZY)
     private List<Batch> batches = new ArrayList<>();

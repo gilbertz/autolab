@@ -25,6 +25,12 @@ public class ItemForm {
     @NotNull
     private Long courseId;
 
+    @NotNull
+    private String place;
+
+    @NotNull
+    private String openTime;
+
 
 
 
@@ -33,6 +39,8 @@ public class ItemForm {
     public Item generateItem(){
         Item item = new Item();
         item.setName(name);
+        item.setPlace(place);
+        item.setOpenTime(openTime);
         ApplicationContext applicationContext = AppContextManager.getAppContext();
         CourseDao courseDao = applicationContext.getBean(CourseDao.class);
         Course course = courseDao.findOne(courseId);
@@ -46,6 +54,12 @@ public class ItemForm {
     public void updateItem(Item item){
         if(name != null){
             item.setName(name);
+        }
+        if(place != null){
+            item.setPlace(place);
+        }
+        if(openTime != null){
+            item.setOpenTime(openTime);
         }
         if(courseId != null){
             ApplicationContext applicationContext = AppContextManager.getAppContext();

@@ -26,9 +26,6 @@ public class BatchForm {
     private Long itemId;
 
     @NotNull
-    private String laboratory;
-
-    @NotNull
     private Integer allowNumber;
 
     @NotNull
@@ -42,7 +39,6 @@ public class BatchForm {
     public Batch generateBatch(){
         Batch batch = new Batch();
         batch.setAllowNumber(allowNumber);
-        batch.setLaboratory(laboratory);
         batch.setStartTime(startTime);
         batch.setEndTime(endTime);
         ApplicationContext applicationContext = AppContextManager.getAppContext();
@@ -56,9 +52,6 @@ public class BatchForm {
     }
 
     public void updateBatch(Batch batch){
-        if(laboratory != null){
-            batch.setLaboratory(laboratory);
-        }
         if(allowNumber != null){
             batch.setAllowNumber(allowNumber);
         }

@@ -4,6 +4,7 @@ import com.autolab.api.exception.UtilException;
 import com.autolab.api.model.*;
 import com.autolab.api.repository.CourseDao;
 import com.autolab.api.repository.ItemDao;
+import com.autolab.api.service.ItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,20 +38,21 @@ public class ItemController extends BaseController{
     @Autowired
     protected CourseDao courseDao;
 
-
+    @Autowired
+    protected ItemService itemService;
     /**
      * create a item
      * @param form
      * @return
      */
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
-    @RequestMapping(value = "/create")
+    @RequestMapping(value = "/create") //name,place,opentime,allownumber
     public Map<String,?> create(@Valid ItemForm form){
         Item item = form.generateItem();
         if(getUser() != item.getCourse().getUser()){
             throw new UtilException("you have no authorization");
         }
-        itemDao.save(item);
+        itemService.createItem(item);
         return success(Item.TAG, item);
     }
 
