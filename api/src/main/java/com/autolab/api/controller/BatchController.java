@@ -291,6 +291,7 @@ public class BatchController extends BaseController{
                     batchMap.put("allowNumber",batch.getAllowNumber());
                     batchMap.put("bookNum", batch.getBooks().size());
                     batchMap.put("status", batch.getStatus());
+                    batchMap.put("publish", batch.getPublish());
                     if(date.containsKey(dateTime)){
                         List<Map> dateOfBatches = (List)date.get(dateTime);
                         dateOfBatches.add(batchMap);
