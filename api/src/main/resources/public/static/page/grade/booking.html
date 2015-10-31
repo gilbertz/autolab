@@ -48,7 +48,7 @@
                 <tr ng-repeat = "date in filterWeek.dates">
                     <td>{{date.date}}</td>
                     <td ng-repeat = "batch in date.batches">
-                         <button class="btn btn-default  btn-success btn-xs" ui-sref="app.grade.detail">发布成绩</button>
+                         <button class="btn btn-default  btn-success btn-xs" ui-sref="app.grade.detail({batchId:'{{batch.id}}'})">发布成绩</button>
                     </td>
                 </tr>
                 </tbody>
@@ -67,7 +67,7 @@
 <script type="text/javascript">
     app.controller('GradeBookingController', ['$scope', '$http', '$stateParams',function ($scope, $http, $stateParams) {
 
-                        //根据外面来传进来的itemId刷新本页item详情。
+        //根据外面来传进来的itemId刷新本页item详情。
         var itemId = $stateParams.itemId;
 
         $scope.getBatches = function(){
