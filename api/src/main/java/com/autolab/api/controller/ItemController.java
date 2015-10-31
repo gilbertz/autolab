@@ -68,7 +68,11 @@ public class ItemController extends BaseController{
         if (form.getId() == null) {
             throw new UtilException("id required!");
         }
-        Item item = itemDao.findOne(form.getId());
+        Item item = itemDao.findByIdAndStatus(form.getId(),Status.OK);
+
+        if(item == null){
+            throw  new UtilException("item not exits");
+        }
 
         form.updateItem(item);
 
@@ -86,7 +90,7 @@ public class ItemController extends BaseController{
     @RequestMapping(value = "/del/{itemId}")
     public Map<String, ?> del(@PathVariable Long itemId) {
 
-        Item item = itemDao.findOne(itemId);
+        Item item = itemDao.findByIdAndStatus(itemId, Status.OK);
 
         if(item == null){
             throw new UtilException("item is not exit");
@@ -106,7 +110,7 @@ public class ItemController extends BaseController{
      */
     @RequestMapping(value = "/detail/{itemId}")
     public Map<String, ?> find(@PathVariable Long itemId) {
-        Item item = itemDao.findOne(itemId);
+        Item item = itemDao.findByIdAndStatus(itemId, Status.OK);
 
         if(item == null){
             throw new UtilException("item is not exit");
@@ -133,7 +137,7 @@ public class ItemController extends BaseController{
             if(name != null){
                 predicate = cb.and(predicate,cb.equal(root.get(Item_.name),name));
             }
-
+            predicate = cb.and(predicate,cb.equal(root.get(Item_.status),Status.OK));
             return predicate;
         },pageable);
         return success(Item.TAGS, items, pageable);

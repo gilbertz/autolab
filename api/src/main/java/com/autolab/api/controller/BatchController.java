@@ -66,7 +66,7 @@ public class BatchController extends BaseController{
         if(form.getId() == null){
             throw  new UtilException("id required");
         }
-        Batch batch = batchDao.findOne(form.getId());
+        Batch batch = batchDao.findByIdAndStatus(form.getId(), Status.OK);
         form.updateBatch(batch);
         batchDao.save(batch);
         return success(Batch.TAG,batch);
@@ -81,7 +81,7 @@ public class BatchController extends BaseController{
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping("/publish/{batchId}")
     public Map<String, ?> publish(@PathVariable Long batchId){
-        Batch batch = batchDao.findOne(batchId);
+        Batch batch = batchDao.findByIdAndStatus(batchId, Status.OK);
         if(batch == null){
             throw new UtilException("batch not exits");
         }
@@ -114,7 +114,7 @@ public class BatchController extends BaseController{
     public Map<String,?> browse(@PathVariable Long batchId,
                                 @RequestParam(required = false, defaultValue = "0") Integer page,
                                 @RequestParam(required = false, defaultValue = "20") Integer size){
-        Batch batch = batchDao.findOne(batchId);
+        Batch batch = batchDao.findByIdAndStatus(batchId, Status.OK);
         if(batch == null){
             throw new UtilException("batch not exits");
         }
@@ -155,7 +155,7 @@ public class BatchController extends BaseController{
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping("/del/{batchId}")
     public Map<String, ?> del(@PathVariable Long batchId){
-        Batch batch = batchDao.findOne(batchId);
+        Batch batch = batchDao.findByIdAndStatus(batchId, Status.OK);
         if(getUser() != batch.getItem().getCourse().getUser()){
             throw new UtilException("you have no authorization");
         }
@@ -242,7 +242,7 @@ public class BatchController extends BaseController{
         }
         else{*/
         List<Map<String, Object>> weekMapList = new ArrayList<Map<String, Object>>();
-            Item item = itemDao.findOne(itemId);
+            Item item = itemDao.findByIdAndStatus(itemId,Status.OK);
             if(item == null){
                 throw new UtilException("item not exits");
             }

@@ -1,6 +1,7 @@
 package com.autolab.api.repository;
 
 import com.autolab.api.model.Item;
+import com.autolab.api.model.Status;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
@@ -10,4 +11,6 @@ import java.util.List;
  */
 public interface ItemDao extends BaseDao<Item, Long>{
     List<Item> findAll(Specification<Item> spec);
+
+    Item findByIdAndStatus(Long id, Status status);
 }
