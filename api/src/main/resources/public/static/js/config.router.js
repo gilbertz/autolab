@@ -43,7 +43,7 @@ angular.module('app')
                   templateUrl: '/static/page/experiment/booking.html'
               })
               .state('app.experiment.create', {
-                  url: '/create',
+                  url: '/create/{courseId}',
                   templateUrl: '/static/page/experiment/create.html'
               })
 
