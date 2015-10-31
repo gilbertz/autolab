@@ -106,16 +106,15 @@
         $scope.changeStatus = function(batch){
 
            var url = $scope.app.host + '/batch/edit';
-           var params = {"batchId": $scope.batch.batchId,"status":$scope.batch.status};
+           var params = {"id": batch.id,"status":"DISABLED"};
            console.log(url + "?" + JSON.stringify(params));
-           // $http.post(url, params)
-           //         .success(function (response) {
-           //             console.log(response);
-           //             // $scope.items = response.pager.items;
+           $http.post(url, params)
+                   .success(function (response) {
+                       console.log(response);
 
-           //         }).error(function (response) {
-           //             $scope.pop("error", "错误", response.error.message);
-           //         });
+                   }).error(function (response) {
+                       $scope.pop("error", "错误", response.error.message);
+                   });
 
         };
 
