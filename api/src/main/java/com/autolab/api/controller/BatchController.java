@@ -5,6 +5,7 @@ import com.autolab.api.form.BatchForm;
 import com.autolab.api.form.GradeForm;
 import com.autolab.api.model.*;
 import com.autolab.api.repository.BatchDao;
+import com.autolab.api.repository.BookDao;
 import com.autolab.api.repository.ItemDao;
 import com.autolab.api.service.BatchService;
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import sun.util.resources.cldr.ta.CalendarData_ta_IN;
 
 import javax.persistence.criteria.Predicate;
 import javax.validation.Valid;
@@ -40,6 +42,9 @@ public class BatchController extends BaseController{
 
     @Autowired
     protected ItemDao itemDao;
+
+    @Autowired
+    protected BookDao bookDao;
 
     @Autowired
     protected BatchService batchService;
@@ -109,7 +114,7 @@ public class BatchController extends BaseController{
      * @return page
      */
 
-    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+    //@PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping(value =  "/books/{batchId}")
     public Map<String,?> browse(@PathVariable Long batchId,
                                 @RequestParam(required = false, defaultValue = "0") Integer page,
@@ -118,14 +123,21 @@ public class BatchController extends BaseController{
         if(batch == null){
             throw new UtilException("batch not exits");
         }
+
         if(getUser() != batch.getItem().getCourse().getUser()){
             throw new UtilException("you have no authorization");
         }
-        List<Book> books = batch.getBooks();
+        Pageable pageable = new PageRequest(page, size);
 
-        Pager pager = new Pager(size, page, books.size(), "books", books);
+        Page<Book> books = bookDao.findAll(((root, query, cb) -> {
+            Predicate predicate = cb.notEqual(root.get(Book_.status), Status.DELETED);
+            predicate = cb.and(predicate, cb.equal(root.get(Book_.batch), batch));
+            return predicate;
+        }) , pageable);
 
-        return success(Pager.TAG, pager.map());
+
+
+        return success(Book.TAGS, books, pageable);
 
     }
 
@@ -242,7 +254,7 @@ public class BatchController extends BaseController{
         }
         else{*/
         List<Map<String, Object>> weekMapList = new ArrayList<Map<String, Object>>();
-            Item item = itemDao.findByIdAndStatus(itemId,Status.OK);
+            Item item = itemDao.findByIdAndStatus(itemId, Status.OK);
             if(item == null){
                 throw new UtilException("item not exits");
             }
@@ -262,8 +274,13 @@ public class BatchController extends BaseController{
 
                     Batch batch = batchesOfWeek.get(j);
                     Date startTime = batch.getStartTime();
-                    Calendar c = GregorianCalendar.getInstance();
+                    Calendar c = Calendar.getInstance();
                     c.setTime(startTime);
+                    int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+                    dayOfWeek--;
+                    if(dayOfWeek == 0){
+                        dayOfWeek = 7;
+                    }
                     String dateTime = String.valueOf(c.get(Calendar.YEAR)) + "-" + String.valueOf(c.get(Calendar.MONTH)+1)
                             + "-" + String.valueOf(c.get(Calendar.DAY_OF_MONTH)) +" "+ c.get(Calendar.DAY_OF_WEEK);
                     Map<String, Object> batchMap = new HashMap<>();
@@ -285,6 +302,7 @@ public class BatchController extends BaseController{
                         date.put(dateTime,dateOfBatches);
                     }
                 }
+
                 Iterator<Map.Entry<String, Object>> entries = date.entrySet().iterator();
 
                 while (entries.hasNext()) {
