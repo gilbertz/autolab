@@ -61,7 +61,7 @@ public class ItemService {
             weeks[i] = Integer.parseInt(weeksOfString[i]);
         }
         List<Batch> batches = new ArrayList<>();
-        Calendar calendar = new GregorianCalendar(startYearOfTerm,startMonthOfTerm - 1,startDayOfTerm,startHourOfDay,0);
+
         for(int i =0;i < weeks.length;i++){
             for(int j = 1;j <= dayOfWeek;j++){
                 for(int k = 0;k < numberOfSlot;k++){
@@ -73,12 +73,13 @@ public class ItemService {
                     batch.setEndTime(new Date());
                     batches.add(batch);
 
-                    calendar.add(Calendar.DAY_OF_MONTH,weeks[i]-1);
+                    Calendar calendar = new GregorianCalendar(startYearOfTerm,startMonthOfTerm - 1,startDayOfTerm,startHourOfDay,0);
+                    calendar.add(Calendar.WEEK_OF_MONTH,weeks[i]-1);
                     calendar.add(Calendar.DAY_OF_MONTH,j-1);
                     calendar.add(Calendar.HOUR_OF_DAY,k*slot);
                     Date startTime = calendar.getTime();
                     logger.debug("startTime:" + startTime);
-                    calendar.add(Calendar.HOUR_OF_DAY,(k+1)*slot);
+                    calendar.add(Calendar.HOUR_OF_DAY,slot);
                     Date endTime = calendar.getTime();
                     logger.debug("endTime:" + endTime);
                     batch.setStartTime(startTime);
@@ -90,7 +91,7 @@ public class ItemService {
             }
 
         }
-        //itemDao.save(item);
-        //batchDao.save(batches);
+        itemDao.save(item);
+        batchDao.save(batches);
     }
 }
