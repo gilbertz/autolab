@@ -34,6 +34,8 @@ public class Batch extends BaseEntity{
 
     private Date endTime;
 
+    private String publish;
+
 
     @JsonIgnore
     @OneToMany(mappedBy = "batch", cascade = {}, fetch = FetchType.LAZY)
