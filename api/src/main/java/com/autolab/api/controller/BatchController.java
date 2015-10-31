@@ -72,6 +72,37 @@ public class BatchController extends BaseController{
         return success(Batch.TAG,batch);
     }
 
+
+    /**
+     *
+     * @param batchId
+     * @return
+     */
+    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+    @RequestMapping("/publish/{batchId}")
+    public Map<String, ?> publish(@PathVariable Long batchId){
+        Batch batch = batchDao.findOne(batchId);
+        if(batch == null){
+            throw new UtilException("batch not exits");
+        }
+        if(!getUser().equals(batch.getItem().getCourse().getUser())){
+            throw new UtilException("you have no authorization to operate ohter teacher's batch");
+        }
+        List<Book> books = batch.getBooks();
+        int num = books.size();
+        for(int i = 0;i < books.size();i++){
+            if(books.get(i).getGrade() != null){
+                num--;
+            }
+        }
+        if(num != 0){
+            throw new UtilException("you have " + num + " students' grade to be set");
+        }
+        batch.setPublish(Publish.YES);
+        batchDao.save(batch);
+        return success();
+    }
+
     /**
      * teacher browse the books
      *  @param batchId
