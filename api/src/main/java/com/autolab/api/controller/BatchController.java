@@ -112,7 +112,7 @@ public class BatchController extends BaseController{
             @RequestParam(required = true) Long itemId,
             @RequestParam(required = false, defaultValue = "ASC") Sort.Direction direction
     ) {
-        List<String> ordersBy = new ArrayList<>();
+       /* List<String> ordersBy = new ArrayList<>();
 
         ordersBy.add("week");
         ordersBy.add("startTime");
@@ -160,9 +160,12 @@ public class BatchController extends BaseController{
             weekMapList.add(weeks);
 
         }
-        else{
-
+        else{*/
+        List<Map<String, Object>> weekMapList = new ArrayList<Map<String, Object>>();
             Item item = itemDao.findOne(itemId);
+            if(item == null){
+                throw new UtilException("item not exits");
+            }
             String allWeek = item.getOpenTime();
             String [] arrayOfWeeks = allWeek.split(",");
             Map<String, Object> weeks = new HashMap<>();
@@ -190,6 +193,7 @@ public class BatchController extends BaseController{
                     batchMap.put("endTime",batch.getEndTime().toString());
                     batchMap.put("allowNumber",batch.getAllowNumber());
                     batchMap.put("bookNum", batch.getBooks().size());
+                    batchMap.put("STATUS", batch.getStatus());
                     if(date.containsKey(dateTime)){
                         List<Map> dateOfBatches = (List)date.get(dateTime);
                         dateOfBatches.add(batchMap);
@@ -219,7 +223,7 @@ public class BatchController extends BaseController{
             }
             weekMapList.add(weeks);
 
-        }
+        //}
 
         Pager pager = new Pager(size, page, weekMapList.size(), "weeks", weekMapList);
 
