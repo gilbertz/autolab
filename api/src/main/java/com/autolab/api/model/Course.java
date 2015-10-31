@@ -22,7 +22,7 @@ public class Course extends BaseEntity{
     public static final String TABLE_NAME=BaseEntity.PREFIX+"course";
 
     @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "teacher_id", nullable = false)
     private User user;
 
     private String name;
