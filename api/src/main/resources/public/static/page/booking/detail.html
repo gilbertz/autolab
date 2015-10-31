@@ -1,4 +1,4 @@
-<div class="wrapper-md" style="padding-top:0!important;" ng-controller="MybookingIndexController">
+<div class="wrapper-md" style="padding-top:0!important;" ng-controller="BookingDetailController">
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -6,10 +6,10 @@
         </div>
         <div class="row wrapper">
             <div class="col-sm-11 m-b-xs">
-                <button class="btn btn-sm btn-default">自动控制原理实验一</button>
-                <button class="btn btn-sm btn-default">第7周</button>
-                <button class="btn btn-sm btn-default">星期一/2016-9-10</button>
-                <button class="btn btn-sm btn-default">8:00-10:00</button>
+                <button class="btn btn-sm btn-default">{{bookDetail.batch.item.name}}</button>
+                <button class="btn btn-sm btn-default">第{{bookDetail.batch.week}}周</button>
+                <button class="btn btn-sm btn-default">{{bookDetail.batch.startTime}}</button>
+                <button class="btn btn-sm btn-default">{{bookDetail.batch.endTime}}</button>
 
             </div>
             <div class="col-sm-1">
@@ -26,15 +26,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1140329122</td>
-                    <td>赵国旗</td>
-                    <td>自动化系</td>
-                </tr>
-                <tr>
-                    <td>1234567</td>
-                    <td>赵翔</td>
-                    <td>自动化系</td>
+                 <tr dir-paginate="book in books | itemsPerPage: pagination.pageSize"
+         total-items="pagination.totalItems" current-page="pagination.page">
+                    <td>{{book.user.jaccountId}}</td>
+                    <td>{{book.user.jaccountChinesename}}</td>
+                    <td>{{book.user.jaccountDept}}</td>
                 </tr>
                 </tbody>
             </table>
@@ -42,27 +38,13 @@
         <footer class="panel-footer">
             <div class="row">
                 <div class="col-sm-4 hidden-xs">
-                    <select class="input-sm form-control w-sm inline v-middle">
-                        <option value="0">自动控制原理实验</option>
-                        <option value="1">计算机控制实验</option>
-                        <option value="2">过程控制实验</option>
-                        <option value="3">运动控制实验</option>
-                    </select>
-                    <button class="btn btn-sm btn-default">选择课程</button>
                 </div>
                 <div class="col-sm-4 text-center">
-                    <small class="text-muted inline m-t-sm m-b-sm"></small>
                 </div>
                 <div class="col-sm-4 text-right text-center-xs">
-                    <ul class="pagination pagination-sm m-t-none m-b-none">
-                        <li><a href><i class="fa fa-chevron-left"></i></a></li>
-                        <li><a href>1</a></li>
-                        <li><a href>2</a></li>
-                        <li><a href>3</a></li>
-                        <li><a href>4</a></li>
-                        <li><a href>5</a></li>
-                        <li><a href><i class="fa fa-chevron-right"></i></a></li>
-                    </ul>
+        <div class="text-center">
+            <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+        </div>
                 </div>
             </div>
         </footer>
@@ -73,37 +55,40 @@
 <script type="text/javascript">
 
 
-    app.controller('MybookingIndexController', ['$scope', '$http', function ($scope, $http) {
-        //        $scope.app.title="自动化系实验预约系统";
-        //
-        //        console.log("Enter into DashboardController");
-        //
-        //        $scope.refresh = function () {
-        //            var url = $scope.app.host + '/city/detail/' + $scope.app.city.id;
-        //
-        //            //,$scope.app.httpConfig
-        //            var params = {};
-        //            console.log(url + "?" + JSON.stringify(params));
-        //            $http.post(url, params)
-        //                    .success(function (response) {
-        //                        console.log(response);
-        //                        $scope.city = response.city;
-        //
-        //                        $scope.filterDistricts = [];
-        //                        $scope.filterDistricts.push($scope.allDistrict);
-        //                        for (var key in $scope.city.districts) {
-        //                            var district = $scope.city.districts[key];
-        //                            $scope.filterDistricts.push(district);
-        //                        }
-        //
-        //
-        //                    }).error(function (response) {
-        //                        $scope.pop("error", "错误", response.error.message);
-        //                    });
-        //        };
-        //        $scope.refresh();
-        //
-        //
+    app.controller('BookingDetailController', ['$scope', '$http','$stateParams', function ($scope, $http,$stateParams) {
+        $scope.pagination = {
+            page: 1,
+            pageSize: 3,
+            totalItems: 0
+        };
+
+        $scope.pageChanged = function (newPage) {
+            console.log(newPage);
+            $scope.pagination.page = newPage;
+            $scope.getDetail();
+        };
+
+
+        $scope.getDetail = function () {
+            var url = $scope.app.host + '/batch/books/'+$stateParams.batchId;
+            var params = {};
+            params["size"] = $scope.pagination.pageSize;
+            params["page"] = $scope.pagination.page-1;
+
+           console.log(url + "?" + JSON.stringify(params));
+            $http.post(url, params)
+                .success(function (response){
+                    $scope.books = response.pager.books;
+                    if ($scope.books.length !=0) {
+                        $scope.bookDetail = $scope.books[0];
+                    };
+                    $scope.pagination.totalItems = response.pager.totalItems;
+                }).error(function (response){
+                    $scope.pop("error","错误",response.error.message);
+                });
+        };
+
+        $scope.getDetail();
     }]);
 
 </script>
