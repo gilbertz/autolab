@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.criteria.Predicate;
 import javax.validation.Valid;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by ABC on 2015/10/24 0024.
@@ -108,24 +109,120 @@ public class BatchController extends BaseController{
     public Map<String, ?> page(
             @RequestParam(required = false, defaultValue = "0") Integer page,
             @RequestParam(required = false, defaultValue = "20") Integer size,
-            @RequestParam(required = false, defaultValue = "id") String orderBy,
-            @RequestParam(required = false) Long itemId,
-            @RequestParam(required = false) String laboratory,
+            @RequestParam(required = true) Long itemId,
             @RequestParam(required = false, defaultValue = "ASC") Sort.Direction direction
     ) {
-        Pageable pageable = new PageRequest(page, size, new Sort(direction,orderBy));
-        Page<Batch> batchs = batchDao.findAll((root,query,cb) -> {
+        List<String> ordersBy = new ArrayList<>();
+
+        ordersBy.add("week");
+        ordersBy.add("startTime");
+
+        Pageable pageable = new PageRequest(page, size, new Sort(direction,ordersBy));
+        Page<Batch> batches = batchDao.findAll((root,query,cb) -> {
             Predicate predicate = setStatusNotDeleted(root, cb);
             if(itemId != null){
                 Item item = itemDao.findOne(itemId);
                 predicate = cb.and(predicate,cb.equal(root.get(Batch_.item),item));
             }
-            if(laboratory != null){
-                predicate = cb.and(predicate,cb.equal(root.get(Batch_.laboratory),laboratory));
-            }
 
             return predicate;
         },pageable);
-        return success(Batch.TAGS, batchs, pageable);
+
+        List<Batch> batchesList = batches.getContent();
+        List<Map<String, Object>> batchMapList = batchesList
+                .stream()
+                .map(batch -> {
+                    Map<String, Object> batchMap = batch.map();
+                    batchMap.put("id",batch.getId());
+                    batchMap.put("week",batch.getWeek());
+                    batchMap.put("startTime",batch.getStartTime());
+                    batchMap.put("endTime",batch.getEndTime());
+                    batchMap.put("allowNumber",batch.getAllowNumber());
+                    batchMap.put("bookNum", batch.getBooks().size());
+                    return batchMap;
+                })
+                .collect(Collectors.toList());
+
+        List<Map<String, Object>> weekMapList = new ArrayList<Map<String, Object>>();
+        if(batchMapList.isEmpty()){
+
+            Map<String, Object> dates = new HashMap<>();
+            dates.put("date",null);
+            dates.put("batches",batchMapList);
+
+            Map<String, Object> weeks = new HashMap<>();
+            weeks.put("week",null);
+            weeks.put("dates",dates);
+
+           // Map<String, Object> pageDatas = new HashMap<>();
+            //pageDatas.put("weeks",weeks);
+
+            weekMapList.add(weeks);
+
+        }
+        else{
+
+            Item item = itemDao.findOne(itemId);
+            String allWeek = item.getOpenTime();
+            String [] arrayOfWeeks = allWeek.split(",");
+            Map<String, Object> weeks = new HashMap<>();
+            for(int i = 0;i < arrayOfWeeks.length;i++){
+                int week = Integer.parseInt(arrayOfWeeks[i]);
+
+                weeks.put("week","第"+week+"周");
+                List<Map<String, Object>> datesMapList = new ArrayList<>();
+
+                List<Batch> batchesOfWeek = batchDao.findByWeek(week);
+
+                Map<String, Object> date = new HashMap<>();
+                for(int j = 0;j < batchesOfWeek.size();j++){
+
+                    Batch batch = batchesOfWeek.get(j);
+                    Date startTime = batch.getStartTime();
+                    Calendar c = GregorianCalendar.getInstance();
+                    c.setTime(startTime);
+                    String dateTime = String.valueOf(c.get(Calendar.YEAR)) + "-" + String.valueOf(c.get(Calendar.MONTH)+1)
+                            + "-" + String.valueOf(c.get(Calendar.DAY_OF_MONTH)) +" "+ c.get(Calendar.DAY_OF_WEEK);
+                    Map<String, Object> batchMap = new HashMap<>();
+                    batchMap.put("id",batch.getId());
+                    batchMap.put("startTime",batch.getStartTime());
+                    logger.debug(batch.getStartTime().toString());
+                    batchMap.put("endTime",batch.getEndTime());
+                    batchMap.put("allowNumber",batch.getAllowNumber());
+                    batchMap.put("bookNum", batch.getBooks().size());
+                    if(date.containsKey(dateTime)){
+                        List<Map> dateOfBatches = (List)date.get(dateTime);
+                        dateOfBatches.add(batchMap);
+                        date.put(dateTime,dateOfBatches);
+                    }
+                    else{
+                        List<Map> dateOfBatches = new ArrayList<>();
+                        dateOfBatches.add(batchMap);
+                        date.put(dateTime,dateOfBatches);
+                    }
+                }
+                Iterator<Map.Entry<String, Object>> entries = date.entrySet().iterator();
+
+                while (entries.hasNext()) {
+
+                    Map.Entry<String, Object> entry = entries.next();
+
+                    Map<String,Object> dates= new HashMap<>();
+
+                    dates.put("date",entry.getKey());
+
+                    dates.put("batches",entry.getValue());
+
+                    datesMapList.add(dates);
+                }
+                weeks.put("dates", datesMapList);
+            }
+            weekMapList.add(weeks);
+
+        }
+
+        Pager pager = new Pager(size, page, weekMapList.size(), "weeks", weekMapList);
+
+        return success(Pager.TAG, pager.map());
     }
 }

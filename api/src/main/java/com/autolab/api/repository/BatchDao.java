@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface BatchDao extends BaseDao<Batch, Long>{
     List<Batch> findAll(Specification<Batch> spec);
+
+    List<Batch> findByWeek(Integer week);
 }
