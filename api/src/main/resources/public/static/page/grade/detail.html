@@ -17,7 +17,7 @@
                 </button>
             </div>
             <div class="col-sm-1">
-                <a href="#/app/grade/booking" class="btn btn-sm btn-success">返回</a>
+                <a onclick="javascript:history.back(-1);" class="btn btn-sm btn-success">返回</a>
             </div>
         </div>
         <div class="table-responsive">
@@ -60,7 +60,6 @@
 
 <script type="text/javascript">
 
-
     app.controller('MybookingIndexController', ['$scope', '$http','$stateParams', function ($scope, $http,$stateParams) {
 
         $scope.pagination = {
@@ -74,7 +73,8 @@
             $scope.pagination.page = newPage;
             $scope.getDetail();
         };
-        
+
+        $scope.batchId = $stateParams.batchId;
         $scope.getDetail = function () {
             var url = $scope.app.host + '/batch/books/'+$stateParams.batchId;
             var params = {};
