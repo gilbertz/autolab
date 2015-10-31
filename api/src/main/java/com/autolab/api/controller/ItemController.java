@@ -45,10 +45,11 @@ public class ItemController extends BaseController{
      * @param form
      * @return
      */
-    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+   // @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping(value = "/create") //name,place,opentime,allownumber
     public Map<String,?> create(@Valid ItemForm form){
         Item item = form.generateItem();
+        User uu = item.getCourse().getUser();
         if(getUser() != item.getCourse().getUser()){
             throw new UtilException("you have no authorization");
         }

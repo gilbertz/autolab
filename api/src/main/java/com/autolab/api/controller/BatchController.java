@@ -172,7 +172,7 @@ public class BatchController extends BaseController{
                 weeks.put("week","第"+week+"周");
                 List<Map<String, Object>> datesMapList = new ArrayList<>();
 
-                List<Batch> batchesOfWeek = batchDao.findByWeek(week);
+                List<Batch> batchesOfWeek = batchDao.findByItemAndWeek(item,week);
 
                 Map<String, Object> date = new HashMap<>();
                 for(int j = 0;j < batchesOfWeek.size();j++){

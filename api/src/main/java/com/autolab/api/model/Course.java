@@ -21,6 +21,7 @@ public class Course extends BaseEntity{
     public static final String TAGS = TAG + "s";
     public static final String TABLE_NAME=BaseEntity.PREFIX+"course";
 
+    @JsonIgnore
     @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id", nullable = false)
     private User user;
