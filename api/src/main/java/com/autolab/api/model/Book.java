@@ -26,6 +26,6 @@ public class Book extends BaseEntity{
     private String grade;
 
     @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "student_id", nullable = false)
     private User user;
 }

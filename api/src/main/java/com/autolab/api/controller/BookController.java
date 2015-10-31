@@ -4,6 +4,7 @@ import com.autolab.api.exception.UtilException;
 import com.autolab.api.form.BookForm;
 import com.autolab.api.model.Batch;
 import com.autolab.api.model.Book;
+import com.autolab.api.model.Pager;
 import com.autolab.api.model.User;
 import com.autolab.api.repository.BatchDao;
 import com.autolab.api.repository.BookDao;
@@ -14,9 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,9 +47,7 @@ public class BookController extends BaseController {
     @RequestMapping(value = "/create")
     public Map<String,?> create(@Valid BookForm form){
         Book book=form.generateBook();
-        if(!getUser() .equals( book.getUser())){
-            throw new UtilException("you have no authorization booking for other students");
-        }
+        book.setUser(getUser());
 
         Batch batch=book.getBatch();
         if(  batch.getBooks().size()>= batch.getAllowNumber()){
@@ -54,8 +55,7 @@ public class BookController extends BaseController {
         }
 
         bookDao.save(book);
-
-        batchDao.save(batch);
+        
         return success(Book.TAG, book);
     }
 
@@ -83,6 +83,8 @@ public class BookController extends BaseController {
         if(  getUser().equals(book.getUser()) ){
             throw new  UtilException("cannot delete other students book");
         }
+
+        bookDao.delete(book);
         /*
         to avoid bugs
          */
@@ -91,20 +93,27 @@ public class BookController extends BaseController {
 
     /**
      * student browse the books
-     *
+     *  @param batchId
+     * @return page
      */
 
-    @RequestMapping(value =  "/page")
-    public Map<String,?> browse(){
-        if(getUser().getRole()==User.Role.ROLE_USER){
-            return success(Book.TAGS, getUser().getBooks());
+    //@PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+    @RequestMapping(value =  "/page/{batchId}")
+    public Map<String,?> browse(@PathVariable Long batchId,
+                                @RequestParam(required = false, defaultValue = "0") Integer page,
+                                @RequestParam(required = false, defaultValue = "20") Integer size){
+        Batch batch = batchDao.findOne(batchId);
+        if(batch == null){
+            throw new UtilException("batch not exits");
         }
+        if(getUser() != batch.getItem().getCourse().getUser()){
+            throw new UtilException("you have no authorization");
+        }
+        List<Book> books = batch.getBooks();
 
-        if(getUser().getRole()==User.Role.ROLE_ADMIN){
-            return success(Book.TAGS,getUser().getCourses());
-        }
-        else
-            throw new UtilException("no authorization");
+        Pager pager = new Pager(size, page, books.size(), "books", books);
+
+        return success(Pager.TAG, pager.map());
 
 
     }

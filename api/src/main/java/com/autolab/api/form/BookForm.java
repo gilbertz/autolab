@@ -22,9 +22,6 @@ public class BookForm {
     @NotNull
     private Long batchId;
 
-    @NotNull
-    private Long userId;
-
     private Long grade;
 
     public Book generateBook(){
@@ -42,13 +39,6 @@ public class BookForm {
         }
         book.setBatch(batch);
 
-        UserDao userDao=applicationContext.getBean(UserDao.class);
-        User user=userDao.findOne(userId);
-        if (user == null){
-            throw new UtilException("user is not exist");
-        }
-        book.setUser(user);
-
         return book;
     }
 
@@ -63,15 +53,6 @@ public class BookForm {
             book.setBatch(batch);
         }
 
-        if(userId != null){
-            ApplicationContext applicationContext = AppContextManager.getAppContext();
-            UserDao userDao=applicationContext.getBean(UserDao.class);
-            User user=userDao.findOne(userId);
-            if (user == null){
-                throw new UtilException("user is not exist");
-            }
-            book.setUser(user);
-        }
 
         if(grade != null){
             throw new UtilException("Student cannot set the grade");

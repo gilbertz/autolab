@@ -78,10 +78,8 @@ public class ItemService {
                     calendar.add(Calendar.DAY_OF_MONTH,j-1);
                     calendar.add(Calendar.HOUR_OF_DAY,k*slot);
                     Date startTime = calendar.getTime();
-                    logger.debug("startTime:" + startTime);
                     calendar.add(Calendar.HOUR_OF_DAY,slot);
                     Date endTime = calendar.getTime();
-                    logger.debug("endTime:" + endTime);
                     batch.setStartTime(startTime);
                     batch.setEndTime(endTime);
                     batches.add(batch);
