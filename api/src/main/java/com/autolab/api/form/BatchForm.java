@@ -3,6 +3,7 @@ package com.autolab.api.form;
 import com.autolab.api.exception.UtilException;
 import com.autolab.api.model.Batch;
 import com.autolab.api.model.Item;
+import com.autolab.api.model.Status;
 import com.autolab.api.repository.ItemDao;
 import com.autolab.api.util.AppContextManager;
 import com.autolab.api.util.DateUtil;
@@ -35,6 +36,8 @@ public class BatchForm {
     @NotNull
     @DateTimeFormat(pattern= DateUtil.DEFAULT_FORMAT)
     private Date endTime;
+
+    private Status status;
 
     public Batch generateBatch(){
         Batch batch = new Batch();
@@ -69,6 +72,12 @@ public class BatchForm {
                 throw new UtilException("item is not exit");
             }
             batch.setItem(item);
+        }
+        if(status != null){
+            if(batch.getBooks().size() > 0){
+                throw new UtilException("this batch hae been booked by students");
+            }
+            batch.setStatus(status);
         }
     }
 }
