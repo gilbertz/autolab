@@ -253,7 +253,7 @@ public class BatchController extends BaseController{
 
         }
         else{*/
-        List<Map<String, Object>> weekMapList = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> weekMapList = new ArrayList<>();
             Item item = itemDao.findByIdAndStatus(itemId, Status.OK);
             if(item == null){
                 throw new UtilException("item not exits");
@@ -269,7 +269,7 @@ public class BatchController extends BaseController{
 
                 List<Batch> batchesOfWeek = batchDao.findByItemAndWeek(item,week);
 
-                Map<String, Object> date = new HashMap<>();
+                Map<String, Object> date = new TreeMap<>();
                 for(int j = 0;j < batchesOfWeek.size();j++){
 
                     Batch batch = batchesOfWeek.get(j);
@@ -281,8 +281,8 @@ public class BatchController extends BaseController{
                     if(dayOfWeek == 0){
                         dayOfWeek = 7;
                     }
-                    String dateTime = String.valueOf(c.get(Calendar.YEAR)) + "-" + String.valueOf(c.get(Calendar.MONTH)+1)
-                            + "-" + String.valueOf(c.get(Calendar.DAY_OF_MONTH)) +" "+ c.get(Calendar.DAY_OF_WEEK);
+                    String dateTime =  dayOfWeek + " " + String.valueOf(c.get(Calendar.YEAR)) + "-" + String.valueOf(c.get(Calendar.MONTH)+1)
+                            + "-" + String.valueOf(c.get(Calendar.DAY_OF_MONTH)) +" ";
                     Map<String, Object> batchMap = new HashMap<>();
                     batchMap.put("id",batch.getId());
                     //这里如果不toString(),返回结果就会有8个小时的时差，暂时不知道为什么
