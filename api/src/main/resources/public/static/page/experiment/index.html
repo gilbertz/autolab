@@ -26,10 +26,7 @@
             <div class="col-sm-4">
             </div>
             <div class="col-sm-2">
-                <button type="button" ng-click="addRandomItem(row)"  ui-sref="app.experiment.create" class="btn btn-sm btn-success" tabindex="0">
-                    <i class="glyphicon glyphicon-plus">
-                    </i> 新建实验项目
-                </button>
+                <a ui-sref="#/app/experiment/create/{{filterCourse.id}}" class="btn btn-sm btn-success">新建实验项目</a>
             </div>
         </div>
         <div class="table-responsive">
@@ -48,7 +45,7 @@
          total-items="pagination.totalItems" current-page="pagination.page">
                     <td>{{item.name}}</td>
                     <td>{{item.place}}</td>
-                    <td>{{item.opentime}}</td>
+                    <td>{{item.openTime}}</td>
                     <td>
                         <button class="btn btn-default  btn-success btn-xs" ui-sref="app.experiment.booking({itemId: '{{item.id}}'})">设置时间</button>
                     </td>
