@@ -2,10 +2,7 @@ package com.autolab.api.controller;
 
 import com.autolab.api.exception.UtilException;
 import com.autolab.api.form.BookForm;
-import com.autolab.api.model.Batch;
-import com.autolab.api.model.Book;
-import com.autolab.api.model.Pager;
-import com.autolab.api.model.User;
+import com.autolab.api.model.*;
 import com.autolab.api.repository.BatchDao;
 import com.autolab.api.repository.BookDao;
 import net.sf.jasperreports.olap.mapping.Mapping;
@@ -21,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by KUN on 2015/10/24.
@@ -66,12 +64,6 @@ public class BookController extends BaseController {
 
 
     /**
-     * add the grade
-     * @param  form
-     * @return
-     */
-
-    /**
      * detele a book
      * @param bookId
      * @return
@@ -106,7 +98,18 @@ public class BookController extends BaseController {
                                @RequestParam(required = false, defaultValue = "20") Integer size){
         List<Book> books = bookDao.findByUser(getUser());
 
-        Pager pager = new Pager(size, page, books.size(), "books", books);
+        List<Map<String, Object>> bookMapList = books
+                .stream()
+                .map(book -> {
+                    Map<String, Object> bookMap = book.map();
+                    if (book.getBatch().getPublish() == Publish.NO && book.getGrade() != null) {
+                        book.setGrade(null);
+                    }
+                    return bookMap;
+                })
+                .collect(Collectors.toList());
+
+        Pager pager = new Pager(size, page, books.size(), Book.TAGS, bookMapList);
 
         return success(Pager.TAG, pager.map());
     }
