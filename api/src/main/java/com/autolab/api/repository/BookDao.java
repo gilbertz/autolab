@@ -4,8 +4,7 @@ package com.autolab.api.repository;
  * Created by KUN on 2015/10/24.
  */
 
-import com.autolab.api.model.Book;
-import com.autolab.api.model.User;
+import com.autolab.api.model.*;
 
 import java.util.List;
 
@@ -24,5 +23,5 @@ public interface BookDao extends BaseDao<Book, Long>{
 
     List<Book> findByUser(User user);
 
-
+    Book findByUserAndBatch(User user, Batch batch);
 }

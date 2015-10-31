@@ -50,12 +50,17 @@ public class BookController extends BaseController {
         book.setUser(getUser());
 
         Batch batch=book.getBatch();
+
+        if(bookDao.findByUserAndBatch(book.getUser(),book.getBatch()) != null){
+            throw new UtilException("you have already book this batch");
+        }
+
         if(  batch.getBooks().size()>= batch.getAllowNumber()){
             throw new UtilException("already reaches the max allow number ");
         }
 
         bookDao.save(book);
-        
+
         return success(Book.TAG, book);
     }
 
@@ -80,43 +85,33 @@ public class BookController extends BaseController {
             throw new UtilException("book is not exit");
         }
 
-        if(  getUser().equals(book.getUser()) ){
+        if( !getUser().equals(book.getUser()) ){
             throw new  UtilException("cannot delete other students book");
         }
 
         bookDao.delete(book);
-        /*
-        to avoid bugs
-         */
+
         return success(Book.TAG,bookId);
     }
 
-    /**
-     * student browse the books
-     *  @param batchId
-     * @return page
-     */
 
-    //@PreAuthorize(User.Role.HAS_ROLE_ADMIN)
-    @RequestMapping(value =  "/page/{batchId}")
-    public Map<String,?> browse(@PathVariable Long batchId,
+    /**
+     * student find books
+     * @return
+     */
+    @PreAuthorize(User.Role.HAS_ROLE_USER)
+    @RequestMapping(value ="/page")
+    public  Map<String,?> find(
                                 @RequestParam(required = false, defaultValue = "0") Integer page,
-                                @RequestParam(required = false, defaultValue = "20") Integer size){
-        Batch batch = batchDao.findOne(batchId);
-        if(batch == null){
-            throw new UtilException("batch not exits");
-        }
-        if(getUser() != batch.getItem().getCourse().getUser()){
-            throw new UtilException("you have no authorization");
-        }
-        List<Book> books = batch.getBooks();
+                               @RequestParam(required = false, defaultValue = "20") Integer size){
+        List<Book> books = bookDao.findByUser(getUser());
 
         Pager pager = new Pager(size, page, books.size(), "books", books);
 
         return success(Pager.TAG, pager.map());
-
-
     }
+
+
 
 
 

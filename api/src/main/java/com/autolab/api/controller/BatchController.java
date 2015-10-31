@@ -2,6 +2,7 @@ package com.autolab.api.controller;
 
 import com.autolab.api.exception.UtilException;
 import com.autolab.api.form.BatchForm;
+import com.autolab.api.form.GradeForm;
 import com.autolab.api.model.*;
 import com.autolab.api.repository.BatchDao;
 import com.autolab.api.repository.ItemDao;
@@ -66,6 +67,49 @@ public class BatchController extends BaseController{
         batchDao.save(batch);
         return success(Batch.TAG,batch);
     }
+
+    /**
+     * teacher browse the books
+     *  @param batchId
+     * @return page
+     */
+
+    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+    @RequestMapping(value =  "/books/{batchId}")
+    public Map<String,?> browse(@PathVariable Long batchId,
+                                @RequestParam(required = false, defaultValue = "0") Integer page,
+                                @RequestParam(required = false, defaultValue = "20") Integer size){
+        Batch batch = batchDao.findOne(batchId);
+        if(batch == null){
+            throw new UtilException("batch not exits");
+        }
+        if(getUser() != batch.getItem().getCourse().getUser()){
+            throw new UtilException("you have no authorization");
+        }
+        List<Book> books = batch.getBooks();
+
+        Pager pager = new Pager(size, page, books.size(), "books", books);
+
+        return success(Pager.TAG, pager.map());
+
+    }
+
+
+    /**
+     * teacher browse the books
+     *  @param form
+     * @return page
+     */
+
+    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+    @RequestMapping(value =  "/grades")
+    public Map<String,?> setGrades(@Valid GradeForm form){
+
+
+        return success();
+
+    }
+
 
     /**
      * delete a batch
@@ -168,10 +212,10 @@ public class BatchController extends BaseController{
             }
             String allWeek = item.getOpenTime();
             String [] arrayOfWeeks = allWeek.split(",");
-            Map<String, Object> weeks = new HashMap<>();
+
             for(int i = 0;i < arrayOfWeeks.length;i++){
                 int week = Integer.parseInt(arrayOfWeeks[i]);
-
+                Map<String, Object> weeks = new HashMap<>();
                 weeks.put("week","第"+week+"周");
                 List<Map<String, Object>> datesMapList = new ArrayList<>();
 
@@ -193,7 +237,7 @@ public class BatchController extends BaseController{
                     batchMap.put("endTime",batch.getEndTime().toString());
                     batchMap.put("allowNumber",batch.getAllowNumber());
                     batchMap.put("bookNum", batch.getBooks().size());
-                    batchMap.put("STATUS", batch.getStatus());
+                    batchMap.put("status", batch.getStatus());
                     if(date.containsKey(dateTime)){
                         List<Map> dateOfBatches = (List)date.get(dateTime);
                         dateOfBatches.add(batchMap);
@@ -220,8 +264,9 @@ public class BatchController extends BaseController{
                     datesMapList.add(dates);
                 }
                 weeks.put("dates", datesMapList);
+                weekMapList.add(weeks);
             }
-            weekMapList.add(weeks);
+
 
         //}
 
