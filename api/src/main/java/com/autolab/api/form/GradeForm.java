@@ -18,7 +18,7 @@ public class GradeForm {
     private Long [] studentIds;
 
     @NotNull
-    private Long [] grades;
+    private String [] grades;
 
 
 }

@@ -6,6 +6,7 @@ import com.autolab.api.form.GradeForm;
 import com.autolab.api.model.*;
 import com.autolab.api.repository.BatchDao;
 import com.autolab.api.repository.ItemDao;
+import com.autolab.api.service.BatchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,9 @@ public class BatchController extends BaseController{
     @Autowired
     protected ItemDao itemDao;
 
+    @Autowired
+    protected BatchService batchService;
+
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping("/create")
     public Map<String, ?> create(@Valid BatchForm form){
@@ -58,7 +62,7 @@ public class BatchController extends BaseController{
      */
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping("/edit")
-    public Map<String, ?> edit(@Valid BatchForm form){
+    public Map<String, ?> edit(BatchForm form){
         if(form.getId() == null){
             throw  new UtilException("id required");
         }
@@ -105,6 +109,7 @@ public class BatchController extends BaseController{
     @RequestMapping(value =  "/grades")
     public Map<String,?> setGrades(@Valid GradeForm form){
 
+        batchService.setGrade(form.getStudentIds(), form.getGrades(), form.getBatchId());
 
         return success();
 
