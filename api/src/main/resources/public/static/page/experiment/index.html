@@ -142,7 +142,7 @@
        };
 
        $scope.deleteItem = function (item){
-            var url = $scope.app.host + 'item/del/'+item.id;
+            var url = $scope.app.host + '/item/del/'+item.id;
 
             var params = {};
            console.log(url + "?" + JSON.stringify(params));
