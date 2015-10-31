@@ -1,4 +1,4 @@
-<div class="wrapper-md" style="padding-top:0!important;" ng-controller="ExperimentBookingController">
+<div class="wrapper-md" style="padding-top:0!important;" ng-controller="BookingBookingController">
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -10,19 +10,24 @@
                 <tr>
                     <div class="row wrapper">
                         <div class="col-sm-11 m-b-xs">
-                            <select class="input-sm form-control w-sm inline v-middle">
-                                <option value="0">第7周</option>
-                                <option value="1">第8周</option>
-                                <option value="2">第10周</option>
-                                <option value="3">第11周</option>
-                            </select>
-                            <button class="btn btn-sm btn-default">选择周次</button>
+                         <label class="inline"}>选择周次</label>
+                         <div class="dropdown filter-content inline" dropdown="">
+                            <button class="btn btn-default dropdown-toggle filter-a" type="button" dropdown-toggle=""
+                            aria-haspopup="true"
+                            aria-expanded="false">{{filterWeek.week}}<span
+                            class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li ng-repeat="week in weeks">
+                                <a href="javascript:void(0)" ng-click="changeWeek(week)">
+                                    {{week.week}}
+                                </a>
+                            </li>
+                        </ul>
+                        </div>
                         </div>
                         <div class="col-sm-1">
-                            <button type="button" ng-click="addRandomItem(row)"  ui-sref="app.experiment.create" class="btn btn-sm btn-success" tabindex="0">
-                                <i class="glyphicon glyphicon-plus">
-                                </i> 返回
-                            </button>
+                            <a href="#/app/booking/index" class="btn btn-sm btn-success">返回</a>
                         </div>
                     </div>
                 </tr>
@@ -40,9 +45,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>星期一/2015-9-10</td>
-                    <td>
+                <tr ng-repeat = "date in filterWeek.dates">
+                    <td>{{date.date}}</td>
+                    <td ng-repeat = "batch in date.batches">
                         <div class="progress-sm progress ng-isolate-scope" value="dynamic" type="info" style="display:inline-block; width: 50px;margin-bottom: 0px;margin-top:5px" >
                             <div class="progress-bar progress-bar-info" ng-class="type &amp;&amp; 'progress-bar-' + type" role="progressbar" aria-valuenow="29" aria-valuemin="0" aria-valuemax="200" ng-style="{width: percent + '%'}" aria-valuetext="50%" ng-transclude="" style="width:10%;text-align: center">
                                 <span style="white-space:nowrap;text-align: center" class="ng-binding ng-scope" >29 / 50</span>
@@ -50,112 +55,6 @@
                         </div>
                         <button class="btn btn-default  btn-success btn-xs" ui-sref="app.booking.detail" style="width: 40px;display:inline-block;float:right">详细</button>
                     </td>
-                    <td>
-                        <div class="progress-sm progress ng-isolate-scope" value="dynamic" type="info" style="display:inline-block; width: 50px;margin-bottom: 0px;margin-top:5px" >
-                            <div class="progress-bar progress-bar-info" ng-class="type &amp;&amp; 'progress-bar-' + type" role="progressbar" aria-valuenow="29" aria-valuemin="0" aria-valuemax="200" ng-style="{width: percent + '%'}" aria-valuetext="50%" ng-transclude="" style="width:10%;text-align: center">
-                                <span style="white-space:nowrap;text-align: center" class="ng-binding ng-scope" >29 / 50</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">详细</button>
-                    </td>
-                    <td>
-                        <div class="progress-sm progress ng-isolate-scope" value="dynamic" type="info" style="display:inline-block; width: 50px;margin-bottom: 0px;margin-top:5px" >
-                            <div class="progress-bar progress-bar-info" ng-class="type &amp;&amp; 'progress-bar-' + type" role="progressbar" aria-valuenow="29" aria-valuemin="0" aria-valuemax="200" ng-style="{width: percent + '%'}" aria-valuetext="50%" ng-transclude="" style="width:10%;text-align: center">
-                                <span style="white-space:nowrap;text-align: center" class="ng-binding ng-scope" >29 / 50</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">预约</button>
-                    </td>
-                    <td>
-                        <div class="progress-sm progress ng-isolate-scope" value="dynamic" type="info" style="display:inline-block; width: 50px;margin-bottom: 0px;margin-top:5px" >
-                            <div class="progress-bar progress-bar-info" ng-class="type &amp;&amp; 'progress-bar-' + type" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="50" ng-style="{width: percent + '%'}" aria-valuetext="100%" ng-transclude="" style="width:100%;text-align: center">
-                                <span style="white-space:nowrap;text-align: center" class="ng-binding ng-scope" >50 / 50</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-default  btn-danger btn-xs" style="width: 40px;display:inline-block;float:right">已满</button>
-                    </td>
-                    <td> <div class="progress-sm progress ng-isolate-scope" value="dynamic" type="info" style="display:inline-block; width: 50px;margin-bottom: 0px;margin-top:5px" >
-                        <div class="progress-bar progress-bar-info" ng-class="type &amp;&amp; 'progress-bar-' + type" role="progressbar" aria-valuenow="29" aria-valuemin="0" aria-valuemax="200" ng-style="{width: percent + '%'}" aria-valuetext="50%" ng-transclude="" style="width:10%;text-align: center">
-                            <span style="white-space:nowrap;text-align: center" class="ng-binding ng-scope" >29 / 50</span>
-                        </div>
-                    </div>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">预约</button>
-                    </td>
-                    <td> <div class="progress-sm progress ng-isolate-scope" value="dynamic" type="info" style="display:inline-block; width: 50px;margin-bottom: 0px;margin-top:5px" >
-                        <div class="progress-bar progress-bar-info" ng-class="type &amp;&amp; 'progress-bar-' + type" role="progressbar" aria-valuenow="29" aria-valuemin="0" aria-valuemax="200" ng-style="{width: percent + '%'}" aria-valuetext="50%" ng-transclude="" style="width:10%;text-align: center">
-                            <span style="white-space:nowrap;text-align: center" class="ng-binding ng-scope" >29 / 50</span>
-                        </div>
-                    </div>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">预约</button>
-                    </td>
-                    <td> <div class="progress-sm progress ng-isolate-scope" value="dynamic" type="info" style="display:inline-block; width: 50px;margin-bottom: 0px;margin-top:5px" >
-                        <div class="progress-bar progress-bar-info" ng-class="type &amp;&amp; 'progress-bar-' + type" role="progressbar" aria-valuenow="29" aria-valuemin="0" aria-valuemax="200" ng-style="{width: percent + '%'}" aria-valuetext="50%" ng-transclude="" style="width:10%;text-align: center">
-                            <span style="white-space:nowrap;text-align: center" class="ng-binding ng-scope" >29 / 50</span>
-                        </div>
-                    </div>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right">预约</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>星期二/2015-9-11</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                </tr>
-                <tr>
-                    <td>星期三/2015-9-12</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                </tr>
-                <tr>
-                    <td>星期四/2015-9-13</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                </tr>
-                <tr>
-                    <td>星期五/2015-9-14</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                </tr>
-                <tr>
-                    <td>星期六/2015-9-15</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                </tr>
-                <tr>
-                    <td>星期日/2015-9-16</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                    <td>开放</td>
-                </tr>
                 </tbody>
             </table>
         </div>
@@ -172,37 +71,35 @@
 <script type="text/javascript">
 
 
-    app.controller('ExperimentBookingController', ['$scope', '$http', function ($scope, $http) {
-        //        $scope.app.title="自动化系实验预约系统";
-        //
-        //        console.log("Enter into DashboardController");
-        //
-        //        $scope.refresh = function () {
-        //            var url = $scope.app.host + '/city/detail/' + $scope.app.city.id;
-        //
-        //            //,$scope.app.httpConfig
-        //            var params = {};
-        //            console.log(url + "?" + JSON.stringify(params));
-        //            $http.post(url, params)
-        //                    .success(function (response) {
-        //                        console.log(response);
-        //                        $scope.city = response.city;
-        //
-        //                        $scope.filterDistricts = [];
-        //                        $scope.filterDistricts.push($scope.allDistrict);
-        //                        for (var key in $scope.city.districts) {
-        //                            var district = $scope.city.districts[key];
-        //                            $scope.filterDistricts.push(district);
-        //                        }
-        //
-        //
-        //                    }).error(function (response) {
-        //                        $scope.pop("error", "错误", response.error.message);
-        //                    });
-        //        };
-        //        $scope.refresh();
-        //
-        //
+    app.controller('BookingBookingController', ['$scope', '$http', '$stateParams',function ($scope, $http,$stateParams) {
+
+                //根据外面来传进来的itemId刷新本页item详情。
+        var itemId = $stateParams.itemId;
+
+        $scope.getBatches = function(){
+            var url = $scope.app.host + '/batch/page' ;
+            var params = {"itemId": $stateParams.itemId};
+            console.log(url + "?" + JSON.stringify(params));
+
+            $http.post(url,params)
+                    .success(function (response) {
+                        console.log(response);
+                        $scope.weeks = response.pager.weeks;
+                        if ($scope.weeks.length != 0 ) {
+                            $scope.filterWeek = $scope.weeks[0];
+                        };
+
+                    }).error(function (response) {
+                        toaster.pop("error", "错误", response.error.message);
+            });
+        };
+        $scope.getBatches();
+
+        $scope.changeWeek = function (week) {
+            console.log("change");
+            $scope.filterWeek = week;
+        };
+
     }]);
 
 </script>
