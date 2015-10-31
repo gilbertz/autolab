@@ -185,9 +185,9 @@ public class BatchController extends BaseController{
                             + "-" + String.valueOf(c.get(Calendar.DAY_OF_MONTH)) +" "+ c.get(Calendar.DAY_OF_WEEK);
                     Map<String, Object> batchMap = new HashMap<>();
                     batchMap.put("id",batch.getId());
-                    batchMap.put("startTime",batch.getStartTime());
-                    logger.debug(batch.getStartTime().toString());
-                    batchMap.put("endTime",batch.getEndTime());
+                    //这里如果不toString(),返回结果就会有8个小时的时差，暂时不知道为什么
+                    batchMap.put("startTime",batch.getStartTime().toString());
+                    batchMap.put("endTime",batch.getEndTime().toString());
                     batchMap.put("allowNumber",batch.getAllowNumber());
                     batchMap.put("bookNum", batch.getBooks().size());
                     if(date.containsKey(dateTime)){
