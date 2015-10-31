@@ -5,7 +5,7 @@
             成绩详情
         </div>
         <div class="row wrapper">
-            <div class="col-sm-10 m-b-xs">
+            <div class="col-sm-9 m-b-xs">
                 <button class="btn btn-sm btn-default">{{bookDetail.batch.item.name}}</button>
                 <button class="btn btn-sm btn-default">第{{bookDetail.batch.week}}周</button>
                 <button class="btn btn-sm btn-default">{{bookDetail.batch.startTime}}</button>
@@ -13,11 +13,18 @@
 
             </div>
             <div class="col-sm-1">
-                <button type="button" ng-click="addRandomItem(row)"  ui-sref="app.experiment.create" class="btn btn-sm btn-success" tabindex="0">成绩发布
+                <button type="button" ng-click="saveGrade()" class="btn btn-sm btn-success" >保存
                 </button>
             </div>
+
             <div class="col-sm-1">
-                <a onclick="javascript:history.back(-1);" class="btn btn-sm btn-success">返回</a>
+                <button type="button" ng-click="publishGrade()" class="btn btn-sm btn-success">发布
+                </button>
+            </div>
+
+            <div class="col-sm-1">
+                <button type="button" onclick="javascript:history.back(-1);" class="btn btn-sm btn-success" >返回
+                </button>
             </div>
         </div>
         <div class="table-responsive">
@@ -33,10 +40,11 @@
                 <tbody>
                  <tr dir-paginate="book in books | itemsPerPage: pagination.pageSize"
          total-items="pagination.totalItems" current-page="pagination.page">
-                    <td>{{book.user.jaccountId}}</td>
-                    <td>{{book.user.jaccountChinesename}}</td>
-                    <td>{{book.user.jaccountDept}}</td>
-                    <td>{{book.grade}}</td>
+                    <td class="col-sm-3">{{book.user.jaccountId}}</td>
+                    <td class="col-sm-3">{{book.user.jaccountChinesename}}</td>
+                    <td class="col-sm-3">{{book.user.jaccountDept}}</td>
+                    <td class="col-sm-3"><input type="text" class="form-control" ng-model="book.grade">
+</td>
                 </tr>
                 </tbody>
             </table>
@@ -74,7 +82,6 @@
             $scope.getDetail();
         };
 
-        $scope.batchId = $stateParams.batchId;
         $scope.getDetail = function () {
             var url = $scope.app.host + '/batch/books/'+$stateParams.batchId;
             var params = {};
@@ -93,8 +100,42 @@
                     $scope.pop("error","错误",response.error.message);
                 });
         };
-
         $scope.getDetail();
+
+        $scope.saveGrade = function (){
+            var url = $scope.app.host + '/batch/grades';
+            var params = {};
+            params["batchId"] = $stateParams.batchId;
+            var studentIds = [];
+            var grades = [];
+            for (var i = 0; i < $scope.books.length; i++) {
+                studentIds.push($scope.books[i].user.id);
+                grades.push($scope.books[i].grade);
+            };
+            params["studentIds"] = studentIds;
+            params["grades"] = grades;
+            console.log(url + "?" + JSON.stringify(params));
+            $http.post(url, params)
+                .success(function (response){
+
+                }).error(function (response){
+                    $scope.pop("error","错误",response.error.message);
+                });
+
+        };
+
+        $scope.publishGrade = function (){
+            var url = $scope.app.host + '/batch/publish/'+ $stateParams.batchId;
+            var params = {};
+            console.log(url + "?" + JSON.stringify(params));
+            $http.post(url, params)
+                .success(function (response){
+
+                }).error(function (response){
+                    $scope.pop("error","错误",response.error.message);
+                });
+
+        };
     }]);
 
 </script>
