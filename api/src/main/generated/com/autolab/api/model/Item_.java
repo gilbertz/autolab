@@ -12,6 +12,8 @@ public abstract class Item_ extends com.autolab.api.model.BaseEntity_ {
 	public static volatile ListAttribute<Item, Batch> batches;
 	public static volatile SingularAttribute<Item, String> name;
 	public static volatile SingularAttribute<Item, Course> course;
+	public static volatile SingularAttribute<Item, String> place;
+	public static volatile SingularAttribute<Item, String> openTime;
 
 }
 

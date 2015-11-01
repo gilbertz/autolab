@@ -11,8 +11,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Batch_ extends com.autolab.api.model.BaseEntity_ {
 
 	public static volatile SingularAttribute<Batch, Item> item;
+	public static volatile SingularAttribute<Batch, Integer> week;
 	public static volatile ListAttribute<Batch, Book> books;
-	public static volatile SingularAttribute<Batch, String> laboratory;
+	public static volatile SingularAttribute<Batch, Publish> publish;
 	public static volatile SingularAttribute<Batch, Integer> allowNumber;
 	public static volatile SingularAttribute<Batch, Date> startTime;
 	public static volatile SingularAttribute<Batch, Date> endTime;

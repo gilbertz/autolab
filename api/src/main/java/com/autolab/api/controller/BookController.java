@@ -9,13 +9,18 @@ import net.sf.jasperreports.olap.mapping.Mapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.criteria.Predicate;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,8 +54,12 @@ public class BookController extends BaseController {
 
         Batch batch=book.getBatch();
 
-        if(bookDao.findByUserAndBatch(book.getUser(),book.getBatch()) != null){
-            throw new UtilException("you have already book this batch");
+        List<Book> books = getUser().getBooks();
+
+        for(int i = 0;i < books.size();i++){
+            if(batch.getItem().equals(books.get(i).getBatch().getItem())){
+                throw new UtilException("you have booked this item");
+            }
         }
 
         if(  batch.getBooks().size()>= batch.getAllowNumber()){
@@ -96,20 +105,33 @@ public class BookController extends BaseController {
     public  Map<String,?> find(
                                 @RequestParam(required = false, defaultValue = "0") Integer page,
                                @RequestParam(required = false, defaultValue = "20") Integer size){
-        List<Book> books = bookDao.findByUser(getUser());
 
-        List<Map<String, Object>> bookMapList = books
+        Pageable pageable = new PageRequest(page, size);
+
+        Page<Book> books = bookDao.findAll(((root, query, cb) -> {
+            Predicate predicate = cb.notEqual(root.get(Book_.status), Status.DELETED);
+            predicate = cb.and(predicate, cb.equal(root.get(Book_.user), getUser()));
+            return predicate;
+        }) , pageable);
+
+
+        List<Map<String, Object>> bookMapList = books.getContent()
                 .stream()
                 .map(book -> {
-                    Map<String, Object> bookMap = book.map();
+                    Map<String, Object> bookMap = new HashMap();
+                    bookMap.put("user", book.getUser());
+                    bookMap.put("batch", book.getBatch());
                     if (book.getBatch().getPublish() == Publish.NO && book.getGrade() != null) {
-                        book.setGrade(null);
+                        bookMap.put("grade", null);
+                    }
+                    else{
+                        bookMap.put("grade", book.getGrade());
                     }
                     return bookMap;
                 })
                 .collect(Collectors.toList());
 
-        Pager pager = new Pager(size, page, books.size(), Book.TAGS, bookMapList);
+        Pager pager = new Pager(size, page, books.getTotalElements(), Book.TAGS, bookMapList);
 
         return success(Pager.TAG, pager.map());
     }
