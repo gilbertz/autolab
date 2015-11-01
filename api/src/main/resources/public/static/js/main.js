@@ -100,20 +100,20 @@ angular.module('app')
             //通过各种方法，终于能够获取到oauth信息了。
             $rootScope.oauth2={};
 
-            var autolabDebug= false;
+            var autolabDebug= true;
 
             if(autolabDebug){
 
                 //UI开发阶段HardCode.
-                $rootScope.oauth2.accessToken="78167b6b-94c6-4bf9-9c7a-9d11a38693c1";
+                $rootScope.oauth2.accessToken="d76dcab2-ccd9-4bab-81a2-2ccf17caf5cf";
                 $rootScope.oauth2.tokenType="bearer";
                 $rootScope.oauth2.refreshToken="3ecd724e-a02d-40c4-8a5f-496e981e9f9d";
                 $rootScope.oauth2.expiresIn="86399";
                 $rootScope.oauth2.scope="read write";
                 $rootScope.oauth2.id = "1140329122";
                 $rootScope.oauth2.uid = "zhaoguoqi";
-                $rootScope.oauth2.student = "no";
-                $rootScope.oauth2.chinesename = "田作华";
+                $rootScope.oauth2.student = "yes";
+                $rootScope.oauth2.chinesename = "赵国旗";
                 $rootScope.oauth2.dept = "自动化系";
 
             }else{
