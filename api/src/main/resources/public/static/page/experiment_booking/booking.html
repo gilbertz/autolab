@@ -53,7 +53,7 @@
                                 <span style="white-space:nowrap;text-align: center" class="ng-binding ng-scope" >{{batch.bookNum}} / {{batch.allowNumber}}</span>
                             </div>
                         </div>
-                        <button class="btn btn-default  btn-success btn-xs" ng-click="book()" style="width: 40px;display:inline-block;float:right">预约</button>
+                        <button class="btn btn-default  btn-success btn-xs" ng-click="book(batch)" style="width: 40px;display:inline-block;float:right">预约</button>
                     </td>
                 </tbody>
             </table>
@@ -97,8 +97,18 @@
             $scope.filterWeek = week;
         };
 
-        $scope.book = function (){
+        $scope.book = function (batch){
+            var url = $scope.app.host + '/book/create' ;
+            var params = {"batchId": batch.id};
+            console.log(url + "?" + JSON.stringify(params));
 
+            $http.post(url,params)
+                    .success(function (response) {
+                        console.log(response);
+
+                    }).error(function (response) {
+                        toaster.pop("error", "错误", response.error.message);
+            });
 
         };
 
