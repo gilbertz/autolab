@@ -1,14 +1,17 @@
 package com.autolab.api.model;
 
+import com.autolab.api.util.AppContextManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.*;
@@ -71,6 +74,11 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
             user.setRole(User.Role.ROLE_ADMIN);
         }
         user.setStatus(Status.OK);
+
+        ApplicationContext appContextManager = AppContextManager.getAppContext();
+        PasswordEncoder passwordEncoder =appContextManager.getBean(PasswordEncoder.class);
+        user.setUsername(jaccountId);
+        user.setPassword(passwordEncoder.encode(jaccountId));
 
         return user;
     }

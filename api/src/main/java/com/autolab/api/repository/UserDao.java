@@ -13,5 +13,9 @@ public interface UserDao extends BaseDao<User, Long> {
 
     User findByJaccountChinesename(String jaccountChinesename);
 
+    User findByUsername(String username);
+
+    User findById(Long id);
+
 }
 

@@ -2,10 +2,13 @@ package com.autolab.api.config;
 
 import com.autolab.api.model.User;
 import com.autolab.api.repository.UserDao;
+import com.autolab.api.util.AppContextManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.token.AbstractTokenGranter;
@@ -20,10 +23,15 @@ public class JaccountTokenGranter extends AbstractTokenGranter {
     public static final String GRANT_TYPE = "jaccount";
     public static final Logger logger = LoggerFactory.getLogger(JaccountTokenGranter.class);
 
+    private AuthenticationManager authenticationManager;
 
-    JaccountTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService,
-                    OAuth2RequestFactory requestFactory) {
+    public JaccountTokenGranter(AuthenticationManager authenticationManager,AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService,
+                           OAuth2RequestFactory requestFactory) {
+
         super(tokenServices, clientDetailsService, requestFactory, JaccountTokenGranter.GRANT_TYPE);
+
+        this.authenticationManager=authenticationManager;
+
     }
 
     protected OAuth2Authentication getOAuth2Authentication(ClientDetails client, TokenRequest tokenRequest) {
@@ -62,7 +70,7 @@ public class JaccountTokenGranter extends AbstractTokenGranter {
 
 
 
-        ApplicationContext appContextManager = com.autolab.api.util.AppContextManager.getAppContext();
+        ApplicationContext appContextManager = AppContextManager.getAppContext();
         UserDao userDao =appContextManager.getBean(UserDao.class);
 
         User user = userDao.findByJaccountId(jaccountId);
@@ -78,14 +86,9 @@ public class JaccountTokenGranter extends AbstractTokenGranter {
 
         }
 
-        //Authentication authentication = new UsernamePasswordAuthenticationToken(aliUsername, aliPassword, user.getAuthorities());
-        Authentication authentication = new AnonymousAuthenticationToken(jaccountUid,user,user.getAuthorities());
-        Object principal=authentication.getPrincipal();
-        User jaccountUser=(User)principal;
-        OAuth2Authentication oAuth2authentication = new OAuth2Authentication(tokenRequest.createOAuth2Request(client), authentication);
-        Object principal1=oAuth2authentication.getUserAuthentication().getPrincipal();
-        User jaccountUser1=(User)principal1;
-
-        return oAuth2authentication;
+        Authentication authentication = new UsernamePasswordAuthenticationToken(jaccountId, jaccountId);
+        Authentication userAuth = authenticationManager.authenticate(authentication);
+        OAuth2Request storedRequest = getRequestFactory().createOAuth2Request(client, tokenRequest);
+        return new OAuth2Authentication(storedRequest, userAuth);
     }
 }

@@ -110,6 +110,7 @@ public class OAuth2ServerConfiguration {
             List<TokenGranter> granters = new ArrayList<>();
             granters.add(oldTokenGranter);
             granters.add(new JaccountTokenGranter(
+                    authenticationManager,
                     endpoints.getTokenServices(),
                     endpoints.getClientDetailsService(),
                     endpoints.getOAuth2RequestFactory()));

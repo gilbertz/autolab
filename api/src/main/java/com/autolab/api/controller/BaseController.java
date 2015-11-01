@@ -38,10 +38,6 @@ public abstract class BaseController {
      */
     protected boolean isLogin() {
 
-        if(apiConfig.isDebug()){
-            return true;
-        }
-
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         try {
@@ -66,11 +62,6 @@ public abstract class BaseController {
      * @return 当前用户的id.
      */
     protected Long getUserId() {
-
-        if(apiConfig.isDebug()){
-            return 1L;
-        }
-
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         try {
@@ -93,35 +84,7 @@ public abstract class BaseController {
      * @return User.
      */
     protected User getUser() {
-
-        if(apiConfig.isDebug()){
-            return userDao.findOne(getUserId());
-        }
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        User user;
-        try {
-            //TODO:这个地方竟然不能够转换，真的是奇葩了。
-            user = (User) principal;
-            return user;
-        } catch (Exception e1) {
-            try {
-                Method getId = principal.getClass().getMethod("getId");
-                Long userId = (Long) getId.invoke(principal);
-                user = userDao.findOne(userId);
-
-
-                if (user != null) {
-                    return user;
-                } else {
-                    throw new UtilException("请重新登录");
-                }
-
-            } catch (Exception e) {
-                throw new UtilException("请重新登录");
-            }
-        }
+        return userDao.findOne(getUserId());
     }
 
     protected Map<String, Object> error() {
