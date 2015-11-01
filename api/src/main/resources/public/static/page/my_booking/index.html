@@ -58,7 +58,7 @@
         $scope.pageChanged = function (newPage) {
             console.log(newPage);
             $scope.pagination.page = newPage;
-            $scope.getItems();
+            $scope.getBook();
         };
            $scope.getBook = function () {
                var url = $scope.app.host + '/book/page';
