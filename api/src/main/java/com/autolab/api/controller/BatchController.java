@@ -292,6 +292,13 @@ public class BatchController extends BaseController{
                     batchMap.put("bookNum", batch.getBooks().size());
                     batchMap.put("status", batch.getStatus());
                     batchMap.put("publish", batch.getPublish());
+                    Book book = bookDao.findByUserAndBatch(getUser(),batch);
+                    if(book == null){
+                        batchMap.put("isBook", false);
+                    }
+                    else {
+                        batchMap.put("isBook", true);
+                    }
                     if(date.containsKey(dateTime)){
                         List<Map> dateOfBatches = (List)date.get(dateTime);
                         dateOfBatches.add(batchMap);
