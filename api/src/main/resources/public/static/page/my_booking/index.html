@@ -21,7 +21,7 @@
                     <td>{{book.batch.item.place}}</td>
                     <td>{{book.batch.startTime}} 到{{book.batch.endTime}}</td>
                     <td>
-                        <button class="btn btn-default  btn-success btn-xs" ng-click="cancelBook()">取消预约</button>
+                        <button class="btn btn-default  btn-success btn-xs" ng-click="cancelBook(book)">取消预约</button>
                     </td>
                 </tr>
                 </tbody>
@@ -80,6 +80,20 @@
            };
            $scope.getBook();
     
+
+            $scope.cancelBook = function (book) {
+               var url = $scope.app.host + '/book/del/' + book.id;
+    
+               var params = {};
+               console.log(url + "?" + JSON.stringify(params));
+               $http.post(url, params)
+                       .success(function (response) {
+                           console.log(response);
+    
+                       }).error(function (response) {
+                           $scope.pop("error", "错误", response.error.message);
+                       });
+           };
     
         }]);
 
