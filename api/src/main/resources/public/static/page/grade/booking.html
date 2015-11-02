@@ -48,7 +48,7 @@
                 <tr ng-repeat = "date in filterWeek.dates">
                     <td>{{date.date}}</td>
                     <td ng-repeat = "batch in date.batches">
-                         <button class="btn btn-default  btn-success btn-xs" ui-sref="app.grade.detail({batchId:'{{batch.id}}'})">发布成绩</button>
+                        <button class="btn btn-default  btn-xs" ng-class="{'btn-danger': batch.status === 'DISABLED','btn-success': batch.status === 'OK' && batch.publish == null,'btn-info': batch.status === 'OK' && batch.publish != null}" ng-click="goDetail(batch)" >{{(batch.status==="OK") ? (batch.publish == null ? "发布成绩":"查看成绩"):"实验关闭"}}</button>
                     </td>
                 </tr>
                 </tbody>
@@ -92,6 +92,15 @@
         $scope.changeWeek = function (week) {
             console.log("change");
             $scope.filterWeek = week;
+        };
+
+        $scope.goDetail = function  (batch) {
+            if (batch.status==="OK") {
+                $state.go("app.grade.detail",{batchId:batch.id});
+            }else{
+                $scope.pop("error", "错误", "已关闭");
+
+            }
         };
         
     }]);

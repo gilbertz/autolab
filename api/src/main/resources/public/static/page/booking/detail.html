@@ -6,10 +6,10 @@
         </div>
         <div class="row wrapper">
             <div class="col-sm-11 m-b-xs">
-                <button class="btn btn-sm btn-default">{{bookDetail.batch.item.name}}</button>
-                <button class="btn btn-sm btn-default">第{{bookDetail.batch.week}}周</button>
-                <button class="btn btn-sm btn-default">{{bookDetail.batch.startTime}}</button>
-                <button class="btn btn-sm btn-default">{{bookDetail.batch.endTime}}</button>
+                <button class="btn btn-sm btn-default" ng-show="bookDetail != null">{{bookDetail.batch.item.name}}</button>
+                <button class="btn btn-sm btn-default" ng-show="bookDetail != null">第{{bookDetail.batch.week}}周</button>
+                <button class="btn btn-sm btn-default" ng-show="bookDetail != null">{{bookDetail.batch.startTime}}</button>
+                <button class="btn btn-sm btn-default" ng-show="bookDetail != null">{{bookDetail.batch.endTime}}</button>
 
             </div>
             <div class="col-sm-1">
