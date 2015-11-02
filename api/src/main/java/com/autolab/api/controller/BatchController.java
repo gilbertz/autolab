@@ -71,7 +71,10 @@ public class BatchController extends BaseController{
         if(form.getId() == null){
             throw  new UtilException("id required");
         }
-        Batch batch = batchDao.findByIdAndStatus(form.getId(), Status.OK);
+        Batch batch = batchDao.findOne(form.getId());
+        if(batch == null){
+            throw  new UtilException("batch noe exits");
+        }
         form.updateBatch(batch);
         batchDao.save(batch);
         return success(Batch.TAG,batch);
