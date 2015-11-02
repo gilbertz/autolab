@@ -8,8 +8,8 @@
             <div class="col-sm-11 m-b-xs">
                 <button class="btn btn-sm btn-default" ng-show="bookDetail != null">{{bookDetail.batch.item.name}}</button>
                 <button class="btn btn-sm btn-default" ng-show="bookDetail != null">第{{bookDetail.batch.week}}周</button>
-                <button class="btn btn-sm btn-default" ng-show="bookDetail != null">{{bookDetail.batch.startTime}}</button>
-                <button class="btn btn-sm btn-default" ng-show="bookDetail != null">{{bookDetail.batch.endTime}}</button>
+                <button class="btn btn-sm btn-default" ng-show="bookDetail != null">{{bookDetail.batch.startTime | time2simpleDateTime}} </button>
+                <button class="btn btn-sm btn-default" ng-show="bookDetail != null">{{bookDetail.batch.endTime | time2simpleDateTime}}</button>
 
             </div>
             <div class="col-sm-1">

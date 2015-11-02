@@ -19,7 +19,7 @@
          total-items="pagination.totalItems" current-page="pagination.page">
                     <td>{{book.batch.item.name}}</td>
                     <td>{{book.batch.item.place}}</td>
-                    <td>{{book.batch.startTime}} 到{{book.batch.endTime}}</td>
+                    <td>{{book.batch.startTime | time2simpleDateTime}} 到{{book.batch.endTime | time2simpleDateTime}}</td>
                     <td>
                         <button class="btn btn-default  btn-success btn-xs" ng-click="cancelBook(book)">取消预约</button>
                     </td>
@@ -90,7 +90,8 @@
                $http.post(url, params)
                        .success(function (response) {
                            console.log(response);
-    
+                           $scope.pop("success", "", "取消预约成功");
+                           $scope.getBook();
                        }).error(function (response) {
                            $scope.pop("error", "错误", response.error.message);
                        });

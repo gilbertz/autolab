@@ -6,19 +6,19 @@
         </div>
         <div class="row wrapper">
             <div class="col-sm-9 m-b-xs">
-                <button class="btn btn-sm btn-default">{{bookDetail.batch.item.name}}</button>
-                <button class="btn btn-sm btn-default">第{{bookDetail.batch.week}}周</button>
-                <button class="btn btn-sm btn-default">{{bookDetail.batch.startTime}}</button>
-                <button class="btn btn-sm btn-default">{{bookDetail.batch.endTime}}</button>
+                <button class="btn btn-sm btn-default" ng-show="bookDetail != null">{{bookDetail.batch.item.name}}</button>
+                <button class="btn btn-sm btn-default" ng-show="bookDetail != null">第{{bookDetail.batch.week}}周</button>
+                <button class="btn btn-sm btn-default" ng-show="bookDetail != null">{{bookDetail.batch.startTime | time2simpleDateTime}} </button>
+                <button class="btn btn-sm btn-default" ng-show="bookDetail != null">{{bookDetail.batch.endTime | time2simpleDateTime}}</button>
 
             </div>
             <div class="col-sm-1">
-                <button type="button" ng-click="saveGrade()" class="btn btn-sm btn-success" >保存
+                <button type="button" ng-click="saveGrade()" ng-show="bookDetail.batch.publish == 'NO'"class="btn btn-sm btn-info" >保存
                 </button>
             </div>
 
             <div class="col-sm-1">
-                <button type="button" ng-click="publishGrade()" class="btn btn-sm btn-success">发布
+                <button type="button" ng-click="publishGrade()" ng-show="bookDetail.batch.publish == 'NO'" class="btn btn-sm btn-danger">发布
                 </button>
             </div>
 
@@ -117,7 +117,7 @@
             console.log(url + "?" + JSON.stringify(params));
             $http.post(url, params)
                 .success(function (response){
-
+                $scope.pop("success", "", "保存成绩成功，全部成绩填写后可以点击发布");
                 }).error(function (response){
                     $scope.pop("error","错误",response.error.message);
                 });
@@ -130,6 +130,7 @@
             console.log(url + "?" + JSON.stringify(params));
             $http.post(url, params)
                 .success(function (response){
+                $scope.pop("success", "", "发布成绩成功");
 
                 }).error(function (response){
                     $scope.pop("error","错误",response.error.message);

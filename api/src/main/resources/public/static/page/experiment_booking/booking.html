@@ -106,6 +106,7 @@
                     $http.post(url,params)
                     .success(function (response) {
                         console.log(response);
+                        $scope.pop("success", "", "预约成功");
                         batch.isBook = true;
                         batch.bookNum = batch.bookNum+1;
                     }).error(function (response) {
