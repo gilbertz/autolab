@@ -16,7 +16,9 @@ sudo git pull
 echo "remove some core files"
 sudo rm -rf ./doc
 sudo rm ./.gitignore
-sudo rm ./README.md
+
+"change autolab.debug=false"
+sudo sed -i "s/autolab.debug=true/autolab.debug=false/g" ./api/src/main/resources/application.properties
 
 echo "set the permission 700 of .git"
 sudo chmod 700 .git
