@@ -59,7 +59,10 @@
            $http.post(url, params)
                    .success(function (response) {
                        console.log(response);
+                       $scope.pop("success","","创建实验项目成功");
+
                        $state.go("app.experiment.index");
+
                    }).error(function (response) {
                        $scope.pop("error", "错误", response.error.message);
                    });

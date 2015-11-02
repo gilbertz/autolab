@@ -131,7 +131,7 @@
             $http.post(url, params)
                 .success(function (response){
                 $scope.pop("success", "", "发布成绩成功");
-
+                history.back(-1);
                 }).error(function (response){
                     $scope.pop("error","错误",response.error.message);
                 });

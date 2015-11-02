@@ -15,6 +15,38 @@ angular.module('app')
             return TimeService.str2simpleDate(params);
         }
     })
+    .filter('date2week', function(TimeService) {
+
+        //传入的参数既可以是一个整形的timestamp，也可以是一个yyyy-MM-dd或者yyyy-MM-ddTHH:mm格式的字符串
+        return function(params) {
+            var week= params.substr(0,1);
+            switch (week){
+                case "1":
+                week = "星期一";
+                break;
+                case "2":
+                week = "星期二";
+                break;
+                case "3":
+                week = "星期三";
+                break;
+                case "4":
+                week = "星期四";
+                break;
+                case "5":
+                week = "星期五";
+                break;
+                case "6":
+                week = "星期六";
+                break;
+                case "7":
+                week = "星期日";
+                break;
+            }
+            params = params.substr(1) + week;
+            return params;
+        }
+    })
     .filter('time2simpleDateTime', function(TimeService) {
         //传入的参数既可以是一个整形的timestamp，也可以是一个yyyy-MM-dd或者yyyy-MM-ddTHH:mm格式的字符串
         return function(params) {

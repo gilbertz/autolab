@@ -5,7 +5,7 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            自动控制原理实验一
+          预约管理
         </div>
         <div class="table-responsive">
             <table st-table="rowCollectionBasic" class="table table-striped table-bordered">
@@ -49,7 +49,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat = "date in filterWeek.dates">
-                    <td>{{date.date}}</td>
+                    <td>{{date.date | date2week}}</td>
                     <td ng-repeat = "batch in date.batches">
                       <div style="display:inline-block" >
                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px" ng-click="open(batch)">{{batch.allowNumber}}</button>
