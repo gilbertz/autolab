@@ -105,7 +105,7 @@ angular.module('app')
             if(autolabDebug){
 
                 //UI开发阶段HardCode.
-                $rootScope.oauth2.accessToken="d76dcab2-ccd9-4bab-81a2-2ccf17caf5cf";
+                $rootScope.oauth2.accessToken="3d1b5d21-24e9-4cbe-931c-361b937230c5";
                 // $rootScope.oauth2.accessToken="2939cac6-b46d-4c00-a565-f1e6d6d52f00";
                 $rootScope.oauth2.tokenType="bearer";
                 $rootScope.oauth2.refreshToken="3ecd724e-a02d-40c4-8a5f-496e981e9f9d";

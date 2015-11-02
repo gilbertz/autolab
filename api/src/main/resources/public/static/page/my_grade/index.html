@@ -19,7 +19,7 @@
          total-items="pagination.totalItems" current-page="pagination.page">
                     <td>{{book.batch.item.name}}</td>
                     <td>{{book.batch.item.place}}</td>
-                    <td>{{book.batch.startTime}} 到{{book.batch.endTime}}</td>
+                    <td>{{book.batch.startTime | time2simpleDateTime}} 到{{book.batch.endTime | time2simpleDateTime}}</td>
                     <td>{{book.grade}}</td>
                 </tr>
                 </tbody>

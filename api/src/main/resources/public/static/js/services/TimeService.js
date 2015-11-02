@@ -45,6 +45,11 @@ Date.prototype.format = function (fmt) {
     return fmt;
 };
 
+function ISODateString(d) { 
+    d = d.replace(" ","T");
+    return d;
+} 
+
 Date.prototype.setISO8601 = function (string) {
     var regexp = "([0-9]{4})(-([0-9]{2})(-([0-9]{2})" +
         "(T([0-9]{2}):([0-9]{2})(:([0-9]{2})(\.([0-9]+))?)?" +
@@ -54,11 +59,13 @@ Date.prototype.setISO8601 = function (string) {
         var offset = 0;
         var date = new Date(d[1], 0, 1);
 
+
         if (d[3]) {
             date.setMonth(d[3] - 1);
         }
         if (d[5]) {
             date.setDate(d[5]);
+
         }
         if (d[7]) {
             date.setHours(d[7]);
@@ -119,6 +126,19 @@ angular.module('app').service('TimeService', function () {
         d.setISO8601(str);
 
         return d.format("yyyy-MM-dd");
+
+    };
+
+    this.time2simpleDateTime = function (str) {
+
+        if (!str) {
+            return "未知时间";
+        }
+
+        var d = new Date();
+        str = ISODateString(str);
+        d.setISO8601(str);
+        return d.format("yyyy-MM-dd HH:mm");
 
     };
 

@@ -15,6 +15,12 @@ angular.module('app')
             return TimeService.str2simpleDate(params);
         }
     })
+    .filter('time2simpleDateTime', function(TimeService) {
+        //传入的参数既可以是一个整形的timestamp，也可以是一个yyyy-MM-dd或者yyyy-MM-ddTHH:mm格式的字符串
+        return function(params) {
+            return TimeService.time2simpleDateTime(params);
+        }
+    })
     .filter('simpleDateTime', function(TimeService) {
         //传入的参数既可以是一个整形的timestamp，也可以是一个yyyy-MM-dd或者yyyy-MM-ddTHH:mm格式的字符串
         return function(params) {
