@@ -101,7 +101,7 @@ public class HomeController extends  BaseController{
     public String home(Model model,HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
         String sid = "jaexperimentreservation20150922";
-        String keyDir = this.getClass().getResource("/public/static").toString();
+        String keyDir = this.getClass().getResource("/public/static").getPath();
         String dir = keyDir.substring(0,5);
         logger.debug(dir);
         if  (dir.equals("file:")){
