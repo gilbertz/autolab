@@ -1,4 +1,7 @@
 <div class="wrapper-md" style="padding-top:0!important;" ng-controller="ExperimentBookingController">
+    <script type="text/ng-template" id="myModalContent.html">
+        <div ng-include="'/static/page/experiment/modal.html'"></div>
+    </script>
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -48,13 +51,10 @@
                 <tr ng-repeat = "date in filterWeek.dates">
                     <td>{{date.date}}</td>
                     <td ng-repeat = "batch in date.batches">
-                      <div ng-controller="ModalDemoCtrl" style="display:inline-block" >
-                        <script type="text/ng-template" id="myModalContent.html">
-                         <div ng-include="'/static/page/experiment/modal.html'"></div>
-                       </script>
-                       <button class="btn btn-default  btn-info btn-xs" style="width: 40px" ng-click="open(batch.id)">{{batch.allowNumber}}</button>
+                      <div style="display:inline-block" >
+                       <button class="btn btn-default  btn-info btn-xs" style="width: 40px" ng-click="open(batch)">{{batch.allowNumber}}</button>
                      </div>
-                        <button class="btn btn-default  btn-success btn-xs" style="width: 40px;display:inline-block;float:right" ng-click="changeStatus(batch)">{{batch.status}}</button>
+                        <button class="btn btn-default btn-xs" ng-class="{'btn-success': batch.status === 'OK'}" style="width: 40px;display:inline-block;float:right" ng-click="changeStatus(batch)">{{(batch.status==="OK") ? "开放":"关闭"}}</button>
                     </td>
                 </tr>
                 </tbody>
@@ -71,7 +71,34 @@
 </div>
 
 <script type="text/javascript">
-    app.controller('ExperimentBookingController', ['$scope','$http','$modal','$stateParams' , function($scope, $http, $modal,$stateParams) {
+
+    app.controller('ModalInstanceCtrl', ['$scope', '$http','$modalInstance', 'batchId','toaster', function($scope, $http, $modalInstance, batchId,toaster) {
+        $scope.batch = {};
+        $scope.batch.batchId = batchId;
+
+    $scope.ok = function () {
+            console.log("changeAllowNumber");
+            var url = 'http://localhost:8025' + '/batch/edit';
+           var params = {"id": $scope.batch.batchId,"allowNumber":$scope.batch.allowNumber};
+           console.log(url + "?" + JSON.stringify(params));
+           $http.post(url, params)
+                   .success(function (response) {
+                       console.log(response);
+
+                   }).error(function (response) {
+                        toaster.pop("error", "错误", response.error.message);
+                   });
+          $modalInstance.close($scope.batch);
+
+        };
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+
+  }]); 
+
+    app.controller('ExperimentBookingController', ['$scope','$http','$modal','$stateParams' ,'$log', function($scope, $http, $modal,$stateParams,$log) {
 
         //根据外面来传进来的itemId刷新本页item详情。
         var itemId = $stateParams.itemId;
@@ -90,7 +117,7 @@
                         };
 
                     }).error(function (response) {
-                        toaster.pop("error", "错误", response.error.message);
+                        $scope.pop("error", "错误", response.error.message);
             });
         };
         $scope.getBatches();
@@ -101,13 +128,13 @@
         };
 
         $scope.changeStatus = function(batch){
-
            var url = $scope.app.host + '/batch/edit';
            var params = {"id": batch.id,"status":"DISABLED"};
            console.log(url + "?" + JSON.stringify(params));
            $http.post(url, params)
                    .success(function (response) {
                        console.log(response);
+                       batch.status = "DISABLED";
 
                    }).error(function (response) {
                        $scope.pop("error", "错误", response.error.message);
@@ -115,59 +142,28 @@
 
         };
 
-    }]);
-
-    app.controller('ModalDemoCtrl', ['$scope', '$modal', '$log', function($scope, $modal, $log) {
-
-    $scope.items = ['item1', 'item2', 'item3'];
-      $scope.open = function (batchId) {
+      $scope.open = function (batch) {
       console.log("changeNumber");
+      console.log(batch);
       var modalInstance = $modal.open({
         templateUrl: 'myModalContent.html',
         controller: 'ModalInstanceCtrl',
         size: 'sm',
         resolve: {
           batchId: function () {
-            return batchId;
+            return batch.id;
           }
         }
       });
 
       modalInstance.result.then(function (selectedItem) {
-        $scope.selected = selectedItem;
+        console.log (selectedItem);
+        batch.allowNumber = selectedItem.allowNumber;
       }, function () {
         $log.info('Modal dismissed at: ' + new Date());
       });
     };
-  }])
-  ; 
 
-    app.controller('ModalInstanceCtrl', ['$scope', '$http','$modalInstance', 'batchId', function($scope, $http, $modalInstance, batchId) {
-        $scope.batch = {};
-        $scope.batch.batchId = batchId;
-
-    $scope.ok = function () {
-            console.log("changeAllowNumber");
-            var url = 'http://localhost:8025' + '/batch/edit';
-           var params = {"id": $scope.batch.batchId,"allowNumber":$scope.batch.allowNumber};
-           console.log(url + "?" + JSON.stringify(params));
-           $http.post(url, params)
-                   .success(function (response) {
-                       console.log(response);
-
-
-                   }).error(function (response) {
-                       $scope.pop("error", "错误", response.error.message);
-                   });
-          $modalInstance.close($scope.batch);
-
-        };
-
-    $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
-    };
-
-  }])
-  ; 
+  }]); 
 
 </script>
