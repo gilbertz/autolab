@@ -29,6 +29,12 @@ sudo sed -i "s/120.26.72.17/127.0.0.1/g" ./api/src/main/resources/application.pr
 echo "hide sql"
 sudo sed -i "s/spring.jpa.show-sql/#spring.jpa.show-sql/g" ./api/src/main/resources/application.properties
 
+echo "Change the frontend's host to 120.26.72.17:8025:"
+sudo sed -i "s/localhost/120.26.72.17/g" ./api/src/main/resources/public/static/js/main.js
+
+echo "change wakaDebug=false;"
+sudo sed -i "s/autolabDebug=true/autolabDebug=false/g" ./api/src/main/resources/public/static/js/main.js
+
 echo "change the log appender"
 sudo sed -i "s/<!--CONSOLE_COMMENT1-->/<!--CONSOLE_COMMENT1/g" ./api/src/main/resources/logback.xml
 sudo sed -i "s/<!--CONSOLE_COMMENT2-->/CONSOLE_COMMENT2-->/g" ./api/src/main/resources/logback.xml
