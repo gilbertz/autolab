@@ -54,7 +54,7 @@
                       <div style="display:inline-block" >
                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px" ng-click="open(batch)">{{batch.allowNumber}}</button>
                      </div>
-                        <button class="btn btn-default btn-xs" ng-class="{'btn-success': batch.status === 'OK'}" style="width: 40px;display:inline-block;float:right" ng-click="changeStatus(batch)">{{(batch.status==="OK") ? "开放":"关闭"}}</button>
+                        <button class="btn btn-default btn-xs" ng-class="{'btn-danger': batch.status === 'DISABLED','btn-success': batch.status === 'OK'}" style="width: 40px;display:inline-block;float:right" ng-click="changeStatus(batch)">{{(batch.status==="OK") ? "开放":"关闭"}}</button>
                     </td>
                 </tr>
                 </tbody>

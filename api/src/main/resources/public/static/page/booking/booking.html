@@ -48,12 +48,8 @@
                 <tr ng-repeat = "date in filterWeek.dates">
                     <td>{{date.date}}</td>
                     <td ng-repeat = "batch in date.batches">
-                        <div class="progress-sm progress ng-isolate-scope" value="dynamic" type="info" style="display:inline-block; width: 50px;margin-bottom: 0px;margin-top:5px" >
-                            <div class="progress-bar progress-bar-info" ng-class="type &amp;&amp; 'progress-bar-' + type" role="progressbar" aria-valuenow="29" aria-valuemin="0" aria-valuemax="100" ng-style="{width: percent + '%'}" aria-valuetext="50%" ng-transclude="" style="width:{{batch.bookNum}}/{{batch.allowNumber}};text-align: center">
-                                <span style="white-space:nowrap;text-align: center" class="ng-binding ng-scope" >{{batch.bookNum}} / {{batch.allowNumber}}</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-default  btn-success btn-xs" ui-sref="app.booking.detail({batchId:'{{batch.id}}'})" style="width: 40px;display:inline-block;float:right">详细</button>
+                        <progressbar max="batch.allowNumber" value="batch.bookNum" type="info" class="progress-sm m-t-sm" style="display:inline-block; width: 50px;margin-bottom: 0px;margin-top:5px"><span style="white-space:nowrap;">{{batch.bookNum}} / {{batch.allowNumber}}</span></progressbar>   
+                        <button class="btn btn-default  btn-xs" ng-class="{'btn-danger': batch.status === 'DISABLED','btn-success': batch.status === 'OK'}" style="width: 40px;display:inline-block;float:right" ng-click="goDetail(batch)" >{{(batch.status==="OK") ? "详细":"关闭"}}</button>
                     </td>
                 </tbody>
             </table>
@@ -69,7 +65,7 @@
 </div>
 
 <script type="text/javascript">
-    app.controller('BookingBookingController', ['$scope', '$http', '$stateParams',function ($scope, $http,$stateParams) {
+    app.controller('BookingBookingController', ['$scope', '$http', '$stateParams','$state',function ($scope, $http,$stateParams,$state) {
         //根据外面来传进来的itemId刷新本页item详情。
         var itemId = $stateParams.itemId;
 
@@ -87,7 +83,7 @@
                         };
 
                     }).error(function (response) {
-                        toaster.pop("error", "错误", response.error.message);
+                        $scope.pop("error", "错误", response.error.message);
             });
         };
         $scope.getBatches();
@@ -96,6 +92,16 @@
             console.log("change");
             $scope.filterWeek = week;
         };
+
+        $scope.goDetail = function  (batch) {
+            if (batch.status==="OK") {
+                $state.go("app.booking.detail",{batchId:batch.id});
+            }else{
+                $scope.pop("error", "错误", "已关闭");
+
+            }
+        };
+
 
     }]);
 
