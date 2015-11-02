@@ -118,7 +118,7 @@ public class HomeController extends  BaseController{
         }else {
             keyDir = "/var/www/autolab/api/src/main/resources/public/static";
         }
-        logger.debug(keyDir);
+        logger.debug("login"+keyDir);
 
         JAccountManager jam = new JAccountManager(sid, keyDir);
 
@@ -171,7 +171,7 @@ public class HomeController extends  BaseController{
         }else {
             keyDir = "/var/www/autolab/api/src/main/resources/public/static";
         }
-        logger.debug(keyDir);
+        logger.debug("loginout:"+keyDir);
 
         JAccountManager jam = new JAccountManager(sid, keyDir);
         boolean loggedout = jam.logout(request, response, request.getRequestURI());
