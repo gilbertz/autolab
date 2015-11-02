@@ -11,9 +11,11 @@ import com.ning.http.client.AsyncHttpClientConfig;
 import com.ning.http.client.Param;
 import com.ning.http.client.Response;
 import edu.sjtu.jaccount.JAccountManager;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +50,10 @@ public class HomeController extends  BaseController{
 
     @Autowired
     ApiConfig config;
+
+    @Getter
+    @Value("${autolab.debug}")
+    private boolean debug;
 
     //通过jaccount参数换取授权access_token
     public OAuth2 getOAuth2(String url,List<Param> params) {
@@ -103,10 +109,15 @@ public class HomeController extends  BaseController{
     public String home(Model model,HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
         String sid = "jaexperimentreservation20150922";
-        String keyDir = this.getClass().getResource("/public/static").getPath();
-        //找到路径的开头 /
-        int index = keyDir.indexOf("/");
-        keyDir = keyDir.substring(index);
+        String keyDir;
+        if (debug){
+            keyDir = this.getClass().getResource("/public/static").getPath();
+            //找到路径的开头 /
+            int index = keyDir.indexOf("/");
+            keyDir = keyDir.substring(index);
+        }else {
+            keyDir = "/var/www/autolab/api/src/main/resources/public/static";
+        }
         logger.debug(keyDir);
 
         JAccountManager jam = new JAccountManager(sid, keyDir);
