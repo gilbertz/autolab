@@ -101,8 +101,7 @@ public class HomeController extends  BaseController{
     public String home(Model model,HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
         String sid = "jaexperimentreservation20150922";
-        String keyDir = this.getClass().getResource("/public/static").toString();
-        keyDir = keyDir.substring(5);
+        String keyDir = this.getClass().getResource("/public/static").getPath();
         logger.debug(keyDir);
 
         JAccountManager jam = new JAccountManager(sid, keyDir);
