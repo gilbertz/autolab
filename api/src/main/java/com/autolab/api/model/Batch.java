@@ -35,7 +35,7 @@ public class Batch extends BaseEntity{
     private Date endTime;
 
     @Enumerated(EnumType.STRING)
-    private Publish publish;
+    private Publish publish = Publish.NO;
 
     @JsonIgnore
     @OneToMany(mappedBy = "batch", cascade = {}, fetch = FetchType.LAZY)
