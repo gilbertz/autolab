@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -102,11 +104,9 @@ public class HomeController extends  BaseController{
 
         String sid = "jaexperimentreservation20150922";
         String keyDir = this.getClass().getResource("/public/static").getPath();
-        String dir = keyDir.substring(0,5);
-        logger.debug(dir);
-        if  (dir.equals("file:")){
-            keyDir = keyDir.substring(5);
-        }
+        //找到路径的开头 /
+        int index = keyDir.indexOf("/");
+        keyDir = keyDir.substring(index);
         logger.debug(keyDir);
 
         JAccountManager jam = new JAccountManager(sid, keyDir);
