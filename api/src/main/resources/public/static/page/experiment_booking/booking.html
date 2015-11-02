@@ -48,12 +48,8 @@
                 <tr ng-repeat = "date in filterWeek.dates">
                     <td>{{date.date}}</td>
                     <td ng-repeat = "batch in date.batches">
-                        <div class="progress-sm progress ng-isolate-scope" value="dynamic" type="info" style="display:inline-block; width: 50px;margin-bottom: 0px;margin-top:5px" >
-                            <div class="progress-bar progress-bar-info" ng-class="type &amp;&amp; 'progress-bar-' + type" role="progressbar" aria-valuenow="29" aria-valuemin="0" aria-valuemax="100" ng-style="{width: percent + '%'}" aria-valuetext="50%" ng-transclude="" style="width:{{batch.bookNum}}/{{batch.allowNumber}};text-align: center">
-                                <span style="white-space:nowrap;text-align: center" class="ng-binding ng-scope" >{{batch.bookNum}} / {{batch.allowNumber}}</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-default  btn-success btn-xs" ng-click="book(batch)" style="width: 40px;display:inline-block;float:right">预约</button>
+                        <progressbar max="batch.allowNumber" value="batch.bookNum" type="info" class="progress-sm m-t-sm" style="display:inline-block; width: 50px;margin-bottom: 0px;margin-top:5px"><span style="white-space:nowrap;">{{batch.bookNum}} / {{batch.allowNumber}}</span></progressbar>  
+                        <button class="btn btn-default btn-xs" ng-class="{'btn-danger': batch.status === 'DISABLED' || batch.bookNum === batch.allowNumber,'btn-success': batch.status === 'OK'}" ng-click="book(batch)" style="width: 45px;display:inline-block;float:right">{{batch.status === "OK" ? (batch.bookNum === batch.allowNumber ? "已满" :(batch.isBook === false ? "预约":"已预约")):"关闭"}}</button>
                     </td>
                 </tbody>
             </table>
@@ -87,7 +83,7 @@
                         };
 
                     }).error(function (response) {
-                        toaster.pop("error", "错误", response.error.message);
+                        $scope.pop("error", "错误", response.error.message);
             });
         };
         $scope.getBatches();
@@ -98,17 +94,33 @@
         };
 
         $scope.book = function (batch){
-            var url = $scope.app.host + '/book/create' ;
-            var params = {"batchId": batch.id};
-            console.log(url + "?" + JSON.stringify(params));
+            if (batch.status == "OK") {
+                if (batch.bookNum != batch.allowNumber) {
+                    if (batch.isBook) {
+                        $scope.pop("error", "错误", "已经预约");
+                    }else{
+                    var url = $scope.app.host + '/book/create' ;
+                    var params = {"batchId": batch.id};
+                    console.log(url + "?" + JSON.stringify(params));
 
-            $http.post(url,params)
+                    $http.post(url,params)
                     .success(function (response) {
                         console.log(response);
-
+                        batch.isBook = true;
+                        batch.bookNum = batch.bookNum+1;
                     }).error(function (response) {
-                        toaster.pop("error", "错误", response.error.message);
-            });
+                        $scope.pop("error", "错误", response.error.message);
+                    });
+                    };
+
+                }else{
+                    $scope.pop("error", "错误", "人数已满");
+                };
+            }else{
+                $scope.pop("error", "错误", "实验关闭");
+
+            }
+
 
         };
 

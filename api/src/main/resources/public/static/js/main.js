@@ -105,16 +105,16 @@ angular.module('app')
             if(autolabDebug){
 
                 //UI开发阶段HardCode.
-                //$rootScope.oauth2.accessToken="d76dcab2-ccd9-4bab-81a2-2ccf17caf5cf";
-                $rootScope.oauth2.accessToken="2939cac6-b46d-4c00-a565-f1e6d6d52f00";
+                $rootScope.oauth2.accessToken="d76dcab2-ccd9-4bab-81a2-2ccf17caf5cf";
+                // $rootScope.oauth2.accessToken="2939cac6-b46d-4c00-a565-f1e6d6d52f00";
                 $rootScope.oauth2.tokenType="bearer";
                 $rootScope.oauth2.refreshToken="3ecd724e-a02d-40c4-8a5f-496e981e9f9d";
                 $rootScope.oauth2.expiresIn="86399";
                 $rootScope.oauth2.scope="read write";
                 $rootScope.oauth2.id = "1140329122";
                 $rootScope.oauth2.uid = "zhaoguoqi";
-                $rootScope.oauth2.student = "no";
-                $rootScope.oauth2.chinesename = "田作华";
+                $rootScope.oauth2.student = "yes";
+                $rootScope.oauth2.chinesename = "赵国旗";
                 $rootScope.oauth2.dept = "自动化系";
 
             }else{
