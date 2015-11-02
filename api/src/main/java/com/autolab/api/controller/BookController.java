@@ -119,6 +119,7 @@ public class BookController extends BaseController {
                 .stream()
                 .map(book -> {
                     Map<String, Object> bookMap = new HashMap();
+                    bookMap.put("id", book.getId());
                     bookMap.put("user", book.getUser());
                     bookMap.put("batch", book.getBatch());
                     if (book.getBatch().getPublish() == Publish.NO && book.getGrade() != null) {
