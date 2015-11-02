@@ -100,7 +100,7 @@ angular.module('app')
             //通过各种方法，终于能够获取到oauth信息了。
             $rootScope.oauth2={};
 
-            var autolabDebug= true;
+            var autolabDebug= false;
 
             if(autolabDebug){
 
