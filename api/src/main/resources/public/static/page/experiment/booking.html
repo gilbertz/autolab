@@ -129,12 +129,16 @@
 
         $scope.changeStatus = function(batch){
            var url = $scope.app.host + '/batch/edit';
-           var params = {"id": batch.id,"status":"DISABLED"};
+           if (batch.status==="OK") {
+             var params = {"id": batch.id,"status":"DISABLED"};
+           }else{
+             var params = {"id": batch.id,"status":"OK"};
+           };
            console.log(url + "?" + JSON.stringify(params));
            $http.post(url, params)
                    .success(function (response) {
                        console.log(response);
-                       batch.status = "DISABLED";
+                       batch.status = response.batch.status;
 
                    }).error(function (response) {
                        $scope.pop("error", "错误", response.error.message);
