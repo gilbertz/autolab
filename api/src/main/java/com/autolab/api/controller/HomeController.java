@@ -103,6 +103,7 @@ public class HomeController extends  BaseController{
         String sid = "jaexperimentreservation20150922";
         String keyDir = this.getClass().getResource("/public/static").toString();
         keyDir = keyDir.substring(5);
+        logger.debug(keyDir);
 
         JAccountManager jam = new JAccountManager(sid, keyDir);
 
