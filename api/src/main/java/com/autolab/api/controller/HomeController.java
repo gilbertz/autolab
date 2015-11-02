@@ -162,8 +162,16 @@ public class HomeController extends  BaseController{
     public String loginout(Model model,HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
         String sid = "jaexperimentreservation20150922";
-        String keyDir = this.getClass().getResource("/public/static").toString();
-        keyDir = keyDir.substring(5);
+        String keyDir;
+        if (debug){
+            keyDir = this.getClass().getResource("/public/static").getPath();
+            //找到路径的开头 /
+            int index = keyDir.indexOf("/");
+            keyDir = keyDir.substring(index);
+        }else {
+            keyDir = "/var/www/autolab/api/src/main/resources/public/static";
+        }
+        logger.debug(keyDir);
 
         JAccountManager jam = new JAccountManager(sid, keyDir);
         boolean loggedout = jam.logout(request, response, request.getRequestURI());
