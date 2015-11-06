@@ -138,7 +138,8 @@ public class HomeController extends  BaseController{
             params.add(new Param("client_secret", "f506d105142e2928e2e37675b560ff75"));
             params.add(new Param("client_id", "clientapp"));
 
-            String url = "http://localhost:2046/oauth/token";
+
+            String url = "http://120.26.72.17:8025/oauth/token";
             OAuth2 oAuth2 = getOAuth2(url, params);
 
             model.addAttribute("oauth2", oAuth2);
