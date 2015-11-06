@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.autolab.api.form.ItemForm;
+import com.autolab.api.form.ItemForm2;
 
 import javax.persistence.criteria.Predicate;
 import javax.validation.Valid;
@@ -53,6 +54,22 @@ public class ItemController extends BaseController{
             throw new UtilException("you have no authorization");
         }
         itemService.createItem(item, form.getAllowNumber());
+        return success(Item.TAG, item);
+    }
+
+    /**
+     * create a item
+     * @param form2
+     * @return
+     */
+    //@PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+    @RequestMapping(value = "/create2") //name,place,time,allowNumber,courseId
+    public Map<String,?> create2(@Valid ItemForm2 form2){
+        Item item = form2.generateItem();
+        /*if(getUser() != item.getCourse().getUser()){
+            throw new UtilException("you have no authorization");
+        }*/
+        //itemService.createItem2(item, form2.getAllowNumber(),form2.getTimes());
         return success(Item.TAG, item);
     }
 

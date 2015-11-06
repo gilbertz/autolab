@@ -1,6 +1,7 @@
 package com.autolab.api.service;
 
 import com.autolab.api.exception.UtilException;
+import com.autolab.api.form.Time;
 import com.autolab.api.model.Batch;
 import com.autolab.api.model.Item;
 import com.autolab.api.repository.BatchDao;
@@ -89,7 +90,26 @@ public class ItemService {
             }
 
         }
+        //itemDao.save(item);
+        //batchDao.save(batches);
+    }
+
+    @Transactional(rollbackOn = UtilException.class)
+    public void createItem2(Item item, Integer allowNumber, List<Time> times){
+
+        List<Batch> batches = new ArrayList<>();
+
+        for(int i = 0;i < times.size();i++){
+            Batch batch = new Batch();
+            batch.setItem(item);
+            batch.setAllowNumber(allowNumber);
+            batch.setStartTime(times.get(i).getStartTime());
+            batch.setEndTime(times.get(i).getEndTime());
+            batch.setWeek(0);//不需要记录是第几周
+            batches.add(batch);
+        }
         itemDao.save(item);
         batchDao.save(batches);
+
     }
 }
