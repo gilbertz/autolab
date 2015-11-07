@@ -140,9 +140,9 @@ public class HomeController extends  BaseController{
 
             String url;
             if (debug){
-                url = "http://120.26.72.17:8025/oauth/token";
-            }else{
                 url = "http://localhost:8025/oauth/token";
+            }else{
+                url = "http://120.26.72.17:8025/oauth/token";
             }
             OAuth2 oAuth2 = getOAuth2(url, params);
 
