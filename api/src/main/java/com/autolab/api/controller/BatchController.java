@@ -4,9 +4,7 @@ import com.autolab.api.exception.UtilException;
 import com.autolab.api.form.BatchForm;
 import com.autolab.api.form.GradeForm;
 import com.autolab.api.model.*;
-import com.autolab.api.repository.BatchDao;
-import com.autolab.api.repository.BookDao;
-import com.autolab.api.repository.ItemDao;
+import com.autolab.api.repository.*;
 import com.autolab.api.service.BatchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +46,12 @@ public class BatchController extends BaseController{
 
     @Autowired
     protected BatchService batchService;
+
+    @Autowired
+    protected RelateClassDao relateClassDao;
+
+    @Autowired
+    protected CourseDao courseDao;
 
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping("/create")
@@ -322,5 +326,35 @@ public class BatchController extends BaseController{
         Pager pager = new Pager(size, page, batches.getTotalElements(), Book.TAGS, batchMapList);
 
         return success(Pager.TAG, pager.map());
+    }
+
+    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+    @RequestMapping(value =  "/books")
+    public Map<String,?> getBooks(
+                                  @RequestParam(required = true) Long teacherId,
+                                  @RequestParam(required = true) Long courseId){
+
+        User teacher = userDao.findById(teacherId);
+        if(teacher == null){
+            throw  new UtilException("teacher not exits");
+        }
+        Course course = courseDao.findOne(courseId);
+        if(course == null){
+            throw new UtilException("course not exits");
+        }
+        List<Book> teacherBooks = new ArrayList<>();
+        List<RelateClass> relateClasses = relateClassDao.findByTeacher(teacher);
+        for(int i = 0;i < relateClasses.size();i++){
+            User student = relateClasses.get(i).getStudent();
+            List<Book> books = bookDao.findByUser(student);
+            for(int j = 0;j < books.size();j++){
+                if(books.get(j).getBatch().getItem().getCourse().equals(course)){
+                    teacherBooks.add(books.get(j));
+                }
+            }
+        }
+
+        return success(Book.TAGS, teacherBooks);
+
     }
 }

@@ -1,5 +1,6 @@
 package com.autolab.api.controller;
 
+import com.autolab.api.exception.UtilException;
 import com.autolab.api.model.Book;
 import com.autolab.api.model.User;
 import com.autolab.api.repository.BookDao;
@@ -35,6 +36,30 @@ public class UserController extends BaseController {
         List<Book> books = bookDao.findByUser(user);
 
         return success(Book.TAGS,books);
+    }
+
+    /**
+     *
+     * @param role
+     * @return
+     */
+    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+    @RequestMapping(value = "/{role}")
+    public Map<String, ?> getUser(String role){
+        List<User> users;
+        if(role.equals("ROLE_TEACHER")){
+            users = userDao.findByRole(User.Role.ROLE_TEACHER);
+        }
+        else if(role.equals("ROLE_USER")){
+            users = userDao.findByRole(User.Role.ROLE_USER);
+        }
+        else if (role.equals("ROLE_ADMIN")){
+            users = userDao.findByRole(User.Role.ROLE_ADMIN);
+        }
+        else{
+            throw new UtilException("role is invalid");
+        }
+        return success(User.TAGS,users);
     }
 
 }

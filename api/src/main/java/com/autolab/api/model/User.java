@@ -27,6 +27,7 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
 
     private static final long serialVersionUID = 100L;
     public static String TAG = User.class.getSimpleName().toLowerCase();
+    public static String TAGS = TAG + "s";
 
 
     //和jaccount相关的字段
@@ -52,6 +53,10 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = {}, fetch = FetchType.LAZY)
     private List<Course> courses = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "myClass", cascade = {}, fetch = FetchType.LAZY)
+    private List<RelateClass> relateClasses = new ArrayList<>();
 
 
 
@@ -160,10 +165,12 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
     //角色名。特别注意，此处必须是ROLE_开头，不然Oauth就要出错。
     public enum Role {
         ROLE_USER("ROLE_USER"),
-        ROLE_ADMIN("ROLE_ADMIN");
+        ROLE_ADMIN("ROLE_ADMIN"),
+        ROLE_TEACHER("ROLE_TEACHER");
 
         public static final String HAS_ROLE_USER = "hasRole('ROLE_USER')";
         public static final String HAS_ROLE_ADMIN = "hasRole('ROLE_ADMIN')";
+        public static final String HAS_ROLE_TEACHER = "hasRole('ROLE_TEACHER')";
 
         @Getter
         private String name;
