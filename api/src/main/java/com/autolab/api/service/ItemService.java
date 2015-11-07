@@ -90,8 +90,8 @@ public class ItemService {
             }
 
         }
-        //itemDao.save(item);
-        //batchDao.save(batches);
+        itemDao.save(item);
+        batchDao.save(batches);
     }
 
     @Transactional(rollbackOn = UtilException.class)
@@ -105,7 +105,7 @@ public class ItemService {
             batch.setAllowNumber(allowNumber);
             batch.setStartTime(times.get(i).getStartTime());
             batch.setEndTime(times.get(i).getEndTime());
-            batch.setWeek(0);//不需要记录是第几周
+            batch.setWeek(0);
             batches.add(batch);
         }
         itemDao.save(item);

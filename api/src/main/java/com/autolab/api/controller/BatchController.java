@@ -65,7 +65,7 @@ public class BatchController extends BaseController{
      * @param form
      * @return
      */
-    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+    //@PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping("/edit")
     public Map<String, ?> edit(BatchForm form){
         if(form.getId() == null){
@@ -288,6 +288,38 @@ public class BatchController extends BaseController{
         //}
 
         Pager pager = new Pager(size, page, weekMapList.size(), "weeks", weekMapList);
+
+        return success(Pager.TAG, pager.map());
+    }
+
+    @RequestMapping(value = "/page2")
+    public Map<String, ?> page2(
+            @RequestParam(required = false, defaultValue = "0") Integer page,
+            @RequestParam(required = false, defaultValue = "20") Integer size,
+            @RequestParam(required = true) Long itemId,
+            @RequestParam(required = false, defaultValue = "ASC") Sort.Direction direction
+    ) {
+        Item item = itemDao.findByIdAndStatus(itemId, Status.OK);
+        if(item == null){
+            throw new UtilException("item not exits");
+        }
+        Pageable pageable = new PageRequest(page, size);
+
+        Page<Batch> batches = batchDao.findAll(((root, query, cb) -> {
+            Predicate predicate = cb.notEqual(root.get(Batch_.status), Status.DELETED);
+            predicate = cb.and(predicate, cb.equal(root.get(Batch_.item), item));
+            return predicate;
+        }), pageable);
+
+        List<Map<String, Object>> batchMapList = batches.getContent()
+                .stream()
+                .map(batch -> {
+                    Map<String, Object> batchMap = batch.map();
+                    batchMap.put("bookNum", batch.getBooks().size());
+                    return batchMap;
+                })
+                .collect(Collectors.toList());
+        Pager pager = new Pager(size, page, batches.getTotalElements(), Book.TAGS, batchMapList);
 
         return success(Pager.TAG, pager.map());
     }

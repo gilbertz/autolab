@@ -11,7 +11,9 @@ import org.springframework.context.ApplicationContext;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import com.autolab.api.form.Time;
 
 /**
  * Created by ABC on 2015/11/6 0006.
@@ -32,8 +34,7 @@ public class ItemForm2 {
     private String place;
 
     //@NotNull
-    @JsonProperty("times")
-    private Time [] times;
+    private List<Time> times;
 
     @NotNull
     private Integer allowNumber;
@@ -42,7 +43,7 @@ public class ItemForm2 {
         Item item = new Item();
         item.setName(name);
         item.setPlace(place);
-        item.setOpenTime(null); //不需要openTime这个字段
+        item.setOpenTime(null);
         ApplicationContext applicationContext = AppContextManager.getAppContext();
         CourseDao courseDao = applicationContext.getBean(CourseDao.class);
         Course course = courseDao.findOne(courseId);

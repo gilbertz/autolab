@@ -16,6 +16,6 @@ public class Time {
     private Date startTime;
 
     @NotNull
-    private Date EndTime;
+    private Date endTime;
 }
 
