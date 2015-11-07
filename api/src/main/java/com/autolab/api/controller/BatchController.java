@@ -98,7 +98,7 @@ public class BatchController extends BaseController{
             throw new UtilException("batch not exits");
         }
         if(!getUser().equals(batch.getItem().getCourse().getUser())){
-            throw new UtilException("you have no authorization to operate ohter teacher's batch");
+            throw new UtilException("you have no authorization to operate other teacher's batch");
         }
         List<Book> books = batch.getBooks();
         int num = books.size();
@@ -341,6 +341,9 @@ public class BatchController extends BaseController{
         Course course = courseDao.findOne(courseId);
         if(course == null){
             throw new UtilException("course not exits");
+        }
+        if(!getUser().equals(course.getUser())){
+            throw new UtilException("you have no authorization to operate other teacher's course");
         }
         List<Book> teacherBooks = new ArrayList<>();
         List<RelateClass> relateClasses = relateClassDao.findByTeacher(teacher);
