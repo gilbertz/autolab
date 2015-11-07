@@ -14,15 +14,15 @@ angular.module('app', [
     'ui.load',
     'ui.jq',
     'oc.lazyLoad',
+    'pascalprecht.translate',
     'toaster',
     'ui.bootstrap.datetimepicker',
-    'pascalprecht.translate',
     'angularUtils.directives.dirPagination'
 ], function ($httpProvider) {
     // 设置post请求格式。
     // Use x-www-form-urlencoded Content-Type
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-
+ 
     /**
      * The workhorse; converts an object to x-www-form-urlencoded serialization.
      * @param {Object} obj
@@ -78,8 +78,12 @@ angular.module('app').factory('httpRequestInterceptor',
                 //添加Oauth权限认证。
                 if ($rootScope.oauth2 && $rootScope.oauth2.accessToken) {
                     $config.headers['Authorization'] = "bearer " + $rootScope.oauth2.accessToken;
-                }
+                };
                 $config.headers['X-Request-With']="";
+                if ($rootScope.isJSON === "JSON") {
+                    $config.headers['Content-Type'] = "application/json;charset=utf-8";
+                    $rootScope.isJSON = "";
+                };
                 return $config;
             }
         };

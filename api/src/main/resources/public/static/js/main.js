@@ -99,14 +99,15 @@ angular.module('app')
 
             //通过各种方法，终于能够获取到oauth信息了。
             $rootScope.oauth2={};
+            $rootScope.isJSON = "";
 
-            var autolabDebug= false;
+            var autolabDebug= true;
 
             if(autolabDebug){
 
                 //UI开发阶段HardCode.
                 //$rootScope.oauth2.accessToken="3d1b5d21-24e9-4cbe-931c-361b937230c5";
-                $rootScope.oauth2.accessToken="ae302b7b-c5c4-4a80-9623-3e5668ae9990";
+                $rootScope.oauth2.accessToken="2307547b-2413-4473-9043-0d9f4d445288";
                 $rootScope.oauth2.tokenType="bearer";
                 $rootScope.oauth2.refreshToken="3ecd724e-a02d-40c4-8a5f-496e981e9f9d";
                 $rootScope.oauth2.expiresIn="86399";

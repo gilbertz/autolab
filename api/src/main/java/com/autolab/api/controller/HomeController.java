@@ -186,7 +186,7 @@ public class HomeController extends  BaseController{
         if (!loggedout) {
             return "static/tpl/404";
         }else {
-            return "static/page/login";
+            return "static/view/login";
         }
 
     }
