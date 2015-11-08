@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by KUN on 2015/10/24.
@@ -27,5 +28,10 @@ public class Book extends BaseEntity{
 
     @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     @JoinColumn(name = "student_id", nullable = false)
+
+    private String attendance;
+
+    private Date attendTime;
+
     private User user;
 }

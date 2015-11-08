@@ -23,5 +23,7 @@ public interface BookDao extends BaseDao<Book, Long>{
 
     List<Book> findByUser(User user);
 
+    List<Book> findByBatch(Batch batch);
+
     Book findByUserAndBatch(User user, Batch batch);
 }
