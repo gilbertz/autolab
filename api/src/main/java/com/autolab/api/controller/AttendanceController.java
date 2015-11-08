@@ -1,11 +1,13 @@
 package com.autolab.api.controller;
 
 import com.autolab.api.exception.UtilException;
+import com.autolab.api.model.Attendance;
 import com.autolab.api.model.Batch;
 import com.autolab.api.model.Book;
 import com.autolab.api.model.User;
 import com.autolab.api.repository.BatchDao;
 import com.autolab.api.repository.BookDao;
+import com.autolab.api.service.AttendanceService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -35,35 +37,18 @@ public class AttendanceController extends BaseController {
     protected BatchDao batchDao;
 
     @Autowired
-    protected BookDao bookDao;
+    protected AttendanceService attendanceService;
 
     @RequestMapping("/upload")
-    public Map<String,?> uploadExcel(@RequestParam("file") MultipartFile file){
+    public Map<String,?> uploadExcel(@RequestParam("file") MultipartFile file,
+                                     @RequestParam(required = true) Long batchId){
 
-        Long batchId = Long.parseLong(file.getOriginalFilename());
         Batch batch = batchDao.findOne(batchId);
         if(batch == null){
-            throw new UtilException("batch not exits");
+            //throw new UtilException("batch not exits");
         }
-        List<Book> books = bookDao.findByBatch(batch);
-            try {
-                Workbook wb = new HSSFWorkbook(file.getInputStream());
-                Sheet sheet = wb.getSheetAt(0);
-                for( int i = 1; i <= sheet.getLastRowNum(); i++ ){
-                    Row row = sheet.getRow(i);
-                    String jaccountId  = row.getCell(0).getStringCellValue();
-                    String attendTime = row.getCell(1).getStringCellValue();
-                    User user = userDao.findByJaccountId(jaccountId);
-                    if(user == null){
-                        continue;
-                    }
-                    Book book = bookDao.findByUserAndBatch(user,batch);
 
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+        attendanceService.setAttendance(file,batch);
         return success();
     }
 }

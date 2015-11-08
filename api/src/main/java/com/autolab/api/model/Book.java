@@ -26,12 +26,11 @@ public class Book extends BaseEntity{
 
     private String grade;
 
-    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "student_id", nullable = false)
-
-    private String attendance;
+    @Enumerated(EnumType.STRING)
+    private Attendance attendance = Attendance.NO;
 
     private Date attendTime;
-
+    @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "student_id", nullable = false)
     private User user;
 }
