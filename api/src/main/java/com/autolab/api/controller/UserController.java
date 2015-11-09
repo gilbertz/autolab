@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,7 +46,7 @@ public class UserController extends BaseController {
      */
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping(value = "/{role}")
-    public Map<String, ?> getUser(String role){
+    public Map<String, ?> getUser(@PathVariable String role){
         List<User> users;
         if(role.equals("ROLE_TEACHER")){
             users = userDao.findByRole(User.Role.ROLE_TEACHER);
