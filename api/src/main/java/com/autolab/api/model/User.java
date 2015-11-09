@@ -51,8 +51,8 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
     private List<Book> books = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = {}, fetch = FetchType.LAZY)
-    private List<Course> courses = new ArrayList<>();
+    @OneToMany(mappedBy = "teacher", cascade = {}, fetch = FetchType.LAZY)
+    private List<CourseTeacher> courseTeachers = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "myClass", cascade = {}, fetch = FetchType.LAZY)
