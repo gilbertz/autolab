@@ -1,0 +1,55 @@
+<div class="wrapper-md" style="padding-top:0!important;" ng-controller="MybookingIndexController">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            成绩详情
+        </div>
+        <div class="row wrapper">
+            <div class="col-sm-9 m-b-xs">
+                <button class="btn btn-sm btn-default" ng-show="bookDetail != null">{{student.name}}</button>
+                <button class="btn btn-sm btn-default" ng-show="bookDetail != null">{{course.name}}</button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped b-t b-light">
+                <thead>
+                <tr>
+                    <th>实验项目</th>
+                    <th>完成时间</th>
+                    <th>成绩</th>
+                </tr>
+                </thead>
+                <tbody>
+                 <tr dir-paginate="book in books | itemsPerPage: pagination.pageSize"
+         total-items="pagination.totalItems" current-page="pagination.page">
+                    <td class="col-sm-3">{{book.user.jaccountId}}</td>
+                    <td class="col-sm-3">{{book.user.jaccountChinesename}}</td>
+                    <td class="col-sm-3"><input type="text" class="form-control" ng-model="book.grade"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-4 hidden-xs">
+                </div>
+                <div class="col-sm-4 text-center">
+                </div>
+                <div class="col-sm-4 text-right text-center-xs">
+        <div class="text-center">
+            <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+        </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    app.controller('MybookingIndexController', ['$scope', '$http','$stateParams', function ($scope, $http,$stateParams) {
+
+    }]);
+
+</script>
