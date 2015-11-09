@@ -41,13 +41,13 @@ public class AttendanceService {
     public Integer setAttendance(MultipartFile file, Batch batch){
         int attendacneCount = 0;
         try {
-            //XSSFW是处理excel2007的版本
+
             //Workbook wb = new XSSFWorkbook(file.getInputStream());
             Workbook wb = new HSSFWorkbook(file.getInputStream());
             Sheet sheet = wb.getSheetAt(0);
             for( int i = 1; i <= sheet.getLastRowNum(); i++ ){
                 Row row = sheet.getRow(i);
-                //转化成string格式
+
                 row.getCell(0).setCellType(Cell.CELL_TYPE_STRING);
                 String jaccountId  = row.getCell(0).getStringCellValue();
                 row.getCell(1).setCellType(Cell.CELL_TYPE_STRING);

@@ -18,6 +18,7 @@ public abstract class User_ extends com.autolab.api.model.BaseEntity_ {
 	public static volatile SingularAttribute<User, String> jaccountChinesename;
 	public static volatile SingularAttribute<User, String> jaccountStudent;
 	public static volatile SingularAttribute<User, String> jaccountId;
+	public static volatile ListAttribute<User, RelateClass> relateClasses;
 	public static volatile SingularAttribute<User, String> jaccountDept;
 	public static volatile SingularAttribute<User, String> username;
 

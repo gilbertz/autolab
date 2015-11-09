@@ -1,6 +1,7 @@
 package com.autolab.api.model;
 
 import javax.annotation.Generated;
+import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -9,6 +10,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Class_ extends com.autolab.api.model.BaseEntity_ {
 
 	public static volatile SingularAttribute<Class, String> name;
+	public static volatile ListAttribute<Class, RelateClass> relateClasses;
 
 }
 
