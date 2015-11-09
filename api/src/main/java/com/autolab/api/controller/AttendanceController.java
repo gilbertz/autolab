@@ -1,10 +1,7 @@
 package com.autolab.api.controller;
 
 import com.autolab.api.exception.UtilException;
-import com.autolab.api.model.Attendance;
-import com.autolab.api.model.Batch;
-import com.autolab.api.model.Book;
-import com.autolab.api.model.User;
+import com.autolab.api.model.*;
 import com.autolab.api.repository.BatchDao;
 import com.autolab.api.repository.BookDao;
 import com.autolab.api.service.AttendanceService;
@@ -43,12 +40,12 @@ public class AttendanceController extends BaseController {
     public Map<String,?> uploadExcel(@RequestParam("file") MultipartFile file,
                                      @RequestParam(required = true) Long batchId){
 
-        Batch batch = batchDao.findOne(batchId);
+        Batch batch = batchDao.findByIdAndStatus(batchId, Status.OK);
         if(batch == null){
-            //throw new UtilException("batch not exits");
+            throw new UtilException("batch not exits");
         }
 
-        attendanceService.setAttendance(file,batch);
-        return success();
+        Integer attendacneCount = attendanceService.setAttendance(file, batch);
+        return success("attendanceCount",attendacneCount);
     }
 }

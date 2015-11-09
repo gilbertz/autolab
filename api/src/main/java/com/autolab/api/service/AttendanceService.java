@@ -9,6 +9,7 @@ import com.autolab.api.repository.BookDao;
 import com.autolab.api.repository.UserDao;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -18,6 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by KUN on 2015/11/8.
@@ -34,30 +38,48 @@ public class AttendanceService {
     protected UserDao userDao;
 
     @Transactional(rollbackOn = UtilException.class)
-    public void setAttendance(MultipartFile file, Batch batch){
+    public Integer setAttendance(MultipartFile file, Batch batch){
+        int attendacneCount = 0;
         try {
-
+            //XSSFW是处理excel2007的版本
             //Workbook wb = new XSSFWorkbook(file.getInputStream());
-
             Workbook wb = new HSSFWorkbook(file.getInputStream());
             Sheet sheet = wb.getSheetAt(0);
             for( int i = 1; i <= sheet.getLastRowNum(); i++ ){
                 Row row = sheet.getRow(i);
+                //转化成string格式
+                row.getCell(0).setCellType(Cell.CELL_TYPE_STRING);
                 String jaccountId  = row.getCell(0).getStringCellValue();
+                row.getCell(1).setCellType(Cell.CELL_TYPE_STRING);
                 String attendTime = row.getCell(1).getStringCellValue();
-                logger.debug(jaccountId);
-                logger.debug(attendTime);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                Date date;
+                try
+                {
+                    date = sdf.parse(attendTime);
+                }catch (ParseException e)
+                {
+                    throw new UtilException("invalid date format");
+                }
+
                 User user = userDao.findByJaccountId(jaccountId);
+
                 if(user == null){
+                    logger.debug("invalid user");
                     continue;
                 }
                 Book book = bookDao.findByUserAndBatch(user,batch);
                 if(book != null){
                     book.setAttendance(Attendance.YES);
+                    book.setAttendTime(date);
+                    bookDao.save(book);
+                    attendacneCount++;
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new UtilException("invalid file");
         }
+
+        return attendacneCount;
     }
 }

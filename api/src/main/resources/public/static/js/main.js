@@ -101,7 +101,7 @@ angular.module('app')
             $rootScope.oauth2={};
             $rootScope.isJSON = "";
 
-            var autolabDebug= true;
+            var autolabDebug= false;
 
             if(autolabDebug){
 
