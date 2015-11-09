@@ -52,7 +52,7 @@ public class AttendanceService {
                 String jaccountId  = row.getCell(0).getStringCellValue();
                 row.getCell(1).setCellType(Cell.CELL_TYPE_STRING);
                 String attendTime = row.getCell(1).getStringCellValue();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date;
                 try
                 {
