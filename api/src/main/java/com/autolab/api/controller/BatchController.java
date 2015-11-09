@@ -6,6 +6,7 @@ import com.autolab.api.form.GradeForm;
 import com.autolab.api.model.*;
 import com.autolab.api.repository.*;
 import com.autolab.api.service.BatchService;
+import com.autolab.api.service.CourseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,11 +54,14 @@ public class BatchController extends BaseController{
     @Autowired
     protected CourseDao courseDao;
 
+    @Autowired
+    protected CourseService courseService;
+
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping("/create")
     public Map<String, ?> create(@Valid BatchForm form){
         Batch batch = form.generateBatch();
-        if(getUser() != batch.getItem().getCourse().getUser()){
+        if(!courseService.checkAuth(getUser(), batch.getItem().getCourse())){
             throw new UtilException("you have no authorization");
         }
         batchDao.save(batch);
@@ -97,7 +101,7 @@ public class BatchController extends BaseController{
         if(batch == null){
             throw new UtilException("batch not exits");
         }
-        if(!getUser().equals(batch.getItem().getCourse().getUser())){
+        if(!courseService.checkAuth(getUser(),batch.getItem().getCourse())){
             throw new UtilException("you have no authorization to operate other teacher's batch");
         }
         List<Book> books = batch.getBooks();
@@ -131,7 +135,7 @@ public class BatchController extends BaseController{
             throw new UtilException("batch not exits");
         }
 
-        if(getUser() != batch.getItem().getCourse().getUser()){
+        if(!courseService.checkAuth(getUser(), batch.getItem().getCourse())){
             throw new UtilException("you have no authorization");
         }
         Pageable pageable = new PageRequest(page, size);
@@ -175,7 +179,7 @@ public class BatchController extends BaseController{
     @RequestMapping("/del/{batchId}")
     public Map<String, ?> del(@PathVariable Long batchId){
         Batch batch = batchDao.findByIdAndStatus(batchId, Status.OK);
-        if(getUser() != batch.getItem().getCourse().getUser()){
+        if(!courseService.checkAuth(getUser(), batch.getItem().getCourse())){
             throw new UtilException("you have no authorization");
         }
         if(batch == null){
@@ -342,7 +346,7 @@ public class BatchController extends BaseController{
         if(course == null){
             throw new UtilException("course not exits");
         }
-        if(!getUser().equals(course.getUser())){
+        if(!courseService.checkAuth(getUser(), course)){
             throw new UtilException("you have no authorization to operate other teacher's course");
         }
         List<Book> teacherBooks = new ArrayList<>();

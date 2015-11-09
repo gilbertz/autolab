@@ -4,6 +4,7 @@ import com.autolab.api.exception.UtilException;
 import com.autolab.api.model.*;
 import com.autolab.api.repository.CourseDao;
 import com.autolab.api.repository.ItemDao;
+import com.autolab.api.service.CourseService;
 import com.autolab.api.service.ItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,9 @@ public class ItemController extends BaseController{
 
     @Autowired
     protected ItemService itemService;
+
+    @Autowired
+    protected CourseService courseService;
     /**
      * create a item
      * @param form
@@ -47,7 +51,7 @@ public class ItemController extends BaseController{
     @RequestMapping(value = "/create") //name,place,opentime,allownumber
     public Map<String,?> create(@Valid ItemForm form){
         Item item = form.generateItem();
-        if(getUser() != item.getCourse().getUser()){
+        if(!courseService.checkAuth(getUser(),item.getCourse())){
             throw new UtilException("you have no authorization");
         }
         itemService.createItem(item, form.getAllowNumber());
@@ -63,7 +67,7 @@ public class ItemController extends BaseController{
     @RequestMapping(value = "/create2") //name,place,time,allowNumber,courseId
     public Map<String,?> create2(@Valid @RequestBody ItemForm2 form2){
         Item item = form2.generateItem();
-        if(getUser() != item.getCourse().getUser()){
+        if(!courseService.checkAuth(getUser(),item.getCourse())){
             throw new UtilException("you have no authorization");
         }
         itemService.createItem2(item, form2.getAllowNumber(),form2.getTimes());

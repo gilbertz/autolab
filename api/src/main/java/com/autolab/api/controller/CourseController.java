@@ -11,6 +11,7 @@ import com.autolab.api.model.Course_;
 import com.autolab.api.model.Status;
 import com.autolab.api.model.User;
 import com.autolab.api.repository.CourseDao;
+import com.autolab.api.service.CourseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,11 @@ public class CourseController  extends BaseController{
     @Autowired
     protected CourseDao courseDao;
 
+    @Autowired
+    protected CourseService courseService;
+
     /**
-     * create a course
+     * create a new course
      * @param form
      * @return
      */
@@ -46,8 +50,18 @@ public class CourseController  extends BaseController{
     public Map<String,?> create(@Valid CourseForm form){
         User user = getUser();
         Course course = form.generateCourse();
-        course.setUser(user);
-        courseDao.save(course);
+        courseService.createCourse(course,user);
+        return success(Course.TAG, course);
+    }
+
+    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+    @RequestMapping(value = "/addteacher/{courseId}")
+    public Map<String, ?> addTeacher(@PathVariable Long courseId){
+        Course course = courseDao.findOne(courseId);
+        if(course == null){
+            throw new UtilException("course is not exit");
+        }
+        courseService.addTeacher(course, getUser());
         return success(Course.TAG, course);
     }
 
