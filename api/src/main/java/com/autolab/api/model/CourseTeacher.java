@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ABC on 2015/11/9 0009.
@@ -28,4 +30,8 @@ public class CourseTeacher extends BaseEntity{
     @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id", nullable = false)
     private User teacher;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "courseTeacher", cascade = {}, fetch = FetchType.LAZY)
+    private List<CourseTeacherStudent> courseTeacherStudents = new ArrayList<>();
 }
