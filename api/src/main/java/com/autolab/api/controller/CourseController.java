@@ -6,10 +6,7 @@ package com.autolab.api.controller;
 
 import com.autolab.api.exception.UtilException;
 import com.autolab.api.form.CourseForm;
-import com.autolab.api.model.Course;
-import com.autolab.api.model.Course_;
-import com.autolab.api.model.Status;
-import com.autolab.api.model.User;
+import com.autolab.api.model.*;
 import com.autolab.api.repository.CourseDao;
 import com.autolab.api.service.CourseService;
 import org.slf4j.Logger;
@@ -27,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.criteria.Predicate;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -151,4 +149,17 @@ public class CourseController  extends BaseController{
         },pageable);
         return success(Course.TAGS, courses, pageable);
     }
+
+    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+    @RequestMapping(value = "/teachers/{courseId}")
+    public Map<String, ?> getTeachers(@PathVariable Long courseId){
+        Course course = courseDao.findOne(courseId);
+        if(course == null){
+            throw new UtilException("course not exits");
+        }
+        List<CourseTeacher> courseTeachers = courseService.getTeachersByCourse(course);
+
+        return success(CourseTeacher.TAGS,courseTeachers);
+    }
+
 }

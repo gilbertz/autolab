@@ -78,4 +78,8 @@ public class CourseService {
         course.setCourseTeachers(courseTeachers);
         courseDao.save(course);
     }
+
+    public List<CourseTeacher> getTeachersByCourse(Course course){
+        return courseTeacherDao.findByCourse(course);
+    }
 }
