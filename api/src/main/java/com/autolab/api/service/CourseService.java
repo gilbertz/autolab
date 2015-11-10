@@ -3,6 +3,7 @@ package com.autolab.api.service;
 import com.autolab.api.exception.UtilException;
 import com.autolab.api.model.Course;
 import com.autolab.api.model.CourseTeacher;
+import com.autolab.api.model.CourseTeacherStudent;
 import com.autolab.api.model.User;
 import com.autolab.api.repository.CourseDao;
 import com.autolab.api.repository.CourseTeacherDao;
@@ -79,7 +80,20 @@ public class CourseService {
         courseDao.save(course);
     }
 
+    public List<CourseTeacherStudent> getStudentGrades(Course course, User teacher){
+        CourseTeacher courseTeacher = courseTeacherDao.findByCourseAndTeacher(course, teacher);
+        if(courseTeacher == null){
+            throw new UtilException("the teacher not belongs to this course");
+        }
+        List<CourseTeacherStudent> courseTeacherStudents = courseTeacher.getCourseTeacherStudents();
+        return courseTeacherStudents;
+    }
+
     public List<CourseTeacher> getTeachersByCourse(Course course){
         return courseTeacherDao.findByCourse(course);
+    }
+
+    public CourseTeacher getCourseTeacherByCourseAndTeacher(Course course,User teacher){
+        return courseTeacherDao.findByCourseAndTeacher(course, teacher);
     }
 }

@@ -126,7 +126,6 @@ public class CourseController  extends BaseController{
             @RequestParam(required = false, defaultValue = "0") Integer page,
             @RequestParam(required = false, defaultValue = "20") Integer size,
             @RequestParam(required = false, defaultValue = "id") String orderBy,
-            @RequestParam(required = false) Long userId,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String term,
             @RequestParam(required = false, defaultValue = "ASC") Sort.Direction direction
@@ -134,10 +133,6 @@ public class CourseController  extends BaseController{
         Pageable pageable = new PageRequest(page, size, new Sort(direction,orderBy));
         Page<Course> courses = courseDao.findAll((root,query,cb) -> {
             Predicate predicate = setStatusNotDeleted(root, cb);
-            if(userId != null){
-                User user = userDao.findOne(userId);
-                predicate = cb.and(predicate,cb.equal(root.get(Course_.user),user));
-            }
             if(name != null){
                 predicate = cb.and(predicate,cb.equal(root.get(Course_.name),name));
             }
@@ -151,8 +146,8 @@ public class CourseController  extends BaseController{
     }
 
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
-    @RequestMapping(value = "/teachers/{courseId}")
-    public Map<String, ?> getTeachers(@PathVariable Long courseId){
+     @RequestMapping(value = "/teachers/{courseId}")
+     public Map<String, ?> getTeachers(@PathVariable Long courseId){
         Course course = courseDao.findOne(courseId);
         if(course == null){
             throw new UtilException("course not exits");
@@ -160,6 +155,21 @@ public class CourseController  extends BaseController{
         List<CourseTeacher> courseTeachers = courseService.getTeachersByCourse(course);
 
         return success(CourseTeacher.TAGS,courseTeachers);
+    }
+
+    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+    @RequestMapping(value = "/stuedntgrades")
+    public Map<String, ?> getStudentGrades(
+            @RequestParam(required = true) Long courseId,
+            @RequestParam(required = true) Long teacherId){
+        Course course = courseDao.findOne(courseId);
+        if(course == null){
+            throw new UtilException("course not exits");
+        }
+        User teacher = userDao.findById(teacherId);
+        List<CourseTeacherStudent> courseTeacherStudents = courseService.getStudentGrades(course,teacher);
+
+        return success(CourseTeacherStudent.TAGS,courseTeacherStudents);
     }
 
 }

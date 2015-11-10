@@ -49,10 +49,8 @@ public class BatchController extends BaseController{
     protected BatchService batchService;
 
     @Autowired
-    protected RelateClassDao relateClassDao;
-
-    @Autowired
     protected CourseDao courseDao;
+
 
     @Autowired
     protected CourseService courseService;
@@ -333,7 +331,7 @@ public class BatchController extends BaseController{
     }
 
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
-    @RequestMapping(value =  "/books")
+    @RequestMapping(value =  "/books") //此接口暂时不要用
     public Map<String,?> getBooks(
                                   @RequestParam(required = true) Long teacherId,
                                   @RequestParam(required = true) Long courseId){
@@ -350,16 +348,9 @@ public class BatchController extends BaseController{
             throw new UtilException("you have no authorization to operate other teacher's course");
         }
         List<Book> teacherBooks = new ArrayList<>();
-        List<RelateClass> relateClasses = relateClassDao.findByTeacher(teacher);
-        for(int i = 0;i < relateClasses.size();i++){
-            User student = relateClasses.get(i).getStudent();
-            List<Book> books = bookDao.findByUser(student);
-            for(int j = 0;j < books.size();j++){
-                if(books.get(j).getBatch().getItem().getCourse().equals(course)){
-                    teacherBooks.add(books.get(j));
-                }
-            }
-        }
+        CourseTeacher courseTeacher = courseService.getCourseTeacherByCourseAndTeacher(course,teacher);
+
+
 
         return success(Book.TAGS, teacherBooks);
 
