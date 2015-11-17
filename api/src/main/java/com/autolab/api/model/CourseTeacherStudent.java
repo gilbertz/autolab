@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class CourseTeacherStudent extends BaseEntity{
     public static final String TAG = CourseTeacherStudent.class.getSimpleName().toLowerCase();
     public static final String TAGS = TAG + "s";
-    public static final String TABLE_NAME=BaseEntity.PREFIX+"related_class";
+    public static final String TABLE_NAME=BaseEntity.PREFIX+"course_teacher_student";
 
     @ManyToOne(cascade = {}, fetch = FetchType.EAGER)
     @JoinColumn(name = "course_teacher_id", nullable = false)
