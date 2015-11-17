@@ -246,7 +246,7 @@
 
        $scope.getStuedntgrades = function (){
 
-            var url = $scope.app.host + '/stuedntgrades';
+            var url = $scope.app.host + '/course/studentgrades';
             var params = {};
             params["courseId"] = $scope.filterCurriculum.id;
             params["teacherId"] = $scope.filterTeacher.id;
