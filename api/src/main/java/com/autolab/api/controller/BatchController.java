@@ -322,6 +322,13 @@ public class BatchController extends BaseController{
                 .map(batch -> {
                     Map<String, Object> batchMap = batch.map();
                     batchMap.put("bookNum", batch.getBooks().size());
+                    Book book = bookDao.findByUserAndBatch(getUser(),batch);
+                    if(book == null){
+                        batchMap.put("isBook", false);
+                    }
+                    else {
+                        batchMap.put("isBook", true);
+                    }
                     return batchMap;
                 })
                 .collect(Collectors.toList());
