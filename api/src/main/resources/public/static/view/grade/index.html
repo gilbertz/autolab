@@ -22,23 +22,6 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <label class="inline">选择教师</label>
-                <div class="dropdown filter-content inline" dropdown="">
-                    <button class="btn btn-default dropdown-toggle filter-a" type="button" dropdown-toggle=""
-                       aria-haspopup="true"
-                       aria-expanded="false">{{filterTeacher.name}}<span
-                            class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li ng-repeat="teacher in teachers">
-                            <a href="javascript:void(0)" ng-click="changeTeacher(teacher)">
-                                {{teacher.name}}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
             <div class="col-sm-1">
                 <button type="button" ng-click="saveGrade()" ng-show="bookDetail.batch.publish == 'NO'"class="btn btn-sm btn-info" >保存
                 </button>
@@ -112,6 +95,21 @@
                 </div>
             </div>
             <div class="col-sm-4">
+                <label class="inline">选择教师</label>
+                <div class="dropdown filter-content inline" dropdown="">
+                    <button class="btn btn-default dropdown-toggle filter-a" type="button" dropdown-toggle=""
+                       aria-haspopup="true"
+                       aria-expanded="false">{{filterTeacher.jaccountChinesename}}<span
+                            class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="teachercourse in teachercourses">
+                            <a href="javascript:void(0)" ng-click="changeTeacher(teachercourse)">
+                                {{teachercourses.teacher.jaccountChinesename}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="col-sm-2">
             </div>
@@ -222,23 +220,43 @@
         };
 
         $scope.getTeachers = function () {
-           var url = $scope.app.host + '/role/ROLE_TEACHER';
+           var url = $scope.app.host + '/course/teachers/'+$scope.filterCurriculum.id;
 
             var params = {};
-
-            params["courseId"] = $scope.filterCurriculum.id;
-
            console.log(url + "?" + JSON.stringify(params));
            $http.post(url, params)
                    .success(function (response) {
                        console.log(response);
-                       getBooks();
+                        $scope.teachercourses = response.courses;
+                        if ($scope.teachercourses.length !=0) {
+                            $scope.filterTeacher = $scope.teachercourses[0].teacher;
+                            $scope.getStuedntgrades();
+                            console.log("0");
+                        };
                    }).error(function (response) {
                        $scope.pop("error", "错误", response.error.message);
                    });
        };
 
-       $scope.getBooks = function (){
+       $scope.changeTeacher = function (teachercourse) {
+            console.log("changeTeacher");
+            $scope.filterTeacher = teachercourse.teacher;
+            $scope.getStuedntgrades();
+       };
+
+       $scope.getStuedntgrades = function (){
+
+            var url = $scope.app.host + '/stuedntgrades';
+            var params = {};
+            params["courseId"] = $scope.filterCurriculum.id;
+            params["teacherId"] = $scope.filterTeacher.id;
+           console.log(url + "?" + JSON.stringify(params));
+           $http.post(url, params)
+                   .success(function (response) {
+                       console.log(response);
+                   }).error(function (response) {
+                       $scope.pop("error", "错误", response.error.message);
+                   });
 
        };
 

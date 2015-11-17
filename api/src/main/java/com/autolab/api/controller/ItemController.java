@@ -63,7 +63,7 @@ public class ItemController extends BaseController{
      * @param form2
      * @return
      */
-    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+//    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping(value = "/create2") //name,place,time,allowNumber,courseId
     public Map<String,?> create2(@Valid @RequestBody ItemForm2 form2){
         Item item = form2.generateItem();

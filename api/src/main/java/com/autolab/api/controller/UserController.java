@@ -44,7 +44,7 @@ public class UserController extends BaseController {
      * @param role
      * @return
      */
-    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+//    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping(value = "/{role}")
     public Map<String, ?> getUser(@PathVariable String role){
         List<User> users;

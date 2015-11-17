@@ -101,13 +101,13 @@ angular.module('app')
             $rootScope.oauth2={};
             $rootScope.isJSON = "";
 
-            var autolabDebug= false;
+            var autolabDebug= true;
 
             if(autolabDebug){
 
                 //UI开发阶段HardCode.
-                //$rootScope.oauth2.accessToken="3d1b5d21-24e9-4cbe-931c-361b937230c5";
-                $rootScope.oauth2.accessToken="2307547b-2413-4473-9043-0d9f4d445288";
+                //$rootScope.oauth2.accessToken="d6567828-263c-4197-b258-d03f4f8049c6";
+                $rootScope.oauth2.accessToken="d70d4a31-99b3-416c-b83e-bc7a39707c76";
                 $rootScope.oauth2.tokenType="bearer";
                 $rootScope.oauth2.refreshToken="3ecd724e-a02d-40c4-8a5f-496e981e9f9d";
                 $rootScope.oauth2.expiresIn="86399";
@@ -115,7 +115,7 @@ angular.module('app')
                 $rootScope.oauth2.id = "1140329122";
                 $rootScope.oauth2.uid = "zhaoguoqi";
                 $rootScope.oauth2.student = "no";
-                $rootScope.oauth2.chinesename = "赵国旗";
+                $rootScope.oauth2.chinesename = "田作华";
                 $rootScope.oauth2.dept = "自动化系";
 
             }else{
