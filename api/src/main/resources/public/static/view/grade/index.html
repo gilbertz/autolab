@@ -105,7 +105,7 @@
                     <ul class="dropdown-menu">
                         <li ng-repeat="teachercourse in teachercourses">
                             <a href="javascript:void(0)" ng-click="changeTeacher(teachercourse)">
-                                {{teachercourses.teacher.jaccountChinesename}}
+                                {{teachercourse.teacher.jaccountChinesename}}
                             </a>
                         </li>
                     </ul>
@@ -125,12 +125,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="student in students">
-                    <td>{{student.jaccount_id}}</td>
-                    <td>{{student.name}}</td>
-                    <td>{{student.grade}}</td>
+                <tr ng-repeat="courseteacherstudent in courseteacherstudents">
+                    <td>{{courseteacherstudent.student.jaccountId}}</td>
+                    <td>{{courseteacherstudent.student.jaccountChinesename}}</td>
+                    <td>{{courseteacherstudent.grade}}</td>
                     <td>
-                        <button class="btn btn-default  btn-success btn-xs" ui-sref="app.grade.booking({courseId: '{{filterCurriculum.id}}'})">成绩详情</button>
+                        <button class="btn btn-default  btn-success btn-xs" ui-sref="app.grade.student({studentId: '{{courseteacherstudent.student.id}}'})">成绩详情</button>
                     </td>
                 </tr>
                 </tbody>
@@ -254,6 +254,7 @@
            $http.post(url, params)
                    .success(function (response) {
                        console.log(response);
+                        $scope.courseteacherstudents = response.courseteacherstudents;
                    }).error(function (response) {
                        $scope.pop("error", "错误", response.error.message);
                    });

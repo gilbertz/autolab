@@ -98,6 +98,10 @@ angular.module('app')
                   url: '/detail/{batchId}',
                   templateUrl: '/static/view/grade/detail.html'
               })
+              .state('app.grade.student', {
+                  url: '/detail/{studentId}',
+                  templateUrl: '/static/view/grade/student.html'
+              })
 
               //student route
               .state('app.experiment_booking', {
