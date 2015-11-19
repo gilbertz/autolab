@@ -157,6 +157,12 @@ public class CourseController  extends BaseController{
         return success(CourseTeacher.TAGS,courseTeachers);
     }
 
+    /**
+     *
+     * @param courseId
+     * @param teacherId
+     * @return
+     */
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping(value = "/studentgrades")
     public Map<String, ?> getStudentGrades(
@@ -170,6 +176,22 @@ public class CourseController  extends BaseController{
         List<CourseTeacherStudent> courseTeacherStudents = courseService.getStudentGrades(course,teacher);
 
         return success(CourseTeacherStudent.TAGS,courseTeacherStudents);
+    }
+
+    /**
+     * this url will return all item information of one student
+     * @param studentId
+     * @param CourseTeacherId
+     * @return
+     */
+    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+    @RequestMapping(value = "/studentgradedetail")
+    public Map<String, ?> getOneStudentGrades(
+            @RequestParam(required = true) Long studentId,
+            @RequestParam(required = true) Long CourseTeacherId){
+
+
+        return success();
     }
 
 }

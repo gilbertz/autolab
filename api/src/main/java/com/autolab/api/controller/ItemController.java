@@ -3,6 +3,7 @@ package com.autolab.api.controller;
 import com.autolab.api.exception.UtilException;
 import com.autolab.api.model.*;
 import com.autolab.api.repository.CourseDao;
+import com.autolab.api.repository.CourseTeacherDao;
 import com.autolab.api.repository.ItemDao;
 import com.autolab.api.service.CourseService;
 import com.autolab.api.service.ItemService;
@@ -38,6 +39,9 @@ public class ItemController extends BaseController{
     protected CourseDao courseDao;
 
     @Autowired
+    protected CourseTeacherDao courseTeacherDao;
+
+    @Autowired
     protected ItemService itemService;
 
     @Autowired
@@ -48,10 +52,10 @@ public class ItemController extends BaseController{
      * @return
      */
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
-    @RequestMapping(value = "/create") //name,place,opentime,allownumber
+    @RequestMapping(value = "/create") //name,place,openTime,allowNumber,courseTeacherId
     public Map<String,?> create(@Valid ItemForm form){
         Item item = form.generateItem();
-        if(!courseService.checkAuth(getUser(),item.getCourse())){
+        if(!item.getCourseTeacher().equals(getUser())){
             throw new UtilException("you have no authorization");
         }
         itemService.createItem(item, form.getAllowNumber());
@@ -67,7 +71,7 @@ public class ItemController extends BaseController{
     @RequestMapping(value = "/create2") //name,place,time,allowNumber,courseId
     public Map<String,?> create2(@Valid @RequestBody ItemForm2 form2){
         Item item = form2.generateItem();
-        if(!courseService.checkAuth(getUser(),item.getCourse())){
+        if(!item.getCourseTeacher().equals(getUser())){
             throw new UtilException("you have no authorization");
         }
         itemService.createItem2(item, form2.getAllowNumber(),form2.getTimes());

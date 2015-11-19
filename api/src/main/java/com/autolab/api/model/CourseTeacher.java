@@ -34,4 +34,8 @@ public class CourseTeacher extends BaseEntity{
     @JsonIgnore
     @OneToMany(mappedBy = "courseTeacher", cascade = {}, fetch = FetchType.LAZY)
     private List<CourseTeacherStudent> courseTeacherStudents = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "courseTeacher", cascade = {}, fetch = FetchType.LAZY)
+    private List<Item> items = new ArrayList<>();
 }
