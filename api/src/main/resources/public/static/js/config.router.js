@@ -78,7 +78,17 @@ angular.module('app')
               })
               .state('app.booking.detail', {
                   url: '/detail/{batchId}',
-                  templateUrl: '/static/view/booking/detail.html'
+                  templateUrl: '/static/view/booking/detail.html',
+                  resolve: {
+                      deps: ['$ocLazyLoad',
+                        function( $ocLazyLoad){
+                          return $ocLazyLoad.load('angularFileUpload').then(
+                              function(){
+                                 return $ocLazyLoad.load('js/controllers/bookingDetail.js');
+                              }
+                          );
+                      }]
+                  }
               })
 
               .state('app.grade', {

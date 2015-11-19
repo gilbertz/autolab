@@ -50,44 +50,62 @@
         </footer>
     </div>
 
+    <div class="panel panel-default" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+        <div class="panel-heading">
+            上传管理
+        </div>
+        <div class="row wrapper">
+        <div class="form-group">
+            <input type="file" nv-file-select="" uploader="uploader" multiple  />
+        </div>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-striped b-t b-light">
+ <thead>
+              <tr>
+                  <th width="50%">Name</th>
+                  <th ng-show="uploader.isHTML5">Size</th>
+                  <th ng-show="uploader.isHTML5">Progress</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr ng-repeat="item in uploader.queue">
+                  <td><strong>{{ item.file.name }}</strong></td>
+                  <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                  <td ng-show="uploader.isHTML5">
+                      <div class="progress progress-sm m-b-none m-t-xs">
+                          <div class="progress-bar bg-info" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                      </div>
+                  </td>
+                  <td class="text-center">
+                      <span ng-show="item.isSuccess" class="text-success"><i class="glyphicon glyphicon-ok"></i></span>
+                      <span ng-show="item.isCancel" class="text-warning"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                      <span ng-show="item.isError" class="text-danger"><i class="glyphicon glyphicon-remove"></i></span>
+                  </td>
+                  <td nowrap>
+                      <button type="button" class="btn btn-default btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                          Upload
+                      </button>
+                      <button type="button" class="btn btn-default btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                          Cancel
+                      </button>
+                      <button type="button" class="btn btn-default btn-xs" ng-click="item.remove()">
+                          Remove
+                      </button>
+                  </td>
+              </tr>
+          </tbody>
+        </table>
+        </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-4 hidden-xs">
+                </div>
+            </div>
+        </footer>
+    </div>
+
 </div>
-
-<script type="text/javascript">
-
-
-    app.controller('BookingDetailController', ['$scope', '$http','$stateParams', function ($scope, $http,$stateParams) {
-        $scope.pagination = {
-            page: 1,
-            pageSize: 3,
-            totalItems: 0
-        };
-
-        $scope.pageChanged = function (newPage) {
-            console.log(newPage);
-            $scope.pagination.page = newPage;
-            $scope.getDetail();
-        };
-
-        $scope.getDetail = function () {
-            var url = $scope.app.host + '/batch/books/'+$stateParams.batchId;
-            var params = {};
-            params["size"] = $scope.pagination.pageSize;
-            params["page"] = $scope.pagination.page-1;
-
-           console.log(url + "?" + JSON.stringify(params));
-            $http.post(url, params)
-                .success(function (response){
-                    $scope.books = response.pager.books;
-                    if ($scope.books.length !=0) {
-                        $scope.bookDetail = $scope.books[0];
-                    };
-                    $scope.pagination.totalItems = response.pager.totalItems;
-                }).error(function (response){
-                    $scope.pop("error","错误",response.error.message);
-                });
-        };
-
-        $scope.getDetail();
-    }]);
-
-</script>
