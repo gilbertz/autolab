@@ -181,17 +181,21 @@ public class CourseController  extends BaseController{
     /**
      * this url will return all item information of one student
      * @param studentId
-     * @param CourseTeacherId
+     * @param courseTeacherId
      * @return
      */
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping(value = "/studentgradedetail")
     public Map<String, ?> getOneStudentGrades(
             @RequestParam(required = true) Long studentId,
-            @RequestParam(required = true) Long CourseTeacherId){
+            @RequestParam(required = true) Long courseTeacherId){
 
-
-        return success();
+        User student = userDao.findOne(studentId);
+        if(student == null){
+            throw new UtilException("student not exits");
+        }
+        List<Book> books = courseService.getGradeByStudentAndCourseTeacherId(student,courseTeacherId);
+        return success(Book.TAGS,books);
     }
 
 }

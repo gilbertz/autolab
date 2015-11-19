@@ -1,10 +1,7 @@
 package com.autolab.api.service;
 
 import com.autolab.api.exception.UtilException;
-import com.autolab.api.model.Course;
-import com.autolab.api.model.CourseTeacher;
-import com.autolab.api.model.CourseTeacherStudent;
-import com.autolab.api.model.User;
+import com.autolab.api.model.*;
 import com.autolab.api.repository.CourseDao;
 import com.autolab.api.repository.CourseTeacherDao;
 import org.apache.log4j.Logger;
@@ -13,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by ABC on 2015/11/9 0009.
@@ -80,6 +79,12 @@ public class CourseService {
         courseDao.save(course);
     }
 
+    /**
+     *
+     * @param course
+     * @param teacher
+     * @return
+     */
     public List<CourseTeacherStudent> getStudentGrades(Course course, User teacher){
         CourseTeacher courseTeacher = courseTeacherDao.findByCourseAndTeacher(course, teacher);
         if(courseTeacher == null){
@@ -95,5 +100,20 @@ public class CourseService {
 
     public CourseTeacher getCourseTeacherByCourseAndTeacher(Course course,User teacher){
         return courseTeacherDao.findByCourseAndTeacher(course, teacher);
+    }
+
+    public List<Book> getGradeByStudentAndCourseTeacherId(User student, Long courseTeacherId){
+        CourseTeacher courseTeacher = courseTeacherDao.findOne(courseTeacherId);
+        if(courseTeacher == null){
+            throw new UtilException("class not exits");
+        }
+        List<CourseTeacherStudent> courseTeacherStudents = courseTeacher.getCourseTeacherStudents();
+        if(!courseTeacherStudents.contains(student)){
+            throw new UtilException("The student not belongs to this class");
+        }
+        List<Book> books = student.getBooks();
+         books.stream().filter(book -> book.getBatch().getItem().getCourseTeacher().equals(courseTeacher));
+
+        return books;
     }
 }
