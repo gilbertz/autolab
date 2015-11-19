@@ -22,24 +22,16 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-sm-1">
-                <button type="button" ng-click="saveGrade()" ng-show="bookDetail.batch.publish == 'NO'"class="btn btn-sm btn-info" >保存
-                </button>
-            </div>
 
-            <div class="col-sm-1">
-                <button type="button" ng-click="publishGrade()" ng-show="bookDetail.batch.publish == 'NO'" class="btn btn-sm btn-danger">发布
-                </button>
-            </div>
         </div>
         <div class="table-responsive">
             <table class="table table-striped b-t b-light">
                 <thead>
                 <tr>
-                    <th>实验项目</th>
-                    <th>实验地点</th>
-                    <th>开放周次</th>
-                    <th style="width:30px;"></th>
+                    <th class="col-sm-3">实验项目</th>
+                    <th class="col-sm-3">实验地点</th>
+                    <th class="col-sm-3">开放周次</th>
+                    <th class="col-sm-3" style="width:30px;"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -49,7 +41,7 @@
                     <td>{{item.place}}</td>
                     <td>{{item.openTime}}</td>
                     <td>
-                        <button class="btn btn-default  btn-success btn-xs" ui-sref="app.grade.booking({itemId: '{{item.id}}'})">成绩管理</button>
+                        <button class="btn btn-default  btn-success btn-xs" ui-sref="app.grade.booking({itemId: '{{item.id}}'})" style="float:right">成绩管理</button>
                     </td>
                 </tr>
                 </tbody>
@@ -111,16 +103,22 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-1">
+                <button type="button" ng-click="saveGrade()" class="btn btn-sm btn-info" >保存
+                </button>
+            </div>
+            <div class="col-sm-1">
+                <button type="button" ng-click="publishGrade()" class="btn btn-sm btn-danger">发布
+                </button>
             </div>
         </div>
         <div class="table-responsive">
             <table class="table table-striped b-t b-light">
                 <thead>
                 <tr>
-                    <th>学生学号</th>
-                    <th>学生姓名</th>
-                    <th>学生成绩</th>
+                    <th class="col-sm-3">学生学号</th>
+                    <th class="col-sm-3">学生姓名</th>
+                    <th class="col-sm-3">学生成绩</th>
                     <th style="width:30px;"></th>
                 </tr>
                 </thead>
@@ -128,9 +126,9 @@
                 <tr ng-repeat="courseteacherstudent in courseteacherstudents">
                     <td>{{courseteacherstudent.student.jaccountId}}</td>
                     <td>{{courseteacherstudent.student.jaccountChinesename}}</td>
-                    <td>{{courseteacherstudent.grade}}</td>
+                    <td><input type="text" class="form-control" ng-model="courseteacherstudent.grade"></td>
                     <td>
-                        <button class="btn btn-default  btn-success btn-xs" ui-sref="app.grade.student({studentId: '{{courseteacherstudent.student.id}}'})">成绩详情</button>
+                        <button class="btn btn-default  btn-success btn-xs" ui-sref="app.grade.student({studentId: '{{courseteacherstudent.student.id}}'})" style="float:right">成绩详情</button>
                     </td>
                 </tr>
                 </tbody>

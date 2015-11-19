@@ -9,6 +9,21 @@
                 <button class="btn btn-sm btn-default" ng-show="bookDetail != null">{{student.name}}</button>
                 <button class="btn btn-sm btn-default" ng-show="bookDetail != null">{{course.name}}</button>
             </div>
+
+            <div class="col-sm-1">
+                <button type="button" ng-click="saveGrade()"class="btn btn-sm btn-info" >保存
+                </button>
+            </div>
+
+            <div class="col-sm-1">
+                <button type="button" ng-click="publishGrade()"class="btn btn-sm btn-danger">发布
+                </button>
+            </div>
+
+            <div class="col-sm-1">
+                <button type="button" onclick="javascript:history.back(-1);" class="btn btn-sm btn-success" >返回
+                </button>
+            </div>
         </div>
         <div class="table-responsive">
             <table class="table table-striped b-t b-light">

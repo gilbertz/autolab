@@ -134,7 +134,7 @@ public class OAuth2ServerConfiguration {
                         .scopes("read", "write")
                         .resourceIds(RESOURCE_ID)
                         //有效时间24小时
-                        .accessTokenValiditySeconds(86400)
+                        .accessTokenValiditySeconds(8640000)
 
                         .secret(clientSecret);
                 clientDetailsService = builder.build();
