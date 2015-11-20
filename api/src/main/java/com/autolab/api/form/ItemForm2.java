@@ -33,8 +33,11 @@ public class ItemForm2 {
     @NotNull
     private String place;
 
-    //@NotNull
+    @NotNull
     private List<Time> times;
+
+    @NotNull
+    private String openTime;
 
     @NotNull
     private Integer allowNumber;
@@ -43,7 +46,7 @@ public class ItemForm2 {
         Item item = new Item();
         item.setName(name);
         item.setPlace(place);
-        item.setOpenTime(null);
+        item.setOpenTime(openTime);
         ApplicationContext applicationContext = AppContextManager.getAppContext();
         CourseDao courseDao = applicationContext.getBean(CourseDao.class);
         Course course = courseDao.findOne(courseId);
@@ -52,5 +55,30 @@ public class ItemForm2 {
         }
         item.setCourse(course);
         return item;
+    }
+
+    public void updateItem(Item item){
+        if(name != null){
+            item.setName(name);
+        }
+        if(place != null){
+            item.setPlace(place);
+        }
+        if(openTime != null){
+            item.setOpenTime(openTime);
+        }
+        if(courseId != null){
+            ApplicationContext applicationContext = AppContextManager.getAppContext();
+            CourseDao courseDao = applicationContext.getBean(CourseDao.class);
+            Course course = courseDao.findOne(courseId);
+            if(course == null){
+                throw new UtilException("course not exists");
+            }
+            item.setCourse(course);
+        }
+        if(times != null){
+
+        }
+
     }
 }
