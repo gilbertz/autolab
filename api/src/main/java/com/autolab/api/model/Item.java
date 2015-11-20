@@ -27,6 +27,7 @@ public class Item extends BaseEntity{
     @JoinColumn(name = "course_teacher_id", nullable = true)
     private CourseTeacher courseTeacher;
 
+    
     private String place;
 
     
