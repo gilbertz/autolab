@@ -48,18 +48,23 @@ public class CourseController  extends BaseController{
     public Map<String,?> create(@Valid CourseForm form){
         User user = getUser();
         Course course = form.generateCourse();
-        courseService.createCourse(course,user);
+        courseService.createCourse(course);
         return success(Course.TAG, course);
     }
 
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping(value = "/addteacher/{courseId}")
-    public Map<String, ?> addTeacher(@PathVariable Long courseId){
+    public Map<String, ?> addTeacher(@PathVariable Long courseId,
+                                     @RequestParam(required = true) Long teacherId){
         Course course = courseDao.findOne(courseId);
         if(course == null){
-            throw new UtilException("course is not exit");
+            throw new UtilException("course not exists");
         }
-        courseService.addTeacher(course, getUser());
+        User teacher = userDao.findOne(teacherId);
+        if(teacher == null){
+            throw new UtilException("teacher not exist");
+        }
+        courseService.addTeacher(course, teacher);
         return success(Course.TAG, course);
     }
 
@@ -173,7 +178,7 @@ public class CourseController  extends BaseController{
             throw new UtilException("course not exits");
         }
         User teacher = userDao.findById(teacherId);
-        List<CourseTeacherStudent> courseTeacherStudents = courseService.getStudentGrades(course,teacher);
+        List<CourseTeacherStudent> courseTeacherStudents = courseService.getStudentGrades(course, teacher);
 
         return success(CourseTeacherStudent.TAGS,courseTeacherStudents);
     }

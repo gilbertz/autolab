@@ -55,9 +55,6 @@ public class ItemController extends BaseController{
     @RequestMapping(value = "/create") //name,place,openTime,allowNumber,courseTeacherId
     public Map<String,?> create(@Valid ItemForm form){
         Item item = form.generateItem();
-        if(!item.getCourseTeacher().equals(getUser())){
-            throw new UtilException("you have no authorization");
-        }
         itemService.createItem(item, form.getAllowNumber());
         return success(Item.TAG, item);
     }
@@ -71,32 +68,29 @@ public class ItemController extends BaseController{
     @RequestMapping(value = "/create2") //name,place,time,allowNumber,courseId
     public Map<String,?> create2(@Valid @RequestBody ItemForm2 form2){
         Item item = form2.generateItem();
-        if(!item.getCourseTeacher().equals(getUser())){
-            throw new UtilException("you have no authorization");
-        }
         itemService.createItem2(item, form2.getAllowNumber(),form2.getTimes());
         return success(Item.TAG, item);
     }
 
     /**
      * edit a course
-     *@param form
+     *@param form2
      * @return
      */
     @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping(value = "/edit")
-    public Map<String, ?> edit(ItemForm form) {
+    public Map<String, ?> edit(ItemForm2 form2) {
 
-        if (form.getId() == null) {
+        if (form2.getId() == null) {
             throw new UtilException("id required!");
         }
-        Item item = itemDao.findByIdAndStatus(form.getId(),Status.OK);
+        Item item = itemDao.findByIdAndStatus(form2.getId(),Status.OK);
 
         if(item == null){
             throw  new UtilException("item not exits");
         }
 
-        form.updateItem(item);
+        form2.updateItem(item);
 
         itemDao.save(item);
 

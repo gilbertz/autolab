@@ -46,16 +46,9 @@ public class CourseService {
     /**
      *
      * @param course
-     * @param teacher
      */
-    public void createCourse(Course course, User teacher){
-        CourseTeacher courseTeacher = new CourseTeacher();
-        courseTeacher.setCourse(course);
-        courseTeacher.setTeacher(teacher);
-        courseTeacherDao.save(courseTeacher);
-        List<CourseTeacher> courseTeachers = new ArrayList<>();
-        courseTeachers.add(courseTeacher);
-        course.setCourseTeachers(courseTeachers);
+    public void createCourse(Course course){
+        //do not set courseTeacher, due to we add those information in database by hand or use url: /course/addteacher/courseId
         courseDao.save(course);
     }
 
@@ -66,7 +59,10 @@ public class CourseService {
      * @param teacher
      */
     public void addTeacher(Course course, User teacher){
-        CourseTeacher courseTeacher = new CourseTeacher();
+        CourseTeacher courseTeacher = courseTeacherDao.findByCourseAndTeacher(course,teacher);
+        if(courseTeacher != null){
+            throw new UtilException("the teacher is already in the course");
+        }
         courseTeacher.setCourse(course);
         courseTeacher.setTeacher(teacher);
         courseTeacherDao.save(courseTeacher);
