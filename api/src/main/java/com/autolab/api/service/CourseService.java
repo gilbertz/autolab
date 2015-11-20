@@ -1,12 +1,10 @@
 package com.autolab.api.service;
 
 import com.autolab.api.exception.UtilException;
-import com.autolab.api.model.Course;
-import com.autolab.api.model.CourseTeacher;
-import com.autolab.api.model.CourseTeacherStudent;
-import com.autolab.api.model.User;
+import com.autolab.api.model.*;
 import com.autolab.api.repository.CourseDao;
 import com.autolab.api.repository.CourseTeacherDao;
+import com.autolab.api.repository.CourseTeacherStudentDao;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,19 +27,10 @@ public class CourseService {
     @Autowired
     private CourseDao courseDao;
 
+    @Autowired
+    private CourseTeacherStudentDao courseTeacherStudentDao;
+
     public boolean checkAuth(User user, Course course){
-//        CourseTeacher courseTeacher = courseTeacherDao.findByCourseAndTeacher(course, user);
-//        List<CourseTeacher> courseTeachers = courseTeacherDao.findByCourse(course);
-//
-//        if(courseTeacher == null || courseTeachers == null){
-//            throw new UtilException("there is no information in database");
-//        }
-//        if(courseTeachers.contains(courseTeacher)){
-//            return true;
-//        }
-//        else{
-//            return false;
-//        }
         return true;
     }
 
@@ -92,5 +81,20 @@ public class CourseService {
 
     public CourseTeacher getCourseTeacherByCourseAndTeacher(Course course,User teacher){
         return courseTeacherDao.findByCourseAndTeacher(course, teacher);
+    }
+
+    public List<Book> getStudentGradeDetailByStudentAndCourseTeacherId(User student, Long courseTeacherId){
+        CourseTeacher courseTeacher = courseTeacherDao.findOne(courseTeacherId);
+        if(courseTeacher == null){
+            throw new UtilException("courseTeacher not exists");
+        }
+        if(courseTeacherStudentDao.findByCourseTeacherAndStudent(courseTeacher,student) == null){
+            throw new UtilException("the student not belongs to this courseTeacher");
+        }
+
+        List<Book> books = student.getBooks();
+        Course course = courseTeacher.getCourse();
+        books.stream().filter(book -> book.getBatch().getItem().getCourse().equals(course));
+        return books;
     }
 }

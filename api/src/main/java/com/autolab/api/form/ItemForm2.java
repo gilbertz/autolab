@@ -77,7 +77,7 @@ public class ItemForm2 {
             item.setCourse(course);
         }
         if(times != null){
-
+            throw new UtilException("can not modify time");
         }
 
     }
