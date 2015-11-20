@@ -29,6 +29,7 @@ public class Item extends BaseEntity{
 
     private String place;
 
+    
     private String openTime;
 
     @JsonIgnore
