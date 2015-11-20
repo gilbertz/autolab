@@ -29,9 +29,6 @@ public class Course extends BaseEntity{
 
     private String term;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "course", cascade = {}, fetch = FetchType.LAZY)
-    private List<Item> items = new ArrayList<>();
 
 
 }

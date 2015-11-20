@@ -1,9 +1,10 @@
 package com.autolab.api.form;
 
 import com.autolab.api.exception.UtilException;
-import com.autolab.api.model.Course;
+import com.autolab.api.model.CourseTeacher;
 import com.autolab.api.model.Item;
 import com.autolab.api.repository.CourseDao;
+import com.autolab.api.repository.CourseTeacherDao;
 import com.autolab.api.util.AppContextManager;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -28,13 +29,16 @@ public class ItemForm2 {
     private String name;
 
     @NotNull
-    private Long courseId;
+    private Long courseTeacherId;
 
     @NotNull
     private String place;
 
-    //@NotNull
+    @NotNull
     private List<Time> times;
+
+    @NotNull
+    private String openTime;
 
     @NotNull
     private Integer allowNumber;
@@ -43,14 +47,14 @@ public class ItemForm2 {
         Item item = new Item();
         item.setName(name);
         item.setPlace(place);
-        item.setOpenTime(null);
+        item.setOpenTime(openTime);
         ApplicationContext applicationContext = AppContextManager.getAppContext();
-        CourseDao courseDao = applicationContext.getBean(CourseDao.class);
-        Course course = courseDao.findOne(courseId);
-        if(course == null){
-            throw new UtilException("course is not exit");
+        CourseTeacherDao courseTeacherDao = applicationContext.getBean(CourseTeacherDao.class);
+        CourseTeacher courseTeacher = courseTeacherDao.findOne(courseTeacherId);
+        if(courseTeacher == null){
+            throw new UtilException("class is not exit");
         }
-        item.setCourse(course);
+        item.setCourseTeacher(courseTeacher);
         return item;
     }
 }

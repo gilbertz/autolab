@@ -2,8 +2,10 @@ package com.autolab.api.form;
 
 import com.autolab.api.exception.UtilException;
 import com.autolab.api.model.Course;
+import com.autolab.api.model.CourseTeacher;
 import com.autolab.api.model.Item;
 import com.autolab.api.repository.CourseDao;
+import com.autolab.api.repository.CourseTeacherDao;
 import com.autolab.api.util.AppContextManager;
 import lombok.Data;
 import org.springframework.context.ApplicationContext;
@@ -23,7 +25,7 @@ public class ItemForm {
     private String name;
 
     @NotNull
-    private Long courseId;
+    private Long courseTeacherId;
 
     @NotNull
     private String place;
@@ -45,12 +47,12 @@ public class ItemForm {
         item.setPlace(place);
         item.setOpenTime(openTime);
         ApplicationContext applicationContext = AppContextManager.getAppContext();
-        CourseDao courseDao = applicationContext.getBean(CourseDao.class);
-        Course course = courseDao.findOne(courseId);
-        if(course == null){
-            throw new UtilException("course is not exit");
+        CourseTeacherDao courseTeacherDao = applicationContext.getBean(CourseTeacherDao.class);
+        CourseTeacher courseTeacher = courseTeacherDao.findOne(courseTeacherId);
+        if(courseTeacher == null){
+            throw new UtilException("class is not exit");
         }
-        item.setCourse(course);
+        item.setCourseTeacher(courseTeacher);
         return item;
     }
 
@@ -64,14 +66,14 @@ public class ItemForm {
         if(openTime != null){
             item.setOpenTime(openTime);
         }
-        if(courseId != null){
+        if(courseTeacherId != null){
             ApplicationContext applicationContext = AppContextManager.getAppContext();
-            CourseDao courseDao = applicationContext.getBean(CourseDao.class);
-            Course course = courseDao.findOne(courseId);
-            if(course == null){
-                throw new UtilException("course is not exit");
+            CourseTeacherDao courseTeacherDao = applicationContext.getBean(CourseTeacherDao.class);
+            CourseTeacher courseTeacher = courseTeacherDao.findOne(courseTeacherId);
+            if(courseTeacher == null){
+                throw new UtilException("class is not exit");
             }
-            item.setCourse(course);
+            item.setCourseTeacher(courseTeacher);
         }
 
     }

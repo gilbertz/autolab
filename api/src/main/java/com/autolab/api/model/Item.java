@@ -24,8 +24,8 @@ public class Item extends BaseEntity{
     private String name;
 
     @ManyToOne(cascade = {},fetch = FetchType.EAGER)
-    @JoinColumn(name = "course_id", nullable = true)
-    private Course course;
+    @JoinColumn(name = "course_teacher_id", nullable = true)
+    private CourseTeacher courseTeacher;
 
     private String place;
 

@@ -59,7 +59,7 @@ public class BatchController extends BaseController{
     @RequestMapping("/create")
     public Map<String, ?> create(@Valid BatchForm form){
         Batch batch = form.generateBatch();
-        if(!courseService.checkAuth(getUser(), batch.getItem().getCourse())){
+        if(!batch.getItem().getCourseTeacher().equals(getUser())){
             throw new UtilException("you have no authorization");
         }
         batchDao.save(batch);
@@ -71,7 +71,7 @@ public class BatchController extends BaseController{
      * @param form
      * @return
      */
-    //@PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping("/edit")
     public Map<String, ?> edit(BatchForm form){
         if(form.getId() == null){
@@ -79,7 +79,7 @@ public class BatchController extends BaseController{
         }
         Batch batch = batchDao.findOne(form.getId());
         if(batch == null){
-            throw  new UtilException("batch noe exits");
+            throw  new UtilException("batch not exits");
         }
         form.updateBatch(batch);
         batchDao.save(batch);
@@ -99,7 +99,7 @@ public class BatchController extends BaseController{
         if(batch == null){
             throw new UtilException("batch not exits");
         }
-        if(!courseService.checkAuth(getUser(),batch.getItem().getCourse())){
+        if(!batch.getItem().getCourseTeacher().equals(getUser())){
             throw new UtilException("you have no authorization to operate other teacher's batch");
         }
         List<Book> books = batch.getBooks();
@@ -133,8 +133,8 @@ public class BatchController extends BaseController{
             throw new UtilException("batch not exits");
         }
 
-        if(!courseService.checkAuth(getUser(), batch.getItem().getCourse())){
-            throw new UtilException("you have no authorization");
+        if(!batch.getItem().getCourseTeacher().equals(getUser())){
+            throw new UtilException("you have no authorization to operate other teacher's batch");
         }
         Pageable pageable = new PageRequest(page, size);
 
@@ -177,8 +177,8 @@ public class BatchController extends BaseController{
     @RequestMapping("/del/{batchId}")
     public Map<String, ?> del(@PathVariable Long batchId){
         Batch batch = batchDao.findByIdAndStatus(batchId, Status.OK);
-        if(!courseService.checkAuth(getUser(), batch.getItem().getCourse())){
-            throw new UtilException("you have no authorization");
+        if(!batch.getItem().getCourseTeacher().equals(getUser())){
+            throw new UtilException("you have no authorization to operate other teacher's batch");
         }
         if(batch == null){
             throw new UtilException("batch is not exit");

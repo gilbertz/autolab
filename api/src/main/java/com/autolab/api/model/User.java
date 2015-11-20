@@ -46,15 +46,17 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
     @JsonIgnore
     private String password;
 
+    //This property is for student only
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = {}, fetch = FetchType.LAZY)
     private List<Book> books = new ArrayList<>();
 
+    //This property is for student only
     @JsonIgnore
     @OneToMany(mappedBy = "teacher", cascade = {}, fetch = FetchType.LAZY)
     private List<CourseTeacher> courseTeachers = new ArrayList<>();
 
-
+    //This property is for teacher only
     @JsonIgnore
     @OneToMany(mappedBy = "student", cascade = {}, fetch = FetchType.LAZY)
     private List<CourseTeacherStudent> courseTeacherStudents = new ArrayList<>();
