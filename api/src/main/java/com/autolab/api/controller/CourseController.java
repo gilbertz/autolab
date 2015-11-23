@@ -177,7 +177,7 @@ public class CourseController  extends BaseController{
         return success(CourseTeacherStudent.TAGS,courseTeacherStudents);
     }
 
-    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+    //@PreAuthorize(User.Role.HAS_ROLE_ADMIN)
     @RequestMapping(value = "/studentgradedetail")
     public Map<String, ?> getStudentGradeDetail(
             @RequestParam(required = true) Long studentId,

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by ABC on 2015/11/9 0009.
@@ -94,7 +95,7 @@ public class CourseService {
 
         List<Book> books = student.getBooks();
         Course course = courseTeacher.getCourse();
-        books.stream().filter(book -> book.getBatch().getItem().getCourse().equals(course));
+        books = books.stream().filter(book -> book.getBatch().getItem().getCourse().equals(course)).collect(Collectors.toList());
         return books;
     }
 }
