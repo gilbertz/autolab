@@ -122,11 +122,11 @@ public class BookController extends BaseController {
                     bookMap.put("id", book.getId());
                     bookMap.put("user", book.getUser());
                     bookMap.put("batch", book.getBatch());
-                    if ((book.getBatch().getPublish() == Publish.NO || book.getBatch().getPublish() == null) && book.getGrade() != null) {
-                        bookMap.put("grade", null);
-                    } else {
+//                    if ((book.getBatch().getPublish() == Publish.NO || book.getBatch().getPublish() == null) && book.getGrade() != null) {
+//                        bookMap.put("grade", null);
+//                    } else {
                         bookMap.put("grade", book.getGrade());
-                    }
+//                    }
                     return bookMap;
                 })
                 .collect(Collectors.toList());

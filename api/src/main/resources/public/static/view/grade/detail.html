@@ -18,8 +18,6 @@
             </div>
 
             <div class="col-sm-1">
-                <button type="button" ng-click="publishGrade()" ng-show="bookDetail.batch.publish == 'NO'" class="btn btn-sm btn-danger">发布
-                </button>
             </div>
 
             <div class="col-sm-1">
@@ -117,7 +115,8 @@
             console.log(url + "?" + JSON.stringify(params));
             $http.post(url, params)
                 .success(function (response){
-                $scope.pop("success", "", "保存成绩成功，全部成绩填写后可以点击发布");
+                $scope.pop("success", "", "保存成绩成功");
+                history.back(-1);
                 }).error(function (response){
                     $scope.pop("error","错误",response.error.message);
                 });
