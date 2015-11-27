@@ -147,6 +147,10 @@ angular.module('app')
                   url: '/index',
                   templateUrl: '/static/view/my_grade/index.html'
               })
+              .state('app.my_grade.detail', {
+                  url: '/detail/{courseId}',
+                  templateUrl: '/static/view/my_grade/detail.html'
+              })
 
               //个人信息
               .state('app.my_profile', {

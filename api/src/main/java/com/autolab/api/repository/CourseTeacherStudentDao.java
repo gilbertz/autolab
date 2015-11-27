@@ -13,5 +13,6 @@ import java.util.List;
 public interface CourseTeacherStudentDao extends BaseDao<CourseTeacherStudent, Long> {
     List<CourseTeacherStudent> findAll(Specification<CourseTeacherStudent> spec);
     List<CourseTeacherStudent> findByCourseTeacher(CourseTeacher courseTeacher);
+    List<CourseTeacherStudent> findByStudent(User student);
     CourseTeacherStudent findByCourseTeacherAndStudent(CourseTeacher courseTeacher, User student);
 }

@@ -9,8 +9,10 @@ import com.autolab.api.form.CourseForm;
 import com.autolab.api.form.GradeForm2;
 import com.autolab.api.form.GradeForm3;
 import com.autolab.api.model.*;
+import com.autolab.api.repository.BookDao;
 import com.autolab.api.repository.CourseDao;
 import com.autolab.api.repository.CourseTeacherDao;
+import com.autolab.api.repository.CourseTeacherStudentDao;
 import com.autolab.api.service.CourseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +29,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.criteria.Predicate;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/course")
@@ -39,10 +43,16 @@ public class CourseController  extends BaseController{
     protected CourseDao courseDao;
 
     @Autowired
+    protected BookDao bookDao;
+
+    @Autowired
     protected  CourseTeacherDao courseTeacherDao;
 
     @Autowired
     protected CourseService courseService;
+
+    @Autowired
+    protected CourseTeacherStudentDao courseTeacherStudentDao;
 
     /**
      * create a new course
@@ -216,5 +226,28 @@ public class CourseController  extends BaseController{
 
         return success();
 
+    }
+
+    @PreAuthorize(User.Role.HAS_ROLE_USER)
+    @RequestMapping(value = "/mygrade")
+    public Map<String,?> getMygrade(
+    ){
+        User student = getUser();
+        List<CourseTeacherStudent> courseTeacherStudents = courseTeacherStudentDao.findByStudent(student);
+
+        return success(CourseTeacherStudent.TAGS,courseTeacherStudents);
+    }
+
+    @PreAuthorize(User.Role.HAS_ROLE_USER)
+    @RequestMapping(value = "/mygradedetail")
+    public Map<String,?> getMygradeDetail(
+            @RequestParam(required = true) Long courseId
+    ){
+        User student = getUser();
+        Course course = courseDao.findOne(courseId);
+        List<Book> books = student.getBooks();
+        books = books.stream().filter(book -> book.getBatch().getItem().getCourse().equals(course)).collect(Collectors.toList());
+
+        return success(Book.TAGS,books);
     }
 }
