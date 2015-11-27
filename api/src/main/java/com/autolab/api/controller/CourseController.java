@@ -8,6 +8,7 @@ import com.autolab.api.exception.UtilException;
 import com.autolab.api.form.CourseForm;
 import com.autolab.api.model.*;
 import com.autolab.api.repository.CourseDao;
+import com.autolab.api.repository.CourseTeacherDao;
 import com.autolab.api.service.CourseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,9 @@ public class CourseController  extends BaseController{
 
     @Autowired
     protected CourseDao courseDao;
+
+    @Autowired
+    protected  CourseTeacherDao courseTeacherDao;
 
     @Autowired
     protected CourseService courseService;
@@ -181,12 +185,17 @@ public class CourseController  extends BaseController{
     @RequestMapping(value = "/studentgradedetail")
     public Map<String, ?> getStudentGradeDetail(
             @RequestParam(required = true) Long studentId,
-            @RequestParam(required = true) Long courseTeacherId){
+            @RequestParam(required = true) Long courseId,
+            @RequestParam(required = true) Long teacherId){
         User student = userDao.findOne(studentId);
         if(student == null){
             throw new UtilException("student not exists");
         }
-        List<Book> books = courseService.getStudentGradeDetailByStudentAndCourseTeacherId(student,courseTeacherId);
+        Course course = courseDao.findOne(courseId);
+        User teacher = userDao.findOne(teacherId);
+        CourseTeacher courseTeacher = courseTeacherDao.findByCourseAndTeacher(course, teacher);
+
+        List<Book> books = courseService.getStudentGradeDetailByStudentAndCourseTeacherId(student,courseTeacher.getId());
 
         return success(Book.TAGS,books);
     }

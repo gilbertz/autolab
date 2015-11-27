@@ -109,7 +109,7 @@ angular.module('app')
                   templateUrl: '/static/view/grade/detail.html'
               })
               .state('app.grade.student', {
-                  url: '/student/{studentId}',
+                  url: '/student/{courseId}/{teacherId}/{studentId}',
                   templateUrl: '/static/view/grade/student.html'
               })
 

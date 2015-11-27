@@ -6,9 +6,8 @@
         </div>
         <div class="row wrapper">
             <div class="col-sm-9 m-b-xs">
-                <button class="btn btn-sm btn-default">自动控制原理</button>
-                <button class="btn btn-sm btn-default" >找老师</button>
-                <button class="btn btn-sm btn-default">赵国旗</button>
+                <button class="btn btn-sm btn-default" ng-show="courseName != null">{{courseName}}</button>
+                <button class="btn btn-sm btn-default" ng-show="studentName != null">{{studentName}}</button>
             </div>
 
             <div class="col-sm-1">
@@ -32,15 +31,16 @@
                 <tr>
                     <th>实验项目</th>
                     <th>完成时间</th>
-                    <th>出席情况</th>
+                    <th>出勤情况</th>
                     <th>成绩</th>
                 </tr>
                 </thead>
                 <tbody>
                  <tr dir-paginate="book in books | itemsPerPage: pagination.pageSize"
          total-items="pagination.totalItems" current-page="pagination.page">
-                    <td class="col-sm-3">{{book.user.jaccountId}}</td>
-                    <td class="col-sm-3">{{book.user.jaccountChinesename}}</td>
+                    <td class="col-sm-3">{{book.batch.item.name}}</td>
+                    <td class="col-sm-3">{{book.attendTime}}</td>
+                    <td class="col-sm-3">{{book.attendance}}</td>
                     <td class="col-sm-3"><input type="text" class="form-control" ng-model="book.grade"></td>
                 </tr>
                 </tbody>
@@ -66,7 +66,27 @@
 <script type="text/javascript">
 
     app.controller('StudentController', ['$scope', '$http','$stateParams', function ($scope, $http,$stateParams) {
+       $scope.getStuedntgradeDetail = function (){
 
+            var url = $scope.app.host + '/course/studentgradedetail';
+            var params = {};
+            params["studentId"] = $stateParams.studentId;
+            params["courseId"] = $stateParams.courseId;
+            params["teacherId"] = $stateParams.teacherId;
+           console.log(url + "?" + JSON.stringify(params));
+           $http.post(url, params)
+                   .success(function (response) {
+                       console.log(response);
+                       $scope.books = response.books;
+                       if ($scope.books.length > 0 ) {
+                        $scope.courseName = $scope.books[0].batch.item.course.name;
+                        $scope.studentName = $scope.books[0].user.jaccountChinesename;
+                       };
+                   }).error(function (response) {
+                       $scope.pop("error", "错误", response.error.message);
+                   });
+       };
+       $scope.getStuedntgradeDetail();
     }]);
 
 </script>

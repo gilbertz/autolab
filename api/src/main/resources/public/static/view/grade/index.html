@@ -14,12 +14,13 @@
                             class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li ng-repeat="curriculum in curriculums">
-                            <a href="javascript:void(0)" ng-click="changeCurriculum(curriculum)">
-                                {{curriculum.name}}
+                        <li ng-repeat="course in courses">
+                            <a href="javascript:void(0)" ng-click="changeCourse(course)">
+                                {{course.name}}
                             </a>
                         </li>
                     </ul>
+
                 </div>
             </div>
 
@@ -63,11 +64,9 @@
         </footer>
     </div>
 
-
    <div class="panel panel-default">
         <div class="panel-heading">
             学生列表
-        </div>
         </div>
         <div class="row wrapper">
             <div class="col-sm-4 m-b-xs">
@@ -79,9 +78,9 @@
                             class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li ng-repeat="course in courses">
-                            <a href="javascript:void(0)" ng-click="changeCourse(course)">
-                                {{course.name}}
+                        <li ng-repeat="curriculum in curriculums">
+                            <a href="javascript:void(0)" ng-click="changeCurriculum(curriculum)">
+                                {{curriculum.name}}
                             </a>
                         </li>
                     </ul>
@@ -135,7 +134,7 @@
                     <td>{{courseteacherstudent.student.jaccountChinesename}}</td>
                     <td><input type="text" class="form-control" ng-model="courseteacherstudent.grade"></td>
                     <td>
-                        <button class="btn btn-default  btn-success btn-xs" ui-sref="app.grade.student({studentId: '{{courseteacherstudent.student.id}}'})" style="float:right">成绩详情</button>
+                        <button class="btn btn-default  btn-success btn-xs" ui-sref="app.grade.student({courseId:'{{filterCurriculum.id}}',studentId: '{{courseteacherstudent.student.id}}',teacherId:'{{filterTeacher.id}}'})" style="float:right">成绩详情</button>
                     </td>
                 </tr>
                 </tbody>
