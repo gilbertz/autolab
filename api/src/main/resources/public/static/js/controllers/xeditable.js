@@ -32,6 +32,7 @@ app.controller('XeditableCtrl', ['$scope', '$filter', '$http', 'editableOptions'
            params["courseId"] = $stateParams.courseId;
            params["name"] = $scope.item.name;
            params["place"] = $scope.item.place;
+           params["openTime"] = $scope.item.openTime;
            params["allowNumber"] = $scope.item.allowNumber;
            params["times"] = $scope.times;
 
