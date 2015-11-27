@@ -5,10 +5,12 @@ import com.autolab.api.model.*;
 import com.autolab.api.repository.CourseDao;
 import com.autolab.api.repository.CourseTeacherDao;
 import com.autolab.api.repository.CourseTeacherStudentDao;
+import com.autolab.api.repository.UserDao;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +29,9 @@ public class CourseService {
 
     @Autowired
     private CourseDao courseDao;
+
+    @Autowired
+    private UserDao userDao;
 
     @Autowired
     private CourseTeacherStudentDao courseTeacherStudentDao;
@@ -97,5 +102,19 @@ public class CourseService {
         Course course = courseTeacher.getCourse();
         books = books.stream().filter(book -> book.getBatch().getItem().getCourse().equals(course)).collect(Collectors.toList());
         return books;
+    }
+
+    @Transactional(rollbackOn = UtilException.class)
+    public void setGrade3(Long[] couserIds,Long []teacherIds, Long[] studentIds, String []grades){
+
+        for(int i = 0;i < teacherIds.length;i++){
+            Course course = courseDao.findOne(couserIds[i]);
+            User teacher = userDao.findOne(teacherIds[i]);
+            CourseTeacher courseTeacher= courseTeacherDao.findByCourseAndTeacher(course,teacher);
+            User student = userDao.findOne(studentIds[i]);
+            CourseTeacherStudent courseTeacherStudent= courseTeacherStudentDao.findByCourseTeacherAndStudent(courseTeacher,student);
+            courseTeacherStudent.setGrade(grades[i]);
+            courseTeacherStudentDao.save(courseTeacherStudent);
+        }
     }
 }

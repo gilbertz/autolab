@@ -51,4 +51,17 @@ public class BatchService {
             bookDao.save(book);
         }
     }
+
+    @Transactional(rollbackOn = UtilException.class)
+    public void setGrade2(String []grades, Long []bookIds){
+
+        if(bookIds.length != grades.length){
+            throw new UtilException("the lengths do not match!");
+        }
+        for(int i = 0;i < bookIds.length;i++){
+            Book book = bookDao.findOne(bookIds[i]);
+            book.setGrade(grades[i]);
+            bookDao.save(book);
+        }
+    }
 }

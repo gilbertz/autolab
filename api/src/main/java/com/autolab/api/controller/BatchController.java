@@ -3,6 +3,7 @@ package com.autolab.api.controller;
 import com.autolab.api.exception.UtilException;
 import com.autolab.api.form.BatchForm;
 import com.autolab.api.form.GradeForm;
+import com.autolab.api.form.GradeForm2;
 import com.autolab.api.model.*;
 import com.autolab.api.repository.*;
 import com.autolab.api.service.BatchService;
@@ -167,6 +168,22 @@ public class BatchController extends BaseController{
 
     }
 
+
+    /**
+     * teacher browse the books
+     *  @param form
+     * @return page
+     */
+
+    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+    @RequestMapping(value =  "/grades2")
+    public Map<String,?> setGrades2(@Valid GradeForm2 form){
+
+        batchService.setGrade2(form.getGrades(), form.getBookIds());
+
+        return success();
+
+    }
 
     /**
      * delete a batch

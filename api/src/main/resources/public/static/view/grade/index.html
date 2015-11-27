@@ -105,17 +105,14 @@
             </div>
             <div class="col-sm-2">
                 <div class="col-sm-1">
-                <button type="button" ng-click="upload()" class="btn btn-sm btn-info" >上传
-                </button>
+
             </div>
             </div>
             <div class="col-sm-1">
-                <button type="button" ng-click="saveGrade()" class="btn btn-sm btn-info" >保存
+                <button type="button" ng-click="saveGrade()" class="btn btn-sm btn-info" >保存成绩
                 </button>
             </div>
             <div class="col-sm-1">
-                <button type="button" ng-click="publishGrade()" class="btn btn-sm btn-danger">发布
-                </button>
             </div>
         </div>
         <div class="table-responsive">
@@ -264,6 +261,36 @@
                    });
 
        };
+
+       $scope.saveGrade = function () {
+            var url = $scope.app.host + '/course/grades3';
+            var params = {};
+            var params = {};
+            var courseIds = [];
+            var teacherIds = [];
+             var studentIds = [];
+            var grades = [];
+            for (var i = 0; i < $scope.courseteacherstudents.length; i++) {
+                courseIds.push($scope.filterCurriculum.id);
+                teacherIds.push($scope.filterTeacher.id);
+                studentIds.push($scope.courseteacherstudents[i].student.id);
+                grades.push($scope.courseteacherstudents[i].grade);
+
+            };
+            params["courseIds"] = courseIds;
+            params["teacherIds"] = teacherIds;
+            params["studentIds"] = studentIds;
+            params["grades"] = grades;
+           console.log(url + "?" + JSON.stringify(params));
+           $http.post(url, params)
+                   .success(function (response) {
+                       console.log(response);
+            $scope.getStuedntgrades();
+
+                   }).error(function (response) {
+                       $scope.pop("error", "错误", response.error.message);
+                   });
+       }
 
     }]);
 

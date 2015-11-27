@@ -6,6 +6,8 @@ package com.autolab.api.controller;
 
 import com.autolab.api.exception.UtilException;
 import com.autolab.api.form.CourseForm;
+import com.autolab.api.form.GradeForm2;
+import com.autolab.api.form.GradeForm3;
 import com.autolab.api.model.*;
 import com.autolab.api.repository.CourseDao;
 import com.autolab.api.repository.CourseTeacherDao;
@@ -198,5 +200,21 @@ public class CourseController  extends BaseController{
         List<Book> books = courseService.getStudentGradeDetailByStudentAndCourseTeacherId(student,courseTeacher.getId());
 
         return success(Book.TAGS,books);
+    }
+
+    /**
+     * teacher browse the books
+     *  @param form
+     * @return page
+     */
+
+    @PreAuthorize(User.Role.HAS_ROLE_ADMIN)
+    @RequestMapping(value =  "/grades3")
+    public Map<String,?> setGrades2(@Valid GradeForm3 form){
+
+        courseService.setGrade3( form.getCourseIds(),form.getTeacherIds(),form.getStudentIds(),form.getGrades());
+
+        return success();
+
     }
 }
