@@ -56,7 +56,7 @@ angular.module('app')
                         function( $ocLazyLoad ){
                           return $ocLazyLoad.load('xeditable').then(
                               function(){
-                                  return $ocLazyLoad.load('js/controllers/xeditable.js');
+                                  return $ocLazyLoad.load('/static/js/controllers/xeditable.js');
                               }
                           );
                       }]
@@ -84,7 +84,7 @@ angular.module('app')
                         function( $ocLazyLoad){
                           return $ocLazyLoad.load('angularFileUpload').then(
                               function(){
-                                 return $ocLazyLoad.load('js/controllers/bookingDetail.js');
+                                 return $ocLazyLoad.load('/static/js/controllers/bookingDetail.js');
                               }
                           );
                       }]

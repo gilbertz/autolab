@@ -17,7 +17,8 @@ angular.module('app')
                 title: '自动化系实验预约系统',
                 organization:"上海交通大学自动化系",
                 version: '1.0',
-                host: "http://localhost:8025",
+                //host: "http://localhost:8025",
+                host: "http://202.120.39.249:8025",
                 // for chart colors
                 color: {
                     primary: '#7266ba',
@@ -101,12 +102,12 @@ angular.module('app')
             $rootScope.oauth2={};
             $rootScope.isJSON = "";
 
-            var autolabDebug= true;
+            var autolabDebug= false;
 
             if(autolabDebug){
 
                 //UI开发阶段HardCode.
-                $rootScope.oauth2.accessToken="fb53b40c-3c0b-432c-8fbf-047b20196b2e";
+                $rootScope.oauth2.accessToken="332e589d-eedf-439d-986f-cf6d56f35497";
                 // $rootScope.oauth2.accessToken="8b20b4f1-1c1a-43ba-b7ea-b4537698a2c2";
                 $rootScope.oauth2.tokenType="bearer";
                 $rootScope.oauth2.refreshToken="3ecd724e-a02d-40c4-8a5f-496e981e9f9d";
@@ -114,8 +115,8 @@ angular.module('app')
                 $rootScope.oauth2.scope="read write";
                 $rootScope.oauth2.id = "1140329122";
                 $rootScope.oauth2.uid = "zhaoguoqi";
-                $rootScope.oauth2.student = "yes";
-                $rootScope.oauth2.chinesename = "赵国旗";
+                $rootScope.oauth2.student = "no";
+                $rootScope.oauth2.chinesename = "公粮";
                 $rootScope.oauth2.dept = "自动化系";
 
             }else{
