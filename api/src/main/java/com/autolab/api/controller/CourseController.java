@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/course")
-public class CourseController  extends BaseController{
+public class    CourseController  extends BaseController{
     public static final Logger logger = LoggerFactory.getLogger(CourseController.class);
 
     @Autowired

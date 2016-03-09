@@ -17,8 +17,8 @@ angular.module('app')
                 title: '自动化系实验预约系统',
                 organization:"上海交通大学自动化系",
                 version: '1.0',
-                //host: "http://localhost:8025",
-                host: "http://202.120.39.249:8025",
+                host: "http://localhost:8025",
+                //host: "http://202.120.39.249:8025",
                 // for chart colors
                 color: {
                     primary: '#7266ba',
