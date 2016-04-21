@@ -102,15 +102,15 @@ angular.module('app')
             $rootScope.oauth2={};
             $rootScope.isJSON = "";
 
-            var autolabDebug= false;
+            var autolabDebug= true;
 
             if(autolabDebug){
 
                 //UI开发阶段HardCode.
-                $rootScope.oauth2.accessToken="332e589d-eedf-439d-986f-cf6d56f35497";
+                $rootScope.oauth2.accessToken="efa423b5-4ad7-471d-97f5-d5d4e969e672";
                 // $rootScope.oauth2.accessToken="8b20b4f1-1c1a-43ba-b7ea-b4537698a2c2";
                 $rootScope.oauth2.tokenType="bearer";
-                $rootScope.oauth2.refreshToken="3ecd724e-a02d-40c4-8a5f-496e981e9f9d";
+                $rootScope.oauth2.refreshToken="40e923d5-59d8-4f27-926c-14dce1daebb5";
                 $rootScope.oauth2.expiresIn="86399";
                 $rootScope.oauth2.scope="read write";
                 $rootScope.oauth2.id = "1140329122";

@@ -35,7 +35,7 @@ angular.module('app')
                   template: '<div ui-view class="fade-in-up"></div>'
               })
               .state('app.experiment.index', {
-                  url: '/index',
+                  url: '/index/{courseId}',
                   templateUrl: '/static/view/experiment/index.html'
               })
               .state('app.experiment.booking', {
@@ -69,7 +69,7 @@ angular.module('app')
                   template: '<div ui-view class="fade-in-up"></div>'
               })
               .state('app.booking.index', {
-                  url: '/index',
+                  url: '/index/{courseId}',
                   templateUrl: '/static/view/booking/index.html'
               })
               .state('app.booking.booking', {
@@ -97,7 +97,7 @@ angular.module('app')
                   template: '<div ui-view class="fade-in-up"></div>'
               })
               .state('app.grade.index', {
-                  url: '/index',
+                  url: '/index/{courseId}',
                   templateUrl: '/static/view/grade/index.html'
               })
               .state('app.grade.booking', {
@@ -120,7 +120,7 @@ angular.module('app')
                   template: '<div ui-view class="fade-in-up"></div>'
               })
               .state('app.experiment_booking.index', {
-                  url: '/index',
+                  url: '/index/{courseId}',
                   templateUrl: '/static/view/experiment_booking/index.html'
               })
               .state('app.experiment_booking.booking', {

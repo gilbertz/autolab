@@ -13,7 +13,7 @@
                          {{itemName}}
                         </div>
                         <div class="col-sm-1">
-                            <button type="button" onclick="javascript:history.back(-1);" class="btn btn-sm btn-success" >返回</a>
+                            <button type="button" ng-click="returnPre()" class="btn btn-sm btn-success" >返回</button>
                         </div>
                     </div>
                 </tr>
@@ -28,8 +28,8 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat = "batch in batches">
-                    <td>{{batch.startTime}}</td>
-                    <td>{{batch.endTime}}</td>
+                    <td>{{batch.startTime | time2simpleDateTime}}</td>
+                    <td>{{batch.endTime | time2simpleDateTime}}</td>
                     <td>
                       <div style="display:inline-block" >
                        <button class="btn btn-default  btn-info btn-xs" style="width: 40px" ng-click="open(batch)">{{batch.allowNumber}}</button>
@@ -54,10 +54,9 @@
 </div>
 
 <script type="text/javascript">
-    app.controller('BookingBookingController', ['$scope', '$http', '$stateParams',function ($scope, $http,$stateParams) {
+    app.controller('BookingBookingController', ['$scope', '$http', '$stateParams','$state',function ($scope, $http,$stateParams,$state) {
         //根据外面来传进来的itemId刷新本页item详情。
-        var itemId = $stateParams.itemId;
-
+        $scope.courseId = 1;
         $scope.getItem = function(){
             var url = $scope.app.host + '/item/detail/'+ $stateParams.itemId;
             var params = {};
@@ -66,6 +65,8 @@
             $http.post(url,params)
                     .success(function (response) {
                       $scope.itemName = response.item.name;
+                        $scope.courseId = response.item.course.id;
+                        console.log("$scope.courseId "+$scope.courseId);
                     }).error(function (response) {
                         $scope.pop("error", "错误", response.error.message);
             });
@@ -119,6 +120,11 @@
 
 
         };
+
+        $scope.returnPre = function(){
+            $state.go("app.experiment_booking.index",{courseId:$scope.courseId});
+
+        }
 
     }]);
 

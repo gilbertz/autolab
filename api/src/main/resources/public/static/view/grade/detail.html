@@ -136,6 +136,10 @@
                 });
 
         };
+        $scope.returnPre = function(){
+            $state.go("app.grade.index",{currilumId:$scope.currilumId});
+
+        }
     }]);
 
 </script>

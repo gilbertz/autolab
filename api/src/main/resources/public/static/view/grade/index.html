@@ -150,7 +150,7 @@
 <script type="text/javascript">
 
 
-    app.controller('GradeIndexController', ['$scope', '$http', function ($scope, $http) {
+    app.controller('GradeIndexController', ['$scope', '$http', '$stateParams',function ($scope, $http,$stateParams) {
         $scope.pagination = {
             page: 1,
             pageSize: 5,
@@ -174,8 +174,22 @@
                         $scope.courses = response.pager.courses;
                         $scope.curriculums = response.pager.courses;
                         if ($scope.courses.length !=0) {
-                            $scope.filterCourse = $scope.courses[0];
+                            if($stateParams.courseId){
+                                for(var i=0;i<$scope.courses.length;i++){
+                                    angular.forEach($scope.courses[i], function (value, key) {
+                                        console.log(key + ':' + value);
+                                        if(key == "id" && value == $stateParams.courseId){
+                                            console.log("okok");
+                                            $scope.filterCourse = $scope.courses[i];
+
+                                        }
+                                    });
+                                }
+                            }else{
+                                $scope.filterCourse = $scope.courses[0];
+                            }
                             $scope.filterCurriculum = $scope.courses[0];
+
                             $scope.getItems();
                             $scope.getTeachers();
                             console.log("0");

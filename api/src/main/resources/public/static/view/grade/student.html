@@ -37,7 +37,7 @@
                  <tr dir-paginate="book in books | itemsPerPage: pagination.pageSize"
          total-items="pagination.totalItems" current-page="pagination.page">
                     <td class="col-sm-3">{{book.batch.item.name}}</td>
-                    <td class="col-sm-3">{{book.attendTime}}</td>
+                    <td class="col-sm-3">{{book.attendTime | time2simpleDateTime}}</td>
                     <td class="col-sm-3">{{book.attendance}}</td>
                     <td class="col-sm-3"><input type="text" class="form-control" ng-model="book.grade"></td>
                 </tr>

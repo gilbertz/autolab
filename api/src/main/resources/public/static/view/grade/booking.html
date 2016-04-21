@@ -13,7 +13,7 @@
                          {{itemName}}
                         </div>
                         <div class="col-sm-1">
-                            <a onclick="javascript:history.back(-1);" class="btn btn-sm btn-success">返回</a>
+                            <a ng-click="returnPre()" class="btn btn-sm btn-success">返回</a>
                         </div>
                     </div>
                 </tr>
@@ -27,8 +27,8 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat = "batch in batches">
-                    <td>{{batch.startTime}}</td>
-                    <td>{{batch.endTime}}</td>
+                    <td>{{batch.startTime | time2simpleDateTime}}</td>
+                    <td>{{batch.endTime | time2simpleDateTime}}</td>
                     <td>
                         <button class="btn btn-default  btn-xs" ng-class="{'btn-danger': batch.status === 'DISABLED','btn-success': batch.status === 'OK' && batch.publish == 'NO','btn-info': batch.status === 'OK' && batch.publish == 'YES'}" ng-click="goDetail(batch)" >{{(batch.status==="OK") ? (batch.publish == "NO" ? "发布成绩":"查看成绩"):"实验关闭"}}</button>
                     </td>
@@ -51,6 +51,7 @@
 
         //根据外面来传进来的itemId刷新本页item详情。
         var itemId = $stateParams.itemId;
+        $scope.courseId = 1;
 
         $scope.getItem = function(){
             var url = $scope.app.host + '/item/detail/'+ $stateParams.itemId;
@@ -60,6 +61,7 @@
             $http.post(url,params)
                     .success(function (response) {
                       $scope.itemName = response.item.name;
+                        $scope.courseId = response.item.course.id;
                     }).error(function (response) {
                         $scope.pop("error", "错误", response.error.message);
             });
@@ -90,6 +92,11 @@
 
             }
         };
+
+        $scope.returnPre = function(){
+            $state.go("app.grade.index",{courseId:$scope.courseId});
+
+        }
         
     }]);
 

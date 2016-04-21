@@ -13,7 +13,7 @@
                          {{itemName}}
                         </div>
                         <div class="col-sm-1">
-                            <a onclick="javascript:history.back(-1);" class="btn btn-sm btn-success">返回</a>
+                            <a ng-click="returnPre()" class="btn btn-sm btn-success">返回</a>
                         </div>
                     </div>
                 </tr>
@@ -28,8 +28,8 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat = "batch in batches">
-                    <td>{{batch.startTime}}</td>
-                    <td>{{batch.endTime}}</td>
+                    <td>{{batch.startTime | time2simpleDateTime}}</td>
+                    <td>{{batch.endTime | time2simpleDateTime}}</td>
                     <td>
                         <progressbar max="batch.allowNumber" value="batch.bookNum" type="info" class="progress-sm m-t-sm" style="display:inline-block; width: 50px;margin-bottom: 0px;margin-top:5px"><span style="white-space:nowrap;">{{batch.bookNum}} / {{batch.allowNumber}}</span></progressbar>   
                     </td>
@@ -53,6 +53,7 @@
     app.controller('BookingBookingController', ['$scope', '$http', '$stateParams','$state',function ($scope, $http,$stateParams,$state) {
         //根据外面来传进来的itemId刷新本页item详情。
         var itemId = $stateParams.itemId;
+        $scope.courseId = 1;
 
         $scope.getItem = function(){
             var url = $scope.app.host + '/item/detail/'+ $stateParams.itemId;
@@ -62,6 +63,7 @@
             $http.post(url,params)
                     .success(function (response) {
                       $scope.itemName = response.item.name;
+                        $scope.courseId = response.item.course.id;
                     }).error(function (response) {
                         $scope.pop("error", "错误", response.error.message);
             });
@@ -93,6 +95,11 @@
 
             }
         };
+
+        $scope.returnPre = function(){
+            $state.go("app.booking.index",{courseId:$scope.courseId});
+
+        }
 
 
     }]);

@@ -72,7 +72,8 @@
 <script type="text/javascript">
 
 
-    app.controller('ExperimentIndexController', ['$scope', '$http', function ($scope, $http) {
+    app.controller('ExperimentIndexController', ['$scope', '$http', '$stateParams',function ($scope, $http,$stateParams) {
+        console.log("courseId"+$stateParams.courseId);
 
         $scope.pagination = {
             page: 1,
@@ -80,11 +81,13 @@
             totalItems: 0
         };
 
+
         $scope.pageChanged = function (newPage) {
             console.log(newPage);
             $scope.pagination.page = newPage;
             $scope.getItems();
         };
+
 
         $scope.filterCourses = [];
 
@@ -100,6 +103,20 @@
                         $scope.courses = response.pager.courses;
                         if ($scope.courses.length !=0) {
                             $scope.filterCourse = $scope.courses[0];
+                            if($stateParams.courseId){
+                                for(var i=0;i<$scope.courses.length;i++){
+                                    angular.forEach($scope.courses[i], function (value, key) {
+                                        console.log(key + ':' + value);
+                                        if(key == "id" && value == $stateParams.courseId){
+                                            console.log("okok");
+                                            $scope.filterCourse = $scope.courses[i];
+
+                                        }
+                                    });
+                                }
+                            }else{
+                                $scope.filterCourse = $scope.courses[0];
+                            }
                             $scope.getItems();
                             console.log("0");
 
@@ -136,6 +153,8 @@
                        $scope.pop("error", "错误", response.error.message);
                    });
        };
+
+
 
     }]);
 
