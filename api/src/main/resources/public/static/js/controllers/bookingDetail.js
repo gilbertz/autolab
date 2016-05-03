@@ -50,7 +50,7 @@
 
     var uploader = $scope.uploader = new FileUploader({
         formData: [{batchId: 1}],
-        url: $scope.app.host + '/attendance/upload'
+        url: $scope.app.host + '/relation/upload'
     });
 
     // FILTERS

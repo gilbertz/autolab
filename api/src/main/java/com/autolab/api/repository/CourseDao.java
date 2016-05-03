@@ -10,4 +10,8 @@ import java.util.List;
  */
 public interface CourseDao extends BaseDao<Course, Long>{
     List<Course> findAll(Specification<Course> spec);
+
+    Course findById(Long id);
+
+    Course findByName(String name);
 }
